@@ -2,6 +2,8 @@ version: '3'
 services:
   web:
     command: npm run dev
+    ports:
+      - '3000:3000'
     volumes:
       - ./config.js:/usr/src/app/config.js
       - ./theme.js:/usr/src/app/theme.js
