@@ -1,5 +1,7 @@
 # ADASilk
 
+The SILKNOW Exploratory Search Engine is named after Ada Lovelace (1815-1852), the mathematician that anticipated some of the main features of modern computing some 100 years before its advent. In her notes, she wrote that such a computation machine *weaves algebraic patterns, just as the Jacquard loom weaves flowers and leaves*.
+
 ## About
 
 Repository for ADASilk with configuration files for [D2KLab/explorer](https://github.com/D2KLab/explorer).
