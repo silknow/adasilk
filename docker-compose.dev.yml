@@ -1,0 +1,11 @@
+version: '3'
+services:
+  web:
+    command: npm run dev
+    volumes:
+      - ./config.js:/usr/src/app/config.js
+      - ./theme.js:/usr/src/app/theme.js
+      - ./images:/usr/src/app/public/images
+      - ./locales:/usr/src/app/public/static/locales
+    environment:
+      - NODE_ENV=development
