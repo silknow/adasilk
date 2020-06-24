@@ -34,4 +34,4 @@ docker-composer -f docker-compose.yml -f docker-compose.prod.yml up
 
 ## License
 
-ADASilk is [Apache licensed](https://github.com/silknow/adasilk/blob/master/LICENSE).
+ADASilk is [Apache licensed](https://github.com/silknow/adasilk/blob/main/LICENSE).
