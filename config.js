@@ -489,4 +489,12 @@ module.exports = {
       },
     },
   ],
+  plugins: {
+    virtualLoom: {
+      url: 'https://ada.silknow.org/vloom/',
+    },
+    spatioTemporalMaps: {
+      url: 'https://ada.silknow.org/spatio-temporal-maps/',
+    }
+  },
 };
