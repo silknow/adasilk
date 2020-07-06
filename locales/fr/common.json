@@ -9,7 +9,8 @@
     "material": "Matériel",
     "technique": "Technique",
     "time": "Date de production",
-    "location": "Lieu de production"
+    "location": "Lieu de production",
+    "dimension": "Dimension"
   },
   "routes": {
     "objects": "Objets",

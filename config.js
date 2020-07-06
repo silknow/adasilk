@@ -204,6 +204,9 @@ module.exports = {
         'GRAPH ?g { ?id a <http://erlangen-crm.org/current/E22_Man-Made_Object> }',
         '?production <http://erlangen-crm.org/current/P108_has_produced> ?id',
       ],
+      metadata: {
+        dimension: (value) => `${value.width}cm x ${value.height}cm`,
+      },
       query: {
         '@graph': [
           {
@@ -229,6 +232,11 @@ module.exports = {
               '@id': '?technique',
               label: '?techniqueLabel',
             },
+            dimension: {
+              '@id': '?id',
+              width: '?dimensionWidthValue',
+              height: '?dimensionHeightValue',
+            },
             time: {
               '@id': '?time',
               label: '?timeLabel',
@@ -238,7 +246,6 @@ module.exports = {
               label: '?locationLabel',
               latitude: '?locationLat',
               longitude: '?locationLong',
-              country: '?locationCountry',
             },
           },
         ],
@@ -247,6 +254,16 @@ module.exports = {
           `OPTIONAL {
             ?collection <http://erlangen-crm.org/current/P106_is_composed_of> ?id .
             ?collection <http://www.w3.org/2000/01/rdf-schema#label> ?collectionLabel .
+          }`,
+          `OPTIONAL {
+            ?id <http://erlangen-crm.org/current/P43_has_dimension> ?dimensionWidth .
+            ?dimensionWidth <http://erlangen-crm.org/current/P2_has_type> "width" .
+            ?dimensionWidth <http://erlangen-crm.org/current/P90_has_value> ?dimensionWidthValue .
+          }`,
+          `OPTIONAL {
+            ?id <http://erlangen-crm.org/current/P43_has_dimension> ?dimensionHeight .
+            ?dimensionHeight <http://erlangen-crm.org/current/P2_has_type> "height" .
+            ?dimensionHeight <http://erlangen-crm.org/current/P90_has_value> ?dimensionHeightValue .
           }`,
           `OPTIONAL {
             ?production <http://erlangen-crm.org/current/P108_has_produced> ?id .
