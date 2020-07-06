@@ -131,22 +131,7 @@ module.exports = {
           id: 'material',
           isMulti: true,
           isSortable: true,
-          query: {
-            '@graph': [
-              {
-                '@id': '?material',
-                label: '?materialLabel',
-              },
-            ],
-            $where: [
-              '?id a <http://erlangen-crm.org/current/E22_Man-Made_Object>',
-              '?production <http://erlangen-crm.org/current/P108_has_produced> ?id',
-              '?production <http://erlangen-crm.org/current/P126_employed> ?material',
-              '?material <http://www.w3.org/2004/02/skos/core#prefLabel> ?materialLabel',
-            ],
-            $filter: ['lang(?materialLabel) = "en"'],
-            $langTag: 'hide',
-          },
+          vocabulary: 'material',
           whereFunc: () => [
             '?production <http://erlangen-crm.org/current/P126_employed> ?material',
           ],
@@ -158,22 +143,7 @@ module.exports = {
           id: 'technique',
           isMulti: true,
           isSortable: true,
-          query: {
-            '@graph': [
-              {
-                '@id': '?technique',
-                label: '?techniqueLabel',
-              },
-            ],
-            $where: [
-              '?id a <http://erlangen-crm.org/current/E22_Man-Made_Object>',
-              '?production <http://erlangen-crm.org/current/P108_has_produced> ?id',
-              '?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique',
-              '?technique <http://www.w3.org/2004/02/skos/core#prefLabel> ?techniqueLabel',
-            ],
-            $filter: ['lang(?techniqueLabel) = "en"'],
-            $langTag: 'hide',
-          },
+          vocabulary: 'technique',
           whereFunc: () => [
             '?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique',
           ],
@@ -226,11 +196,9 @@ module.exports = {
             },
             material: {
               '@id': '?material',
-              label: '?materialLabel',
             },
             technique: {
               '@id': '?technique',
-              label: '?techniqueLabel',
             },
             dimension: {
               '@id': '?id',
@@ -268,14 +236,12 @@ module.exports = {
           `OPTIONAL {
             ?production <http://erlangen-crm.org/current/P108_has_produced> ?id .
             OPTIONAL {
-              ?production <http://erlangen-crm.org/current/P126_employed> ?material .
-              ?material <http://www.w3.org/2004/02/skos/core#prefLabel> ?materialLabel .
-              FILTER(LANG(?materialLabel) = "en")
+              ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique .
+              FILTER(ISIRI(?technique))
             }
             OPTIONAL {
-              ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique .
-              ?technique <http://www.w3.org/2004/02/skos/core#prefLabel> ?techniqueLabel .
-              FILTER(LANG(?techniqueLabel) = "en")
+              ?production <http://erlangen-crm.org/current/P126_employed> ?material .
+              FILTER(ISIRI(?material))
             }
             OPTIONAL {
               ?production <http://erlangen-crm.org/current/P4_has_time-span> ?time .
@@ -487,9 +453,8 @@ module.exports = {
       icon: '/images/graphs/http-data-silknow-org-mtmad.png',
     },
   },
-  vocabularies: [
-    {
-      id: 'technique',
+  vocabularies: {
+    technique: {
       query: {
         '@graph': [
           {
@@ -505,7 +470,23 @@ module.exports = {
         $langTag: 'hide',
       },
     },
-  ],
+    material: {
+      query: {
+        '@graph': [
+          {
+            '@id': '?material',
+            label: '?materialLabel',
+          },
+        ],
+        $where: [
+          '?production <http://erlangen-crm.org/current/P126_employed> ?material',
+          '?material <http://www.w3.org/2004/02/skos/core#prefLabel> ?materialLabel',
+        ],
+        $filter: ['lang(?materialLabel) = "en"'],
+        $langTag: 'hide',
+      },
+    },
+  },
   plugins: {
     virtualLoom: {
       url: 'https://ada.silknow.org/vloom/',
