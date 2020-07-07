@@ -19,8 +19,8 @@
     "depictions": "Depictions"
   },
   "filters": {
-    "time": "Date de production",
-    "location": "Lieu de production",
+    "time": "Production time",
+    "location": "Production place",
     "technique": "Technique",
     "material": "Material",
     "composed": "Collection",
