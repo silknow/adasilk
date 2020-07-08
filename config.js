@@ -20,6 +20,7 @@ module.exports = {
       '@graph': [
         {
           '@id': '?id',
+          '@type': '?type',
           label: '?label',
           representation: {
             '@id': '?representation',
@@ -29,6 +30,7 @@ module.exports = {
       ],
       $where: [
         '?id a <http://erlangen-crm.org/current/E22_Man-Made_Object>',
+        '?id a ?type',
         '?id <http://www.w3.org/2000/01/rdf-schema#label> ?label',
         // Needed because silknow has 2 duplicate images (the source one and the one hosted on silknow.org cloud server)
         // We should only return the silknow.org one
