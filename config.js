@@ -23,7 +23,7 @@ module.exports = {
           label: '?label',
           representation: {
             '@id': '?representation',
-            image: '?representationUrl$sample',
+            image: '?representationUrl',
           },
         },
       ],
@@ -33,10 +33,12 @@ module.exports = {
         // Needed because silknow has 2 duplicate images (the source one and the one hosted on silknow.org cloud server)
         // We should only return the silknow.org one
         `OPTIONAL {
-          ?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation .
-          OPTIONAL {
-            ?representation <http://schema.org/contentUrl> ?representationUrl .
-            FILTER(STRSTARTS(STR(?representationUrl), "http://silknow.org/"))
+          SELECT ?id ?representation (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
+            ?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation .
+            OPTIONAL {
+              ?representation <http://schema.org/contentUrl> ?representationUrl .
+              FILTER(STRSTARTS(STR(?representationUrl), "http://silknow.org/"))
+            }
           }
         }`,
       ],
@@ -187,7 +189,7 @@ module.exports = {
             identifier: '$<http://purl.org/dc/elements/1.1/identifier>$var:identifier',
             representation: {
               '@id': '?representation',
-              image: '?representationUrl$sample',
+              image: '?representationUrl',
             },
             composed: {
               '@id': '?collection',
@@ -262,10 +264,12 @@ module.exports = {
           // Needed because silknow has 2 duplicate images (the source one and the one hosted on silknow.org cloud server)
           // We should only return the silknow.org one
           `OPTIONAL {
-            ?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation .
-            OPTIONAL {
-              ?representation <http://schema.org/contentUrl> ?representationUrl .
-              FILTER(STRSTARTS(STR(?representationUrl), "http://silknow.org/"))
+            SELECT ?id ?representation (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
+              ?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation .
+              OPTIONAL {
+                ?representation <http://schema.org/contentUrl> ?representationUrl .
+                FILTER(STRSTARTS(STR(?representationUrl), "http://silknow.org/"))
+              }
             }
           }`,
         ],
