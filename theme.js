@@ -1,3 +1,5 @@
+import { css } from 'styled-components';
+
 const theme = {
   fontFamily: {
     sansSerif:
@@ -30,6 +32,18 @@ const theme = {
   footer: {
     minHeight: '150px',
   },
+  pages: {
+    HomePage: {
+      Title: css`
+        background: rgba(255, 255, 255, 0.5);
+        max-width: 400px;
+        line-height: 1.25em;
+        padding: 0.25em;
+        text-align: center;
+      `
+    }
+  },
+  components: {}
 };
 
 export default theme;

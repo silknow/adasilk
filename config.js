@@ -6,9 +6,9 @@ module.exports = {
   },
   home: {
     hero: {
-      // headline: 'Travel into the Silk Heritage',
+      headline: 'Travel into the Silk Heritage',
       // showLogo: true,
-      image: '/images/silknow-hero.png',
+      image: '/images/silknow-hero.jpg',
     },
   },
   footer: {
