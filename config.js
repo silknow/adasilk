@@ -169,6 +169,15 @@ module.exports = {
           ],
         },
         {
+          id: 'show-only-location',
+          isOption: true,
+          whereFunc: () => [
+            '?production <http://erlangen-crm.org/current/P8_took_place_on_or_within> ?location',
+            '?location <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?locationLat',
+            '?location <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?locationLong',
+          ],
+        },
+        {
           id: 'show-only-vloom',
           isOption: true,
         },
