@@ -39,7 +39,7 @@ module.exports = {
             ?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation .
             OPTIONAL {
               ?representation <http://schema.org/contentUrl> ?representationUrl .
-              FILTER(STRSTARTS(STR(?representationUrl), "http://silknow.org/"))
+              FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))
             }
           }
         }`,
@@ -165,7 +165,7 @@ module.exports = {
           whereFunc: () => [
             '?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation',
             '?representation <http://schema.org/contentUrl> ?representationUrl',
-            'FILTER(STRSTARTS(STR(?representationUrl), "http://silknow.org/"))',
+            'FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))',
           ],
         },
         {
@@ -279,7 +279,7 @@ module.exports = {
               ?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation .
               OPTIONAL {
                 ?representation <http://schema.org/contentUrl> ?representationUrl .
-                FILTER(STRSTARTS(STR(?representationUrl), "http://silknow.org/"))
+                FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))
               }
             }
           }`,
