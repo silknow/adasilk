@@ -423,47 +423,47 @@ module.exports = {
     },
   },
   graphs: {
-    'http://data.silknow.org/met': {
+    'http://data.silknow.org/graph/met': {
       label: 'Metropolitan Museum of Art',
       icon: '/images/graphs/http-data-silknow-org-met.png',
     },
-    'http://data.silknow.org/unipa': {
+    'http://data.silknow.org/graph/unipa': {
       label: 'UNIPA',
       icon: '/images/graphs/http-data-silknow-org-unipa.png',
     },
-    'http://data.silknow.org/imatex': {
+    'http://data.silknow.org/graph/imatex': {
       label: 'CDMT Terrassa',
       icon: '/images/graphs/http-data-silknow-org-imatex.png',
     },
-    'http://data.silknow.org/vam': {
+    'http://data.silknow.org/graph/vam': {
       label: 'Victoria and Albert Museum',
       icon: '/images/graphs/http-data-silknow-org-vam.png',
     },
-    'http://data.silknow.org/garin': {
+    'http://data.silknow.org/graph/garin': {
       label: 'Garín 1820',
       icon: '/images/graphs/http-data-silknow-org-garin.png',
     },
-    'http://data.silknow.org/mad': {
+    'http://data.silknow.org/graph/mad': {
       label: 'Musée des Arts Décoratifs',
       icon: '/images/graphs/http-data-silknow-org-mad.png',
     },
-    'http://data.silknow.org/mfa': {
+    'http://data.silknow.org/graph/mfa': {
       label: 'Boston Museum of Fine Arts',
       icon: '/images/graphs/http-data-silknow-org-mfa.png',
     },
-    'http://data.silknow.org/risd': {
+    'http://data.silknow.org/graph/risd': {
       label: 'Rhode Island School of Design',
       icon: '/images/graphs/http-data-silknow-org-risd.png',
     },
-    'http://data.silknow.org/cer': {
+    'http://data.silknow.org/graph/cer': {
       label: 'Red Digital de Colecciones de Museos de España',
       icon: '/images/graphs/http-data-silknow-org-cer.png',
     },
-    'http://data.silknow.org/joconde': {
+    'http://data.silknow.org/graph/joconde': {
       label: 'Joconde Database of French Museum Collections',
       icon: '/images/graphs/http-data-silknow-org-joconde.png',
     },
-    'http://data.silknow.org/mtmad': {
+    'http://data.silknow.org/graph/mtmad': {
       label: 'Musée des Tissus',
       icon: '/images/graphs/http-data-silknow-org-mtmad.png',
     },
