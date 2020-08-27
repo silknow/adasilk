@@ -6,7 +6,7 @@ module.exports = {
   },
   home: {
     hero: {
-      headline: 'Travel into the Silk Heritage',
+      showHeadline: true,
       // showLogo: true,
       image: '/images/silknow-hero.jpg',
     },
