@@ -1,4 +1,7 @@
 {
+  "site": {
+    "description": "Voyagez dans le Patrimoine de la Soie"
+  },
   "search": "Rechercher",
   "footer": {
     "text": "The data contained in SILKNOW Explorer comes from the archives of ...\nThe Virtual Loom has been developed by UVEG.\nKG Explorer has been developed at EURECOM and includes scientific contribution from ..."
