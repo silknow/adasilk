@@ -15,6 +15,7 @@ module.exports = {
     logo: '/images/silknow-footer.png',
   },
   search: {
+    route: 'objects',
     allowTextSearch: true,
     textSearchQuery: {
       '@graph': [
