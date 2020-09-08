@@ -48,7 +48,7 @@ module.exports = {
       $limit: 5,
       $langTag: 'hide',
     },
-    filterFunc: (value) => [`bif:contains(?label, '"${value}"')`],
+    filterFunc: (value) => [`bif:contains(?label, '"${value.replace(/'/g, '\\\'')}"')`],
     allowImageSearch: true,
     placeholderImage: '/images/silknow-placeholder.png',
     languages: {
