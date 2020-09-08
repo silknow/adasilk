@@ -189,7 +189,16 @@ module.exports = {
         '?production <http://erlangen-crm.org/current/P108_has_produced> ?id',
       ],
       metadata: {
-        dimension: (value) => `${value.width}cm x ${value.height}cm`,
+        dimension: (value) => {
+          const dimensions = [];
+          if (typeof value.width !== 'undefined') {
+            dimensions.push(`${value.width}cm`);
+          }
+          if (typeof value.height !== 'undefined') {
+            dimensions.push(`${value.height}cm`);
+          }
+          return dimensions.length > 0 ? dimensions.join(' x ') : null;
+        }
       },
       query: {
         '@graph': [
