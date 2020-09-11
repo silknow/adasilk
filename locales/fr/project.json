@@ -32,8 +32,5 @@
     "show-only-images": "Avec images uniquement",
     "show-only-vloom": "Compatible Virtual Loom",
     "show-only-location": "Uniquement avec localisation"
-  },
-  "labels": {
-    "edit_query": "Modifier la requête"
   }
 }
