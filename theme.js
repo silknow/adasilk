@@ -1,4 +1,5 @@
 import { css } from 'styled-components';
+import breakpoints from '@styles/breakpoints';
 
 const theme = {
   fontFamily: {
@@ -36,10 +37,15 @@ const theme = {
     HomePage: {
       Title: css`
         background: rgba(255, 255, 255, 0.5);
-        max-width: 400px;
-        line-height: 1.25em;
-        padding: 0.25em;
+        max-width: 480px;
+        line-height: 1.25;
+        padding: 1rem;
         text-align: center;
+        font-weight: 400;
+
+        ${breakpoints.tablet`
+          text-align: center;
+        `}
       `
     }
   },
