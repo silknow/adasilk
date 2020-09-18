@@ -72,6 +72,7 @@ module.exports = {
       uriBase: 'http://data.silknow.org/object',
       details: {
         view: 'gallery',
+        excludedMetadata: ['representation'],
       },
       filterByGraph: true,
       filters: [
