@@ -235,6 +235,7 @@ module.exports = {
             },
             location: {
               '@id': '?location',
+              featureCode: '?locationFeatureCode',
               label: '?locationLabel',
               latitude: '?locationLat',
               longitude: '?locationLong',
@@ -281,6 +282,7 @@ module.exports = {
               OPTIONAL { ?location <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?locationLat . }
               OPTIONAL { ?location <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?locationLong . }
               OPTIONAL { ?location <http://www.geonames.org/ontology#parentCountry>/<http://www.geonames.org/ontology#name> ?locationCountry . }
+              OPTIONAL { ?location <http://www.geonames.org/ontology#featureCode> ?locationFeatureCode . }
             }
           }`,
           // Needed because silknow has 2 duplicate images (the source one and the one hosted on silknow.org cloud server)
