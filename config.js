@@ -240,6 +240,10 @@ module.exports = {
               latitude: '?locationLat',
               longitude: '?locationLong',
             },
+            category: {
+              '@id': '?assignedGroup',
+              'label': '?assignedGroupLabel',
+            },
           },
         ],
         $where: [
@@ -283,6 +287,17 @@ module.exports = {
               OPTIONAL { ?location <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?locationLong . }
               OPTIONAL { ?location <http://www.geonames.org/ontology#parentCountry>/<http://www.geonames.org/ontology#name> ?locationCountry . }
               OPTIONAL { ?location <http://www.geonames.org/ontology#featureCode> ?locationFeatureCode . }
+            }
+            OPTIONAL {
+              ?dig ecrm:P129_is_about ?production .
+              ?dig a crmdig:D1_Digital_Object .
+              ?dig ecrm:P129_is_about/ecrm:P42_assigned ?digTypeAssigned .
+              ?assignedGroup skos:member ?digTypeAssigned .
+              <http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?assignedGroup .
+              OPTIONAL {
+                ?assignedGroup <http://www.w3.org/2004/02/skos/core#prefLabel> ?assignedGroupLabel .
+                FILTER(LANG(?assignedGroupLabel) = "en" || LANG(?assignedGroupLabel) = "")
+              }
             }
           }`,
           // Needed because silknow has 2 duplicate images (the source one and the one hosted on silknow.org cloud server)
