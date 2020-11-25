@@ -48,7 +48,22 @@ module.exports = {
       $limit: 5,
       $langTag: 'hide',
     },
-    filterFunc: (value) => [`bif:contains(?label, '"${value.replace(/'/g, '\\\'')}*"')`],
+    whereFunc: (q) => {
+      const value = q.replace(/'/g, '\\\'');
+      return [
+        `
+        {
+          { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+          UNION
+          { ?id <http://purl.org/dc/elements/1.1/identifier> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+          UNION
+          { ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?_technique . ?_technique <http://www.w3.org/2004/02/skos/core#prefLabel> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+          UNION
+          { ?production <http://erlangen-crm.org/current/P126_employed> ?_material . ?_material <http://www.w3.org/2004/02/skos/core#prefLabel> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+        }
+        `
+      ];
+    },
     allowImageSearch: true,
     placeholderImage: '/images/silknow-placeholder.png',
     languages: {
@@ -328,8 +343,6 @@ module.exports = {
           }
           UNION
           {
-            # Needed because silknow has 2 duplicate images (the source one and the one hosted on silknow.org cloud server)
-            # We should only return the silknow.org one
             OPTIONAL {
               SELECT ?id ?representation (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
                 ?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation .
