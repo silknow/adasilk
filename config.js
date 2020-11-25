@@ -48,7 +48,7 @@ module.exports = {
       $limit: 5,
       $langTag: 'hide',
     },
-    filterFunc: (value) => [`bif:contains(?label, '"${value.replace(/'/g, '\\\'')}"')`],
+    filterFunc: (value) => [`bif:contains(?label, '"${value.replace(/'/g, '\\\'')}*"')`],
     allowImageSearch: true,
     placeholderImage: '/images/silknow-placeholder.png',
     languages: {
@@ -248,72 +248,118 @@ module.exports = {
         ],
         $where: [
           'GRAPH ?g { ?id a <http://erlangen-crm.org/current/E22_Man-Made_Object> }',
-          `OPTIONAL {
-            ?collection <http://erlangen-crm.org/current/P106_is_composed_of> ?id .
-            ?collection <http://www.w3.org/2000/01/rdf-schema#label> ?collectionLabel .
-          }`,
-          `OPTIONAL {
-            ?id <http://erlangen-crm.org/current/P43_has_dimension> ?dimensionWidth .
-            ?dimensionWidth <http://erlangen-crm.org/current/P2_has_type> "width" .
-            ?dimensionWidth <http://erlangen-crm.org/current/P90_has_value> ?dimensionWidthValue .
-          }`,
-          `OPTIONAL {
-            ?id <http://erlangen-crm.org/current/P43_has_dimension> ?dimensionHeight .
-            ?dimensionHeight <http://erlangen-crm.org/current/P2_has_type> "height" .
-            ?dimensionHeight <http://erlangen-crm.org/current/P90_has_value> ?dimensionHeightValue .
-          }`,
-          `OPTIONAL {
-            ?production <http://erlangen-crm.org/current/P108_has_produced> ?id .
+          `
+          {
             OPTIONAL {
-              ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique .
-              FILTER(ISIRI(?technique))
+              ?collection <http://erlangen-crm.org/current/P106_is_composed_of> ?id .
+              ?collection <http://www.w3.org/2000/01/rdf-schema#label> ?collectionLabel .
             }
+          }
+          UNION
+          {
             OPTIONAL {
-              ?production <http://erlangen-crm.org/current/P126_employed> ?material .
-              FILTER(ISIRI(?material))
+              ?id <http://erlangen-crm.org/current/P43_has_dimension> ?dimensionWidth .
+              ?dimensionWidth <http://erlangen-crm.org/current/P2_has_type> "width" .
+              ?dimensionWidth <http://erlangen-crm.org/current/P90_has_value> ?dimensionWidthValue .
             }
+          }
+          UNION
+          {
             OPTIONAL {
-              ?production <http://erlangen-crm.org/current/P4_has_time-span> ?time .
-              ?time <http://www.w3.org/2004/02/skos/core#prefLabel> ?timeLabel .
-              FILTER(LANG(?timeLabel) = "en")
+              ?id <http://erlangen-crm.org/current/P43_has_dimension> ?dimensionHeight .
+              ?dimensionHeight <http://erlangen-crm.org/current/P2_has_type> "height" .
+              ?dimensionHeight <http://erlangen-crm.org/current/P90_has_value> ?dimensionHeightValue .
             }
+          }
+          UNION
+          {
             OPTIONAL {
-              ?production <http://erlangen-crm.org/current/P8_took_place_on_or_within> ?location .
-              OPTIONAL {
-                ?location <http://www.geonames.org/ontology#name> ?locationLabel .
-                FILTER(LANG(?locationLabel) = "en" || LANG(?locationLabel) = "")
+              ?production <http://erlangen-crm.org/current/P108_has_produced> ?id .
+              {
+                OPTIONAL {
+                  ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique .
+                  FILTER(ISIRI(?technique))
+                }
               }
-              OPTIONAL { ?location <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?locationLat . }
-              OPTIONAL { ?location <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?locationLong . }
-              OPTIONAL { ?location <http://www.geonames.org/ontology#parentCountry>/<http://www.geonames.org/ontology#name> ?locationCountry . }
-              OPTIONAL { ?location <http://www.geonames.org/ontology#featureCode> ?locationFeatureCode . }
+              UNION
+              {
+                OPTIONAL {
+                  ?production <http://erlangen-crm.org/current/P126_employed> ?material .
+                  FILTER(ISIRI(?material))
+                }
+              }
+              UNION
+              {
+                OPTIONAL {
+                  ?production <http://erlangen-crm.org/current/P4_has_time-span> ?time .
+                  ?time <http://www.w3.org/2004/02/skos/core#prefLabel> ?timeLabel .
+                  FILTER(LANG(?timeLabel) = "en")
+                }
+              }
+              UNION
+              {
+                OPTIONAL {
+                  ?production <http://erlangen-crm.org/current/P8_took_place_on_or_within> ?location .
+                  OPTIONAL {
+                    ?location <http://www.geonames.org/ontology#name> ?locationLabel .
+                    FILTER(LANG(?locationLabel) = "en" || LANG(?locationLabel) = "")
+                  }
+                  OPTIONAL { ?location <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?locationLat . }
+                  OPTIONAL { ?location <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?locationLong . }
+                  OPTIONAL { ?location <http://www.geonames.org/ontology#parentCountry>/<http://www.geonames.org/ontology#name> ?locationCountry . }
+                  OPTIONAL { ?location <http://www.geonames.org/ontology#featureCode> ?locationFeatureCode . }
+                }
+              }
+              UNION
+              {
+                OPTIONAL {
+                  ?dig ecrm:P129_is_about ?production .
+                  ?dig a crmdig:D1_Digital_Object .
+                  ?dig ecrm:P129_is_about/ecrm:P42_assigned ?digTypeAssigned .
+                  ?assignedGroup skos:member ?digTypeAssigned .
+                  <http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?assignedGroup .
+                  OPTIONAL {
+                    ?assignedGroup <http://www.w3.org/2004/02/skos/core#prefLabel> ?assignedGroupLabel .
+                    FILTER(LANG(?assignedGroupLabel) = "en" || LANG(?assignedGroupLabel) = "")
+                  }
+                }
+              }
             }
+          }
+          UNION
+          {
+            # Needed because silknow has 2 duplicate images (the source one and the one hosted on silknow.org cloud server)
+            # We should only return the silknow.org one
             OPTIONAL {
-              ?dig ecrm:P129_is_about ?production .
-              ?dig a crmdig:D1_Digital_Object .
-              ?dig ecrm:P129_is_about/ecrm:P42_assigned ?digTypeAssigned .
-              ?assignedGroup skos:member ?digTypeAssigned .
-              <http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?assignedGroup .
-              OPTIONAL {
-                ?assignedGroup <http://www.w3.org/2004/02/skos/core#prefLabel> ?assignedGroupLabel .
-                FILTER(LANG(?assignedGroupLabel) = "en" || LANG(?assignedGroupLabel) = "")
+              SELECT ?id ?representation (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
+                ?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation .
+                OPTIONAL {
+                  ?representation <http://schema.org/contentUrl> ?representationUrl .
+                  FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))
+                }
               }
             }
-          }`,
-          // Needed because silknow has 2 duplicate images (the source one and the one hosted on silknow.org cloud server)
-          // We should only return the silknow.org one
-          `OPTIONAL {
-            SELECT ?id ?representation (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
-              ?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation .
-              OPTIONAL {
-                ?representation <http://schema.org/contentUrl> ?representationUrl .
-                FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))
-              }
-            }
-          }`,
+          }
+          `
         ],
         $langTag: 'hide',
       },
+      textSearchFunc: (q) => {
+        const value = q.replace(/'/g, '\\\'');
+        return [
+          `
+          {
+            { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+            UNION
+            { ?id <http://purl.org/dc/elements/1.1/identifier> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+            UNION
+            { ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?_technique . ?_technique <http://www.w3.org/2004/02/skos/core#prefLabel> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+            UNION
+            { ?production <http://erlangen-crm.org/current/P126_employed> ?_material . ?_material <http://www.w3.org/2004/02/skos/core#prefLabel> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+          }
+          `
+        ]
+      }
     },
     techniques: {
       view: 'vocabulary',
