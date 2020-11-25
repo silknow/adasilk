@@ -502,7 +502,7 @@ module.exports = {
       icon: '/images/graphs/http-data-silknow-org-met.png',
     },
     'http://data.silknow.org/graph/unipa': {
-      label: 'UNIPA',
+      label: 'Sicily Cultural Heritage',
       icon: '/images/graphs/http-data-silknow-org-unipa.png',
     },
     'http://data.silknow.org/graph/imatex': {
