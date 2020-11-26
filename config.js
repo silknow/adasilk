@@ -176,6 +176,23 @@ module.exports = {
           },
         },
         {
+          id: 'category',
+          isMulti: true,
+          isSortable: true,
+          vocabulary: 'category',
+          hasSkosmosDefinition: true,
+          whereFunc: () => [
+            '?dig ecrm:P129_is_about ?production',
+            '?dig a crmdig:D1_Digital_Object',
+            '?dig ecrm:P129_is_about/ecrm:P42_assigned ?digTypeAssigned',
+            '?assignedGroup skos:member ?digTypeAssigned',
+            '<http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?assignedGroup',
+          ],
+          filterFunc: (values) => {
+            return [values.map((val) => `?assignedGroup = <${val}>`).join(' || ')];
+          },
+        },
+        {
           id: 'show-only-fabric',
           isOption: true,
         },
@@ -586,6 +603,29 @@ module.exports = {
           '?material <http://www.w3.org/2004/02/skos/core#prefLabel> ?materialLabel',
         ],
         $filter: ['lang(?materialLabel) = "en"'],
+        $langTag: 'hide',
+      },
+    },
+    category: {
+      query: {
+        '@graph': [
+          {
+            '@id': '?assignedGroup',
+            label: '?assignedGroupLabel',
+          },
+        ],
+        $where: [
+          '?dig ecrm:P129_is_about ?production',
+          '?dig a crmdig:D1_Digital_Object',
+          '?dig ecrm:P129_is_about/ecrm:P42_assigned ?digTypeAssigned',
+          '?assignedGroup skos:member ?digTypeAssigned',
+          '<http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?assignedGroup',
+          `OPTIONAL {
+            ?assignedGroup <http://www.w3.org/2004/02/skos/core#prefLabel> ?assignedGroupLabel .
+            FILTER(LANG(?assignedGroupLabel) = "en" || LANG(?assignedGroupLabel) = "")
+          }`,
+        ],
+        $filter: ['lang(?assignedGroupLabel) = "en"'],
         $langTag: 'hide',
       },
     },

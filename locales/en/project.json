@@ -14,7 +14,8 @@
     "technique": "Technique",
     "time": "Production time",
     "location": "Production place",
-    "dimension": "Dimension"
+    "dimension": "Dimension",
+    "category": "Type of object"
   },
   "routes": {
     "objects": "Objects",
@@ -28,6 +29,7 @@
     "technique": "Technique",
     "material": "Material",
     "composed": "Collection",
+    "category": "Type of object",
     "show-only-fabric": "Only fabric",
     "show-only-images": "With images",
     "show-only-vloom": "With Virtual Loom",
