@@ -154,6 +154,7 @@ module.exports = {
           isMulti: true,
           isSortable: true,
           vocabulary: 'material',
+          hasSkosmosDefinition: true,
           whereFunc: () => [
             '?production <http://erlangen-crm.org/current/P126_employed> ?material',
           ],
@@ -166,6 +167,7 @@ module.exports = {
           isMulti: true,
           isSortable: true,
           vocabulary: 'technique',
+          hasSkosmosDefinition: true,
           whereFunc: () => [
             '?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique',
           ],
@@ -594,6 +596,9 @@ module.exports = {
     },
     spatioTemporalMaps: {
       url: 'https://ada.silknow.org/spatio-temporal-maps/',
-    }
+    },
+    skosmos: {
+      url: 'https://skosmos.silknow.org/thesaurus/en/page/?uri=',
+    },
   },
 };
