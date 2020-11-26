@@ -15,7 +15,7 @@
     "time": "Date de production",
     "location": "Lieu de production",
     "dimension": "Dimension",
-    "category": "Type d'objet"
+    "type": "Type d'objet"
   },
   "routes": {
     "objects": "Objets",
@@ -29,7 +29,7 @@
     "technique": "Technique",
     "material": "Matériau",
     "composed": "Collection",
-    "category": "Type d'objet",
+    "type": "Type d'objet",
     "show-only-fabric": "En tissu uniquement",
     "show-only-images": "Avec images uniquement",
     "show-only-vloom": "Compatible Virtual Loom",

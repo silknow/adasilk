@@ -87,7 +87,7 @@ module.exports = {
       uriBase: 'http://data.silknow.org/object',
       details: {
         view: 'gallery',
-        excludedMetadata: ['representation'],
+        excludedMetadata: ['representation', 'category'],
         showPermalink: true,
       },
       filterByGraph: true,
@@ -176,20 +176,20 @@ module.exports = {
           },
         },
         {
-          id: 'category',
+          id: 'type',
           isMulti: true,
           isSortable: true,
-          vocabulary: 'category',
+          vocabulary: 'type',
           hasSkosmosDefinition: true,
           whereFunc: () => [
             '?dig ecrm:P129_is_about ?production',
             '?dig a crmdig:D1_Digital_Object',
             '?dig ecrm:P129_is_about/ecrm:P42_assigned ?digTypeAssigned',
             '?assignedGroup skos:member ?digTypeAssigned',
-            '<http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?assignedGroup',
+            '<http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAssignedGroup',
           ],
           filterFunc: (values) => {
-            return [values.map((val) => `?assignedGroup = <${val}>`).join(' || ')];
+            return [values.map((val) => `?digAssignedGroup = <${val}>`).join(' || ')];
           },
         },
         {
@@ -281,10 +281,14 @@ module.exports = {
               latitude: '?locationLat',
               longitude: '?locationLong',
             },
-            category: {
-              '@id': '?assignedGroup',
-              'label': '?assignedGroupLabel',
+            type: {
+              '@id': '?digAssignedGroup',
+              'label': '?digAssignedGroupLabel',
             },
+            category: {
+              '@id': '?assigned',
+              'label': '?assignedLabel',
+            }
           },
         ],
         $where: [
@@ -310,6 +314,15 @@ module.exports = {
               ?id <http://erlangen-crm.org/current/P43_has_dimension> ?dimensionHeight .
               ?dimensionHeight <http://erlangen-crm.org/current/P2_has_type> "height" .
               ?dimensionHeight <http://erlangen-crm.org/current/P90_has_value> ?dimensionHeightValue .
+            }
+          }
+          UNION
+          {
+            OPTIONAL {
+              ?classified ecrm:P41_classified ?id .
+              ?classified ecrm:P42_assigned ?assigned .
+              ?assigned skos:prefLabel ?assignedLabel .
+              FILTER(LANG(?assignedLabel) = "en" || LANG(?assignedLabel) = "")
             }
           }
           UNION
@@ -357,11 +370,11 @@ module.exports = {
                   ?dig ecrm:P129_is_about ?production .
                   ?dig a crmdig:D1_Digital_Object .
                   ?dig ecrm:P129_is_about/ecrm:P42_assigned ?digTypeAssigned .
-                  ?assignedGroup skos:member ?digTypeAssigned .
-                  <http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?assignedGroup .
+                  ?digAssignedGroup skos:member ?digTypeAssigned .
+                  <http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAssignedGroup .
                   OPTIONAL {
-                    ?assignedGroup <http://www.w3.org/2004/02/skos/core#prefLabel> ?assignedGroupLabel .
-                    FILTER(LANG(?assignedGroupLabel) = "en" || LANG(?assignedGroupLabel) = "")
+                    ?digAssignedGroup <http://www.w3.org/2004/02/skos/core#prefLabel> ?digAssignedGroupLabel .
+                    FILTER(LANG(?digAssignedGroupLabel) = "en" || LANG(?digAssignedGroupLabel) = "")
                   }
                 }
               }
@@ -612,26 +625,26 @@ module.exports = {
         $langTag: 'hide',
       },
     },
-    category: {
+    type: {
       query: {
         '@graph': [
           {
-            '@id': '?assignedGroup',
-            label: '?assignedGroupLabel',
+            '@id': '?digAsignedGroup',
+            label: '?digAssignedGroupLabel',
           },
         ],
         $where: [
           '?dig ecrm:P129_is_about ?production',
           '?dig a crmdig:D1_Digital_Object',
           '?dig ecrm:P129_is_about/ecrm:P42_assigned ?digTypeAssigned',
-          '?assignedGroup skos:member ?digTypeAssigned',
-          '<http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?assignedGroup',
+          '?digAsignedGroup skos:member ?digTypeAssigned',
+          '<http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAsignedGroup',
           `OPTIONAL {
-            ?assignedGroup <http://www.w3.org/2004/02/skos/core#prefLabel> ?assignedGroupLabel .
-            FILTER(LANG(?assignedGroupLabel) = "en" || LANG(?assignedGroupLabel) = "")
+            ?digAsignedGroup <http://www.w3.org/2004/02/skos/core#prefLabel> ?digAssignedGroupLabel .
+            FILTER(LANG(?digAssignedGroupLabel) = "en" || LANG(?digAssignedGroupLabel) = "")
           }`,
         ],
-        $filter: ['lang(?assignedGroupLabel) = "en"'],
+        $filter: ['lang(?digAssignedGroupLabel) = "en"'],
         $langTag: 'hide',
       },
     },
