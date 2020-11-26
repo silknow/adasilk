@@ -90,6 +90,7 @@ module.exports = {
       details: {
         view: 'gallery',
         excludedMetadata: ['representation'],
+        showPermalink: true,
       },
       filterByGraph: true,
       filters: [
