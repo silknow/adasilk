@@ -225,7 +225,15 @@ module.exports = {
           isOption: true,
         },
       ],
-      labelFunc: (props) => props.label || props.identifier,
+      labelFunc: (props) => {
+        if (props.label && props.label.length) {
+          return props.label;
+        }
+        if (props.category && props.category.length) {
+          return Array.isArray(props.category) ? props.category.map(cat => cat.label).join(', ') : props.category.label;
+        }
+        return props.identifier;
+      },
       baseWhere: [
         'GRAPH ?g { ?id a <http://erlangen-crm.org/current/E22_Man-Made_Object> }',
         '?production <http://erlangen-crm.org/current/P108_has_produced> ?id',
