@@ -11,7 +11,10 @@ module.exports = {
     },
   },
   footer: {
-    logo: '/images/silknow-footer.png',
+    logo: [
+      '/images/silknow-footer.png',
+      '/images/virtual-loom-logo.png',
+    ]
   },
   search: {
     route: 'objects',
