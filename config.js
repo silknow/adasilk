@@ -195,6 +195,12 @@ module.exports = {
         {
           id: 'show-only-fabric',
           isOption: true,
+          whereFunc: () => [
+            '?classified ecrm:P41_classified ?id',
+            '?classified ecrm:P42_assigned ?assigned',
+            '?assigned skos:inScheme <http://data.silknow.org/category/silk-category-vocabulary>',
+            '<http://data.silknow.org/vocabulary/facet/fabrics> skos:member ?assigned',
+          ],
         },
         {
           id: 'show-only-images',
