@@ -55,13 +55,11 @@ module.exports = {
       return [
         `
         {
-          { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+          { ?id ?_s1p ?_s1o . ?_s1o bif:contains '"${value}*"' }
           UNION
-          { ?id <http://purl.org/dc/elements/1.1/identifier> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+          { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o bif:contains '"${value}*"' }
           UNION
-          { ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?_technique . ?_technique <http://www.w3.org/2004/02/skos/core#prefLabel> ?_s1text . ?_s1text bif:contains '"${value}*"' }
-          UNION
-          { ?production <http://erlangen-crm.org/current/P126_employed> ?_material . ?_material <http://www.w3.org/2004/02/skos/core#prefLabel> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+          { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o ?_s3p ?_s3o . ?_s3o bif:contains '"${value}*"' }
         }
         `
       ];
@@ -365,13 +363,11 @@ module.exports = {
         return [
           `
           {
-            { ?id <http://www.w3.org/2000/01/rdf-schema#label> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+            { ?id ?_s1p ?_s1o . ?_s1o bif:contains '"${value}*"' }
             UNION
-            { ?id <http://purl.org/dc/elements/1.1/identifier> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+            { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o bif:contains '"${value}*"' }
             UNION
-            { ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?_technique . ?_technique <http://www.w3.org/2004/02/skos/core#prefLabel> ?_s1text . ?_s1text bif:contains '"${value}*"' }
-            UNION
-            { ?production <http://erlangen-crm.org/current/P126_employed> ?_material . ?_material <http://www.w3.org/2004/02/skos/core#prefLabel> ?_s1text . ?_s1text bif:contains '"${value}*"' }
+            { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o ?_s3p ?_s3o . ?_s3o bif:contains '"${value}*"' }
           }
           `
         ]
