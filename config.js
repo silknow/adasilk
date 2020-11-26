@@ -1,8 +1,7 @@
 module.exports = {
   debug: typeof process !== 'undefined' && process.env.NODE_ENV === 'development',
   metadata: {
-    title: 'Silknow',
-    logo: '/images/silknow-logo.png',
+    title: 'ADASilk',
   },
   home: {
     hero: {
