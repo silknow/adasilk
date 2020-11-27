@@ -245,6 +245,10 @@ module.exports = {
               '@id': '?representation',
               image: '?representationUrl',
             },
+            legalBody: {
+              '@id': '?legalBody',
+              label: '?legalBodyLabel',
+            },
             composed: {
               '@id': '?collection',
               '@type': 'http://erlangen-crm.org/current/E78_Collection',
@@ -285,6 +289,15 @@ module.exports = {
         $where: [
           'GRAPH ?g { ?id a <http://erlangen-crm.org/current/E22_Man-Made_Object> }',
           `
+          {
+            OPTIONAL {
+              ?custody <http://erlangen-crm.org/current/P30_transferred_custody_of> ?id .
+              ?custody <http://erlangen-crm.org/current/P29_custody_received_by> ?legalBody .
+              ?legalBody <http://www.w3.org/2000/01/rdf-schema#label> ?legalBodyLabel .
+              FILTER(LANG(?legalBodyLabel) = "en" || LANG(?legalBodyLabel) = "")
+            }
+          }
+          UNION
           {
             OPTIONAL {
               ?collection <http://erlangen-crm.org/current/P106_is_composed_of> ?id .
