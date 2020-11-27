@@ -451,6 +451,9 @@ module.exports = {
           filter: 'technique',
         },
       ],
+      skosmos: {
+        uri: 'http://data.silknow.org/vocabulary/facet/techniques'
+      }
     },
     materials: {
       view: 'vocabulary',
@@ -493,6 +496,9 @@ module.exports = {
           filter: 'material',
         },
       ],
+      skosmos: {
+        uri: 'http://data.silknow.org/vocabulary/facet/materials'
+      }
     },
     depictions: {
       view: 'vocabulary',
@@ -529,6 +535,9 @@ module.exports = {
         $orderby: ['ASC(?memberLabel)', 'ASC(?itemLabel)'],
         $langTag: 'hide',
       },
+      skosmos: {
+        uri: 'http://data.silknow.org/vocabulary/facet/depiction'
+      }
     },
   },
   gallery: {
@@ -653,10 +662,11 @@ module.exports = {
       url: 'https://ada.silknow.org/vloom/',
     },
     spatioTemporalMaps: {
-      url: 'https://ada.silknow.org/spatio-temporal-maps/',
+      url: 'http://localhost:3000/spatio-temporal-maps/',
     },
     skosmos: {
-      url: 'https://skosmos.silknow.org/thesaurus/en/page/?uri=',
+      thesaurusUrl: 'https://skosmos.silknow.org/thesaurus/',
+      baseUrl: 'https://skosmos.silknow.org/thesaurus/en/page/?uri=',
     },
   },
 };
