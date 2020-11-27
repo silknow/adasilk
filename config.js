@@ -240,6 +240,7 @@ module.exports = {
             '@graph': '?g',
             label: '$<http://www.w3.org/2000/01/rdf-schema#label>$var:label',
             identifier: '$<http://purl.org/dc/elements/1.1/identifier>$var:identifier',
+            description: '$<http://erlangen-crm.org/current/P3_has_note>$lang:en$var:description',
             representation: {
               '@id': '?representation',
               image: '?representationUrl',
