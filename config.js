@@ -537,7 +537,13 @@ module.exports = {
       },
       skosmos: {
         uri: 'http://data.silknow.org/vocabulary/facet/depiction'
-      }
+      },
+      useWith: [
+        {
+          route: 'object',
+          filter: 'q',
+        },
+      ],
     },
   },
   gallery: {
