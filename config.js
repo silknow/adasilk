@@ -49,7 +49,7 @@ module.exports = {
       ],
       $langTag: 'hide',
     },
-    allowImageSearch: true,
+    allowImageSearch: false,
     placeholderImage: '/images/silknow-placeholder.png',
     languages: {
       en: 'English',
