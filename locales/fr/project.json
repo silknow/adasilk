@@ -18,7 +18,7 @@
     "type": "Type d'objet"
   },
   "routes": {
-    "objects": "Objets",
+    "object": "Objets",
     "techniques": "Techniques",
     "materials": "Matériaux",
     "depictions": "Représentations"

@@ -17,7 +17,7 @@ module.exports = {
     ]
   },
   search: {
-    route: 'objects',
+    route: 'object',
     allowTextSearch: true,
     textSearchQuery: {
       '@graph': [
@@ -80,7 +80,7 @@ module.exports = {
     endpoint: 'https://data.silknow.org/sparql',
   },
   routes: {
-    objects: {
+    object: {
       view: 'browse',
       showInNavbar: true,
       rdfType: 'http://erlangen-crm.org/current/E22_Man-Made_Object',
@@ -453,7 +453,7 @@ module.exports = {
       },
       useWith: [
         {
-          route: 'objects',
+          route: 'object',
           filter: 'technique',
         },
       ],
@@ -495,7 +495,7 @@ module.exports = {
       },
       useWith: [
         {
-          route: 'objects',
+          route: 'object',
           filter: 'material',
         },
       ],
