@@ -47,22 +47,7 @@ module.exports = {
           }
         }`,
       ],
-      $limit: 5,
       $langTag: 'hide',
-    },
-    whereFunc: (q) => {
-      const value = q.replace(/'/g, '\\\'');
-      return [
-        `
-        {
-          { ?id ?_s1p ?_s1o . ?_s1o bif:contains '"${value}*"' }
-          UNION
-          { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o bif:contains '"${value}*"' }
-          UNION
-          { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o ?_s3p ?_s3o . ?_s3o bif:contains '"${value}*"' }
-        }
-        `
-      ];
     },
     allowImageSearch: true,
     placeholderImage: '/images/silknow-placeholder.png',
@@ -402,15 +387,23 @@ module.exports = {
         $langTag: 'hide',
       },
       textSearchFunc: (q) => {
-        const value = q.replace(/'/g, '\\\'');
+        const quotedValue = JSON.stringify(q);
+        const bifValue = `${q.replace(/'/g, '\\\'')}*`;
+        const quotedBifValue = JSON.stringify(bifValue);
         return [
           `
           {
-            { ?id ?_s1p ?_s1o . ?_s1o bif:contains '"${value}*"' }
+            { ?id ?_s1p ?_s1o . ?_s1o bif:contains '${quotedBifValue}' }
             UNION
-            { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o bif:contains '"${value}*"' }
+            { ?id ?_s1p ?_s1o . FILTER(?_s1o = ${quotedValue}) }
             UNION
-            { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o ?_s3p ?_s3o . ?_s3o bif:contains '"${value}*"' }
+            { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o bif:contains '${quotedBifValue}' }
+            UNION
+            { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . FILTER(?_s2o = ${quotedValue}) }
+            UNION
+            { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o ?_s3p ?_s3o . ?_s3o bif:contains '${quotedBifValue}' }
+            UNION
+            { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o ?_s3p ?_s3o . FILTER(?_s3o = ${quotedValue}) }
           }
           `
         ]
