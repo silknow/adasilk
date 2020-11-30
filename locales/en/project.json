@@ -4,7 +4,7 @@
   },
   "search": "Search",
   "footer": {
-    "text": "The data contained in SILKNOW Explorer comes from the archives of ...\nThe Virtual Loom has been developed by UVEG.\nKG Explorer has been developed at EURECOM and includes scientific contribution from ..."
+    "text": "The data contained in ADASilk comes from the archives of Boston Museum of Fine Arts, CDMT Terrassa, Garín 1820, Joconde Database of French Museum Collections, Metropolitan Museum of Art, Musée des Arts Décoratifs, Musée des Tissus, Red Digital de Colecciones de Museos de España, Rhode Island School of Design, Sicily Cultural Heritage, Victoria and Albert Museum.\n\nThe Virtual Loom and Spatio-Temporal Maps visualizations have been developed by Universitat de Valencia.\n\nADASilk is based on a generic exploratory search engine for knowledge graphs being developed at EURECOM and includes scientific contributions from Universitat de Valencia, Centre National de la Recherche Scientifique - Lyon 2, Universita Degli Studi di Palermo, GARIN 1820 S.A., Institut Jozef Stefan, Gottfried Wilhelm Leibniz Universitaet Hannover, Monkeyfab, and Instituto Cervantes."
   },
   "metadata": {
     "@id": "Permalink",
