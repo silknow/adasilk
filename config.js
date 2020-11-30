@@ -14,6 +14,7 @@ module.exports = {
     logo: [
       '/images/silknow-footer.png',
       '/images/virtual-loom-logo.png',
+      '/images/stmaps-logo.png'
     ]
   },
   search: {
