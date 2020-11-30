@@ -681,7 +681,7 @@ module.exports = {
       url: 'https://ada.silknow.org/vloom/',
     },
     spatioTemporalMaps: {
-      url: 'http://localhost:3000/spatio-temporal-maps/',
+      url: 'https://ada.silknow.org/spatio-temporal-maps/',
     },
     skosmos: {
       thesaurusUrl: 'https://skosmos.silknow.org/thesaurus/',
