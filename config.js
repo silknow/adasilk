@@ -322,14 +322,12 @@ module.exports = {
               {
                 OPTIONAL {
                   ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique .
-                  FILTER(ISIRI(?technique))
                 }
               }
               UNION
               {
                 OPTIONAL {
                   ?production <http://erlangen-crm.org/current/P126_employed> ?material .
-                  FILTER(ISIRI(?material))
                 }
               }
               UNION
