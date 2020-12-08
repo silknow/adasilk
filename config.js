@@ -686,5 +686,8 @@ module.exports = {
       thesaurusUrl: 'https://skosmos.silknow.org/thesaurus/',
       baseUrl: 'https://skosmos.silknow.org/thesaurus/en/page/?uri=',
     },
+    consent: {
+      show: true
+    }
   },
 };

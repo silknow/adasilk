@@ -34,5 +34,12 @@
     "show-only-images": "With images",
     "show-only-vloom": "With Virtual Loom",
     "show-only-location": "With location"
+  },
+  "consent": {
+    "title": "SILKNOW PROJECT – ADASilk",
+    "text": "You are accessing an evaluation version of the exploratory search engine named ADASilk, developed under the SILKNOW project (<a href=\"https://silknow.eu/\" target=\"_blank\"  rel=\"noopener noreferrer\">https://silknow.eu/</a>), which is funded by the European Union's Horizon 2020 research and innovation programme under grant agreement Nº 769504.\n\nThe evaluation version of ADASilk is located at the URL <a href=\"https://ada.silknow.org/\" target=\"_blank\"  rel=\"noopener noreferrer\">https://ada.silknow.org/</a> (“this site”, from now on).\n\nIf you consent, while interacting with this site, we will automatically collect data (e.g. the time you spent in this site) in order to monitor your interaction with ADASilk. The purpose of collecting this data is to improve the tools integrated in ADASilk (e.g. Virtual Loom) and it will be only used for research purposes in the scope of the SILKNOW project.\n\nThe data we collect is completely anonymous, meaning that we will not collect any kind of personal information that can identify you, such as your name, e-mail address or IP address.\n\nPlease tick the box below to indicate if you consent that we automatically gather information on your interaction with ADASilk. In case that you do not wish to give your consent, you will still be able to interact with the tool and fulfill the evaluation, but we won’t monitor your interaction with ADASilk.",
+    "accept": "I consent",
+    "decline": "I do not consent",
+    "submit": "Submit"
   }
 }
