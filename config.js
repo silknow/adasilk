@@ -220,15 +220,8 @@ module.exports = {
         '?production <http://erlangen-crm.org/current/P108_has_produced> ?id',
       ],
       metadata: {
-        dimension: (value) => {
-          const dimensions = [];
-          if (typeof value.width !== 'undefined') {
-            dimensions.push(`${value.width}cm`);
-          }
-          if (typeof value.height !== 'undefined') {
-            dimensions.push(`${value.height}cm`);
-          }
-          return dimensions.length > 0 ? dimensions.join(' x ') : null;
+        dimension: (dimension) => {
+          return `${dimension.value} ${dimension.unit} (${dimension.type})`;
         }
       },
       query: {
@@ -260,9 +253,10 @@ module.exports = {
               '@id': '?technique',
             },
             dimension: {
-              '@id': '?id',
-              width: '?dimensionWidthValue',
-              height: '?dimensionHeightValue',
+              '@id': '?dimension',
+              type: '?dimensionType',
+              value: '?dimensionValue',
+              unit: '?dimensionUnit',
             },
             time: {
               '@id': '?time',
@@ -306,17 +300,10 @@ module.exports = {
           UNION
           {
             OPTIONAL {
-              ?id <http://erlangen-crm.org/current/P43_has_dimension> ?dimensionWidth .
-              ?dimensionWidth <http://erlangen-crm.org/current/P2_has_type> "width" .
-              ?dimensionWidth <http://erlangen-crm.org/current/P90_has_value> ?dimensionWidthValue .
-            }
-          }
-          UNION
-          {
-            OPTIONAL {
-              ?id <http://erlangen-crm.org/current/P43_has_dimension> ?dimensionHeight .
-              ?dimensionHeight <http://erlangen-crm.org/current/P2_has_type> "height" .
-              ?dimensionHeight <http://erlangen-crm.org/current/P90_has_value> ?dimensionHeightValue .
+              ?id <http://erlangen-crm.org/current/P43_has_dimension> ?dimension .
+              ?dimension <http://erlangen-crm.org/current/P2_has_type> ?dimensionType .
+              ?dimension <http://erlangen-crm.org/current/P90_has_value> ?dimensionValue .
+              ?dimension <http://erlangen-crm.org/current/P91_has_unit> ?dimensionUnit .
             }
           }
           UNION
