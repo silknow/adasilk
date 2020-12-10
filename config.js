@@ -332,8 +332,8 @@ module.exports = {
               {
                 OPTIONAL {
                   ?production <http://erlangen-crm.org/current/P4_has_time-span> ?time .
-                  ?time <http://www.w3.org/2004/02/skos/core#prefLabel> ?timeLabel .
-                  FILTER(LANG(?timeLabel) = "en")
+                  ?time <http://www.w3.org/2000/01/rdf-schema#label> ?timeLabel .
+                  FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
                 }
               }
               UNION
