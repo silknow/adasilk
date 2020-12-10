@@ -97,7 +97,6 @@ module.exports = {
             $langTag: 'hide',
           },
           whereFunc: () => [
-            '?production <http://erlangen-crm.org/current/P108_has_produced> ?id',
             '?production <http://erlangen-crm.org/current/P4_has_time-span> ?time',
           ],
           filterFunc: (value) => {
@@ -116,7 +115,6 @@ module.exports = {
               },
             ],
             $where: [
-              '?production <http://erlangen-crm.org/current/P108_has_produced> ?id',
               '?production <http://erlangen-crm.org/current/P8_took_place_on_or_within> ?location',
               '?location <http://www.geonames.org/ontology#name> ?locationLabel',
             ],
