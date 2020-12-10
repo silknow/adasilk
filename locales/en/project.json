@@ -12,6 +12,7 @@
     "composed": "Collection",
     "material": "Material",
     "technique": "Technique",
+    "usedType": "Used object type",
     "time": "Production time",
     "location": "Production place",
     "dimension": "Dimension",

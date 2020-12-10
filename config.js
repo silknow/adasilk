@@ -250,6 +250,10 @@ module.exports = {
             technique: {
               '@id': '?technique',
             },
+            usedType: {
+              '@id': '?usedType',
+              label: '?usedTypeLabel'
+            },
             dimension: {
               '@id': '?dimension',
               type: '?dimensionType',
@@ -320,6 +324,12 @@ module.exports = {
               {
                 OPTIONAL {
                   ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique .
+                }
+              }
+              UNION
+              {
+                OPTIONAL {
+                  ?production <http://erlangen-crm.org/current/P125_used_object_of_type> ?usedType .
                 }
               }
               UNION
