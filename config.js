@@ -234,6 +234,7 @@ module.exports = {
             representation: {
               '@id': '?representation',
               image: '?representationUrl',
+              label: '?representationRightComment'
             },
             legalBody: {
               '@id': '?legalBody',
@@ -389,11 +390,16 @@ module.exports = {
           UNION
           {
             OPTIONAL {
-              SELECT ?id ?representation (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
+              SELECT ?id ?representation ?representationRightComment (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
                 ?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation .
                 OPTIONAL {
                   ?representation <http://schema.org/contentUrl> ?representationUrl .
                   FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))
+                }
+                OPTIONAL {
+                  ?representationRight a ecrm:E30_Right .
+                  ?representationRight ecrm:P104i_applies_to ?id .
+                  ?representationRight rdfs:comment ?representationRightComment .
                 }
               }
             }
