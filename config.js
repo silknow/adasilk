@@ -262,7 +262,7 @@ module.exports = {
             },
             time: {
               '@id': '?time',
-              label: '?timeLabel',
+              label: '?timeLabel'
             },
             location: {
               '@id': '?location',
@@ -342,8 +342,18 @@ module.exports = {
               {
                 OPTIONAL {
                   ?production <http://erlangen-crm.org/current/P4_has_time-span> ?time .
-                  ?time <http://www.w3.org/2000/01/rdf-schema#label> ?timeLabel .
+                  ?time a <http://vocab.getty.edu/ontology#Concept> .
+                  ?time skos:prefLabel ?timeLabel .
                   FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
+                }
+              }
+              UNION
+              {
+                OPTIONAL {
+                  ?production <http://erlangen-crm.org/current/P4_has_time-span> ?timeObject .
+                  MINUS { ?timeObject a <http://vocab.getty.edu/ontology#Concept> }
+                  ?timeObject rdfs:label ?time .
+                  FILTER(LANG(?time) = "en" || LANG(?time) = "")
                 }
               }
               UNION
