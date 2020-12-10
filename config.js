@@ -444,6 +444,7 @@ module.exports = {
               '@id': '?item',
               label: '?itemLabel',
               description: '?itemDefinition',
+              count: '?count',
             },
           },
         ],
@@ -459,6 +460,11 @@ module.exports = {
             OPTIONAL {
               ?item <http://www.w3.org/2004/02/skos/core#definition> ?itemDefinition .
               FILTER(LANG(?itemDefinition) = "en")
+            }
+            {
+              SELECT ?item (COUNT(DISTINCT ?production) AS ?count) WHERE {
+                ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?item .
+              }
             }
           }`,
         ],
@@ -489,6 +495,7 @@ module.exports = {
               '@id': '?item',
               label: '?itemLabel',
               description: '?itemDefinition',
+              count: '?count'
             },
           },
         ],
@@ -504,6 +511,11 @@ module.exports = {
             OPTIONAL {
               ?item <http://www.w3.org/2004/02/skos/core#definition> ?itemDefinition .
               FILTER(LANG(?itemDefinition) = "en")
+            }
+            {
+              SELECT ?item (COUNT(DISTINCT ?production) AS ?count) WHERE {
+                ?production <http://erlangen-crm.org/current/P126_employed> ?item .
+              }
             }
           }`,
         ],
@@ -534,6 +546,7 @@ module.exports = {
               '@id': '?item',
               label: '?itemLabel',
               description: '?itemDefinition',
+              count: '?count'
             },
           },
         ],
@@ -549,6 +562,11 @@ module.exports = {
             OPTIONAL {
               ?item <http://www.w3.org/2004/02/skos/core#definition> ?itemDefinition .
               FILTER(LANG(?itemDefinition) = "en")
+            }
+            {
+              SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
+                ?object <http://erlangen-crm.org/current/P62_depicts> ?item .
+              }
             }
           }`,
         ],
