@@ -269,7 +269,6 @@ module.exports = {
             },
             usedType: {
               '@id': '?usedType',
-              label: '?usedTypeLabel'
             },
             depiction: {
               '@id': '?depiction',
