@@ -73,7 +73,7 @@ module.exports = {
       uriBase: 'http://data.silknow.org/object',
       details: {
         view: 'gallery',
-        excludedMetadata: ['representation', 'category'],
+        excludedMetadata: ['representation', 'description', 'category', 'usedType'],
         showPermalink: true,
       },
       filterByGraph: true,
@@ -218,8 +218,12 @@ module.exports = {
         '?production <http://erlangen-crm.org/current/P108_has_produced> ?id',
       ],
       metadata: {
-        dimension: (dimension) => {
-          return `${dimension.value} ${dimension.unit} (${dimension.type})`;
+        dimension: (value, index, { dimension }) => {
+          return `${dimension[index].value} ${dimension[index].unit} (${dimension[index].type})`;
+        },
+        technique: (value, index, { usedType }) => {
+          // Combine technique and used object type
+          return `${value}${usedType && usedType[index] ? ` / ${usedType[index]['@id']}` : ''}`;
         }
       },
       query: {
