@@ -380,7 +380,7 @@ module.exports = {
                 OPTIONAL {
                   ?production <http://erlangen-crm.org/current/P8_took_place_on_or_within> ?location .
                   OPTIONAL {
-                    ?location <http://www.geonames.org/ontology#name> ?locationLabel .
+                    ?location <http://www.geonames.org/ontology#name>|rdfs:label ?locationLabel .
                     FILTER(LANG(?locationLabel) = "en" || LANG(?locationLabel) = "")
                   }
                   OPTIONAL { ?location <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?locationLat . }
