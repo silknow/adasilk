@@ -680,8 +680,12 @@ module.exports = {
           },
         ],
         $where: [
-          '<http://data.silknow.org/vocabulary/facet/techniques> skos:member* ?technique',
-          '?technique <http://www.w3.org/2004/02/skos/core#prefLabel> ?techniqueLabel',
+          `
+          { ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique . }
+          UNION
+          { <http://data.silknow.org/vocabulary/facet/techniques> skos:member* ?technique . }
+          ?technique <http://www.w3.org/2004/02/skos/core#prefLabel> ?techniqueLabel
+          `,
         ],
         $filter: ['lang(?techniqueLabel) = "en"'],
         $langTag: 'hide',
@@ -696,8 +700,12 @@ module.exports = {
           },
         ],
         $where: [
-          '<http://data.silknow.org/vocabulary/facet/materials> skos:member* ?material',
-          '?material <http://www.w3.org/2004/02/skos/core#prefLabel> ?materialLabel',
+          `
+          { ?production <http://erlangen-crm.org/current/P126_employed> ?material . }
+          UNION
+          { <http://data.silknow.org/vocabulary/facet/materials> skos:member* ?material . }
+          ?material <http://www.w3.org/2004/02/skos/core#prefLabel> ?materialLabel
+          `,
         ],
         $filter: ['lang(?materialLabel) = "en"'],
         $langTag: 'hide',
@@ -712,8 +720,12 @@ module.exports = {
           },
         ],
         $where: [
-          '<http://data.silknow.org/vocabulary/facet/depiction> skos:member* ?depiction',
-          '?depiction <http://www.w3.org/2004/02/skos/core#prefLabel> ?depictionLabel',
+          `
+          { ?id <http://erlangen-crm.org/current/P62_depicts> ?depiction . }
+          UNION
+          { <http://data.silknow.org/vocabulary/facet/depiction> skos:member* ?depiction . }
+          ?depiction <http://www.w3.org/2004/02/skos/core#prefLabel> ?depictionLabel
+          `,
         ],
         $filter: ['lang(?depictionLabel) = "en"'],
         $langTag: 'hide',
