@@ -659,7 +659,7 @@ module.exports = {
           },
         ],
         $where: [
-          '?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique',
+          '<http://data.silknow.org/vocabulary/facet/techniques> skos:member* ?technique',
           '?technique <http://www.w3.org/2004/02/skos/core#prefLabel> ?techniqueLabel',
         ],
         $filter: ['lang(?techniqueLabel) = "en"'],
@@ -675,7 +675,7 @@ module.exports = {
           },
         ],
         $where: [
-          '?production <http://erlangen-crm.org/current/P126_employed> ?material',
+          '<http://data.silknow.org/vocabulary/facet/materials> skos:member* ?material',
           '?material <http://www.w3.org/2004/02/skos/core#prefLabel> ?materialLabel',
         ],
         $filter: ['lang(?materialLabel) = "en"'],
