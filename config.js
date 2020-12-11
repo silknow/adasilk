@@ -473,10 +473,10 @@ module.exports = {
           },
         ],
         $where: [
-          '<http://data.silknow.org/vocabulary/facet/techniques> <http://www.w3.org/2004/02/skos/core#member> ?member',
+          'VALUES ?member { <http://data.silknow.org/vocabulary/827> <http://data.silknow.org/vocabulary/318> }',
           '?member <http://www.w3.org/2004/02/skos/core#prefLabel> ?memberLabel',
           `OPTIONAL {
-            ?member <http://www.w3.org/2004/02/skos/core#member> ?item .
+            ?member <http://www.w3.org/2004/02/skos/core#narrower> ?item .
             OPTIONAL {
               ?item <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel .
               FILTER(LANG(?itemLabel) = "en")
@@ -524,10 +524,10 @@ module.exports = {
           },
         ],
         $where: [
-          '<http://data.silknow.org/vocabulary/facet/materials> <http://www.w3.org/2004/02/skos/core#member> ?member',
+          'VALUES ?member { <http://data.silknow.org/vocabulary/209> <http://data.silknow.org/vocabulary/268> }',
           '?member <http://www.w3.org/2004/02/skos/core#prefLabel> ?memberLabel',
           `OPTIONAL {
-            ?member <http://www.w3.org/2004/02/skos/core#member> ?item .
+            ?member <http://www.w3.org/2004/02/skos/core#narrower> ?item .
             OPTIONAL {
               ?item <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel .
               FILTER(LANG(?itemLabel) = "en")
@@ -575,10 +575,10 @@ module.exports = {
           },
         ],
         $where: [
-          '<http://data.silknow.org/vocabulary/facet/depiction> <http://www.w3.org/2004/02/skos/core#member> ?member',
+          'VALUES ?member { <http://data.silknow.org/vocabulary/742> }',
           '?member <http://www.w3.org/2004/02/skos/core#prefLabel> ?memberLabel',
           `OPTIONAL {
-            ?member <http://www.w3.org/2004/02/skos/core#member> ?item .
+            ?member <http://www.w3.org/2004/02/skos/core#narrower> ?item .
             OPTIONAL {
               ?item <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel .
               FILTER(LANG(?itemLabel) = "en")
