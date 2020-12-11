@@ -156,6 +156,18 @@ module.exports = {
           },
         },
         {
+          id: 'depiction',
+          isMulti: true,
+          isSortable: true,
+          vocabulary: 'depiction',
+          whereFunc: () => [
+            '?id <http://erlangen-crm.org/current/P62_depicts> ?depiction',
+          ],
+          filterFunc: (values) => {
+            return [values.map((val) => `?depiction = <${val}>`).join(' || ')];
+          },
+        },
+        {
           id: 'type',
           isMulti: true,
           isSortable: true,
@@ -258,6 +270,9 @@ module.exports = {
             usedType: {
               '@id': '?usedType',
               label: '?usedTypeLabel'
+            },
+            depiction: {
+              '@id': '?depiction',
             },
             dimension: {
               '@id': '?dimension',
@@ -389,6 +404,12 @@ module.exports = {
                   }
                 }
               }
+            }
+          }
+          UNION
+          {
+            OPTIONAL {
+              ?id <http://erlangen-crm.org/current/P62_depicts> ?depiction .
             }
           }
           UNION
@@ -584,7 +605,7 @@ module.exports = {
       useWith: [
         {
           route: 'object',
-          filter: 'q',
+          filter: 'depiction',
         },
       ],
     },
@@ -679,6 +700,22 @@ module.exports = {
           '?material <http://www.w3.org/2004/02/skos/core#prefLabel> ?materialLabel',
         ],
         $filter: ['lang(?materialLabel) = "en"'],
+        $langTag: 'hide',
+      },
+    },
+    depiction: {
+      query: {
+        '@graph': [
+          {
+            '@id': '?depiction',
+            label: '?depictionLabel',
+          },
+        ],
+        $where: [
+          '<http://data.silknow.org/vocabulary/facet/depiction> skos:member* ?depiction',
+          '?depiction <http://www.w3.org/2004/02/skos/core#prefLabel> ?depictionLabel',
+        ],
+        $filter: ['lang(?depictionLabel) = "en"'],
         $langTag: 'hide',
       },
     },
