@@ -513,7 +513,52 @@ module.exports = {
       ],
       skosmos: {
         uri: 'http://data.silknow.org/vocabulary/facet/techniques'
-      }
+      },
+      featured: {
+        query: {
+          '@graph': [
+            {
+              '@id': '?item',
+              label: '?itemLabel',
+              count: '?count',
+            },
+          ],
+          $where: [
+            `VALUES ?item {
+              <http://data.silknow.org/vocabulary/facet/velvet>
+              <http://data.silknow.org/vocabulary/facet/damask>
+              <http://data.silknow.org/vocabulary/192>
+              <http://data.silknow.org/vocabulary/facet/satin>
+              <http://data.silknow.org/vocabulary/facet/tabby>
+              <http://data.silknow.org/vocabulary/facet/twill>
+              <http://data.silknow.org/vocabulary/facet/brocatelle>
+              <http://data.silknow.org/vocabulary/facet/embroidery>
+              <http://data.silknow.org/vocabulary/facet/lampas>
+              <http://data.silknow.org/vocabulary/facet/cannele>
+            }
+            {
+              OPTIONAL {
+                ?item <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel .
+                FILTER(LANG(?itemLabel) = "en")
+              }
+            }
+            UNION
+            {
+              SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
+                ?object <http://erlangen-crm.org/current/P32_used_general_technique> ?item .
+              }
+            }
+            UNION
+            {
+              SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
+                ?item skos:member* ?member .
+                ?object <http://erlangen-crm.org/current/P32_used_general_technique> ?member .
+              }
+            }`
+          ],
+          $langTag: 'hide',
+        },
+      },
     },
     materials: {
       view: 'vocabulary',
@@ -570,7 +615,51 @@ module.exports = {
       ],
       skosmos: {
         uri: 'http://data.silknow.org/vocabulary/facet/materials'
-      }
+      },
+      featured: {
+        query: {
+          '@graph': [
+            {
+              '@id': '?item',
+              label: '?itemLabel',
+              count: '?count',
+            },
+          ],
+          $where: [
+            `VALUES ?item {
+              <http://data.silknow.org/vocabulary/441>
+              <http://data.silknow.org/vocabulary/497>
+              <http://data.silknow.org/vocabulary/627>
+              <http://data.silknow.org/vocabulary/628>
+              <http://data.silknow.org/vocabulary/214>
+              <http://data.silknow.org/vocabulary/210>
+              <http://data.silknow.org/vocabulary/210>
+              <http://data.silknow.org/vocabulary/35>
+              <http://data.silknow.org/vocabulary/213>
+            }
+            {
+              OPTIONAL {
+                ?item <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel .
+                FILTER(LANG(?itemLabel) = "en")
+              }
+            }
+            UNION
+            {
+              SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
+                ?object <http://erlangen-crm.org/current/P126_employed> ?item .
+              }
+            }
+            UNION
+            {
+              SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
+                ?item skos:member* ?member .
+                ?object <http://erlangen-crm.org/current/P126_employed> ?member .
+              }
+            }`
+          ],
+          $langTag: 'hide',
+        },
+      },
     },
     depictions: {
       view: 'vocabulary',
@@ -622,6 +711,47 @@ module.exports = {
           filter: 'depiction',
         },
       ],
+      featured: {
+        query: {
+          '@graph': [
+            {
+              '@id': '?item',
+              label: '?itemLabel',
+              count: '?count',
+            },
+          ],
+          $where: [
+            `VALUES ?item {
+              <http://data.silknow.org/vocabulary/761>
+              <http://data.silknow.org/vocabulary/743>
+              <http://data.silknow.org/vocabulary/745>
+              <http://data.silknow.org/vocabulary/747>
+              <http://data.silknow.org/vocabulary/744>
+              <http://data.silknow.org/vocabulary/818>
+            }
+            {
+              OPTIONAL {
+                ?item <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel .
+                FILTER(LANG(?itemLabel) = "en")
+              }
+            }
+            UNION
+            {
+              SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
+                ?object <http://erlangen-crm.org/current/P62_depicts> ?item .
+              }
+            }
+            UNION
+            {
+              SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
+                ?item skos:member* ?member .
+                ?object <http://erlangen-crm.org/current/P62_depicts> ?member .
+              }
+            }`
+          ],
+          $langTag: 'hide',
+        },
+      },
     },
   },
   gallery: {
