@@ -138,9 +138,10 @@ module.exports = {
           vocabulary: 'material',
           whereFunc: () => [
             '?production <http://erlangen-crm.org/current/P126_employed> ?material',
+            '?broaderMaterial skos:member* ?material'
           ],
           filterFunc: (values) => {
-            return [values.map((val) => `?material = <${val}>`).join(' || ')];
+            return [values.map((val) => `?material = <${val}> || ?broaderMaterial = <${val}>`).join(' || ')];
           },
         },
         {
@@ -150,9 +151,10 @@ module.exports = {
           vocabulary: 'technique',
           whereFunc: () => [
             '?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique',
+            '?broaderTechnique skos:member* ?technique'
           ],
           filterFunc: (values) => {
-            return [values.map((val) => `?technique = <${val}>`).join(' || ')];
+            return [values.map((val) => `?technique = <${val}> || ?broaderTechnique = <${val}>`).join(' || ')];
           },
         },
         {
@@ -162,9 +164,10 @@ module.exports = {
           vocabulary: 'depiction',
           whereFunc: () => [
             '?id <http://erlangen-crm.org/current/P62_depicts> ?depiction',
+            '?broaderDepiction skos:member* ?depiction'
           ],
           filterFunc: (values) => {
-            return [values.map((val) => `?depiction = <${val}>`).join(' || ')];
+            return [values.map((val) => `?depiction = <${val}> || ?broaderDepiction = <${val}>`).join(' || ')];
           },
         },
         {
@@ -476,15 +479,21 @@ module.exports = {
           'VALUES ?member { <http://data.silknow.org/vocabulary/827> <http://data.silknow.org/vocabulary/318> }',
           '?member <http://www.w3.org/2004/02/skos/core#prefLabel> ?memberLabel',
           `OPTIONAL {
-            ?member <http://www.w3.org/2004/02/skos/core#narrower> ?item .
-            OPTIONAL {
-              ?item <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel .
-              FILTER(LANG(?itemLabel) = "en")
+            ?member <http://www.w3.org/2004/02/skos/core#narrower>* ?item .
+            {
+              OPTIONAL {
+                ?item <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel .
+                FILTER(LANG(?itemLabel) = "en")
+              }
             }
-            OPTIONAL {
-              ?item <http://www.w3.org/2004/02/skos/core#definition> ?itemDefinition .
-              FILTER(LANG(?itemDefinition) = "en")
+            UNION
+            {
+              OPTIONAL {
+                ?item <http://www.w3.org/2004/02/skos/core#definition> ?itemDefinition .
+                FILTER(LANG(?itemDefinition) = "en")
+              }
             }
+            UNION
             {
               SELECT ?item (COUNT(DISTINCT ?production) AS ?count) WHERE {
                 ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?item .
@@ -527,15 +536,21 @@ module.exports = {
           'VALUES ?member { <http://data.silknow.org/vocabulary/209> <http://data.silknow.org/vocabulary/268> }',
           '?member <http://www.w3.org/2004/02/skos/core#prefLabel> ?memberLabel',
           `OPTIONAL {
-            ?member <http://www.w3.org/2004/02/skos/core#narrower> ?item .
-            OPTIONAL {
-              ?item <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel .
-              FILTER(LANG(?itemLabel) = "en")
+            ?member <http://www.w3.org/2004/02/skos/core#narrower>* ?item .
+            {
+              OPTIONAL {
+                ?item <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel .
+                FILTER(LANG(?itemLabel) = "en")
+              }
             }
-            OPTIONAL {
-              ?item <http://www.w3.org/2004/02/skos/core#definition> ?itemDefinition .
-              FILTER(LANG(?itemDefinition) = "en")
+            UNION
+            {
+              OPTIONAL {
+                ?item <http://www.w3.org/2004/02/skos/core#definition> ?itemDefinition .
+                FILTER(LANG(?itemDefinition) = "en")
+              }
             }
+            UNION
             {
               SELECT ?item (COUNT(DISTINCT ?production) AS ?count) WHERE {
                 ?production <http://erlangen-crm.org/current/P126_employed> ?item .
