@@ -126,9 +126,10 @@ module.exports = {
           },
           whereFunc: () => [
             '?production <http://erlangen-crm.org/current/P8_took_place_on_or_within> ?location',
+            'OPTIONAL { ?location geonames:parentCountry ?parentCountry . }'
           ],
           filterFunc: (values) => {
-            return [values.map((val) => `?location = <${val}>`).join(' || ')];
+            return [values.map((val) => `?location = <${val}> || ?parentCountry = <${val}>`).join(' || ')];
           },
         },
         {
