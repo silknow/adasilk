@@ -152,7 +152,7 @@ module.exports = {
           vocabulary: 'technique',
           whereFunc: () => [
             '?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique',
-            '?broaderTechnique skos:member* ?technique'
+            '?broaderTechnique (skos:member|skos:narrower)* ?technique'
           ],
           filterFunc: (values) => {
             return [values.map((val) => `?technique = <${val}> || ?broaderTechnique = <${val}>`).join(' || ')];
@@ -828,7 +828,7 @@ module.exports = {
           `
           { ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique . }
           UNION
-          { <http://data.silknow.org/vocabulary/facet/techniques> skos:member* ?technique . }
+          { <http://data.silknow.org/vocabulary/facet/techniques> (skos:member|skos:narrower)* ?technique . }
           ?technique <http://www.w3.org/2004/02/skos/core#prefLabel> ?techniqueLabel
           `,
         ],
@@ -848,7 +848,7 @@ module.exports = {
           `
           { ?production <http://erlangen-crm.org/current/P126_employed> ?material . }
           UNION
-          { <http://data.silknow.org/vocabulary/facet/materials> skos:member* ?material . }
+          { <http://data.silknow.org/vocabulary/facet/materials> (skos:member|skos:narrower)* ?material . }
           ?material <http://www.w3.org/2004/02/skos/core#prefLabel> ?materialLabel
           `,
         ],
@@ -868,7 +868,7 @@ module.exports = {
           `
           { ?id <http://erlangen-crm.org/current/P62_depicts> ?depiction . }
           UNION
-          { <http://data.silknow.org/vocabulary/facet/depiction> skos:member* ?depiction . }
+          { <http://data.silknow.org/vocabulary/facet/depiction> (skos:member|skos:narrower)* ?depiction . }
           ?depiction <http://www.w3.org/2004/02/skos/core#prefLabel> ?depictionLabel
           `,
         ],
