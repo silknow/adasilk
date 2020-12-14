@@ -139,7 +139,7 @@ module.exports = {
           vocabulary: 'material',
           whereFunc: () => [
             '?production <http://erlangen-crm.org/current/P126_employed> ?material',
-            '?broaderMaterial skos:member* ?material'
+            'OPTIONAL { ?broaderMaterial (skos:member|skos:narrower)* ?material }'
           ],
           filterFunc: (values) => {
             return [values.map((val) => `?material = <${val}> || ?broaderMaterial = <${val}>`).join(' || ')];
@@ -152,7 +152,7 @@ module.exports = {
           vocabulary: 'technique',
           whereFunc: () => [
             '?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique',
-            '?broaderTechnique (skos:member|skos:narrower)* ?technique'
+            'OPTIONAL { ?broaderTechnique (skos:member|skos:narrower)* ?technique }'
           ],
           filterFunc: (values) => {
             return [values.map((val) => `?technique = <${val}> || ?broaderTechnique = <${val}>`).join(' || ')];
@@ -165,7 +165,7 @@ module.exports = {
           vocabulary: 'depiction',
           whereFunc: () => [
             '?id <http://erlangen-crm.org/current/P62_depicts> ?depiction',
-            '?broaderDepiction skos:member* ?depiction'
+            'OPTIONAL { ?broaderDepiction (skos:member|skos:narrower)* ?depiction }'
           ],
           filterFunc: (values) => {
             return [values.map((val) => `?depiction = <${val}> || ?broaderDepiction = <${val}>`).join(' || ')];
