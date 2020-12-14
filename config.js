@@ -509,16 +509,15 @@ module.exports = {
           ],
           $where: [
             `VALUES ?item {
-              <http://data.silknow.org/vocabulary/facet/velvet>
-              <http://data.silknow.org/vocabulary/facet/damask>
+              <http://data.silknow.org/vocabulary/379>
+              <http://data.silknow.org/vocabulary/168>
               <http://data.silknow.org/vocabulary/192>
-              <http://data.silknow.org/vocabulary/facet/satin>
-              <http://data.silknow.org/vocabulary/facet/tabby>
-              <http://data.silknow.org/vocabulary/facet/twill>
+              <http://data.silknow.org/vocabulary/366>
+              <http://data.silknow.org/vocabulary/236>
+              <http://data.silknow.org/vocabulary/238>
               <http://data.silknow.org/vocabulary/103>
-              <http://data.silknow.org/vocabulary/facet/embroidery>
+              <http://data.silknow.org/vocabulary/87>
               <http://data.silknow.org/vocabulary/305>
-              <http://data.silknow.org/vocabulary/facet/cannele>
             }
             {
               OPTIONAL {
@@ -616,10 +615,6 @@ module.exports = {
               <http://data.silknow.org/vocabulary/627>
               <http://data.silknow.org/vocabulary/628>
               <http://data.silknow.org/vocabulary/214>
-              <http://data.silknow.org/vocabulary/210>
-              <http://data.silknow.org/vocabulary/facet/mixed_fibre>
-              <http://data.silknow.org/vocabulary/35>
-              <http://data.silknow.org/vocabulary/213>
             }
             {
               OPTIONAL {
