@@ -85,13 +85,14 @@ module.exports = {
           query: {
             '@graph': [
               {
-                '@id': '?time',
+                '@id': '?fallsWithin',
                 label: '?label',
               },
             ],
             $where: [
               '?production <http://erlangen-crm.org/current/P4_has_time-span> ?time',
-              '?time <http://www.w3.org/2004/02/skos/core#prefLabel> ?label',
+              '?time <http://erlangen-crm.org/current/P86_falls_within> ?fallsWithin',
+              '?fallsWithin <http://www.w3.org/2004/02/skos/core#prefLabel> ?label',
             ],
             $filter: ['langmatches(lang(?label), "en") || lang(?label) = ""'],
             $langTag: 'hide',
