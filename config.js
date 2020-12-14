@@ -98,9 +98,10 @@ module.exports = {
           },
           whereFunc: () => [
             '?production <http://erlangen-crm.org/current/P4_has_time-span> ?time',
+            'OPTIONAL { ?time <http://erlangen-crm.org/current/P86_falls_within> ?fallsWithin . }'
           ],
           filterFunc: (value) => {
-            return [`?time = <${value}>`];
+            return [`?time = <${value}> || ?fallsWithin = <${value}>`];
           },
         },
         {
