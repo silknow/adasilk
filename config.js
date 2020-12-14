@@ -532,9 +532,9 @@ module.exports = {
               <http://data.silknow.org/vocabulary/facet/satin>
               <http://data.silknow.org/vocabulary/facet/tabby>
               <http://data.silknow.org/vocabulary/facet/twill>
-              <http://data.silknow.org/vocabulary/facet/brocatelle>
+              <http://data.silknow.org/vocabulary/103>
               <http://data.silknow.org/vocabulary/facet/embroidery>
-              <http://data.silknow.org/vocabulary/facet/lampas>
+              <http://data.silknow.org/vocabulary/305>
               <http://data.silknow.org/vocabulary/facet/cannele>
             }
             {
@@ -634,7 +634,7 @@ module.exports = {
               <http://data.silknow.org/vocabulary/628>
               <http://data.silknow.org/vocabulary/214>
               <http://data.silknow.org/vocabulary/210>
-              <http://data.silknow.org/vocabulary/210>
+              <http://data.silknow.org/vocabulary/facet/mixed_fibre>
               <http://data.silknow.org/vocabulary/35>
               <http://data.silknow.org/vocabulary/213>
             }
