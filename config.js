@@ -462,6 +462,12 @@ module.exports = {
                 label: '?itemLabel2',
                 description: '?itemDefinition2',
                 count: '?count2',
+                items: {
+                  '@id': '?item3',
+                  label: '?itemLabel3',
+                  description: '?itemDefinition3',
+                  count: '?count3',
+                },
               },
             },
           },
@@ -510,6 +516,29 @@ module.exports = {
               {
                 SELECT ?item2 (COUNT(DISTINCT ?production2) AS ?count2) WHERE {
                   ?production2 <http://erlangen-crm.org/current/P32_used_general_technique> ?item2 .
+                }
+              }
+
+              OPTIONAL {
+                ?item2 <http://www.w3.org/2004/02/skos/core#narrower> ?item3 .
+                {
+                  OPTIONAL {
+                    ?item3 <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel3 .
+                    FILTER(LANG(?itemLabel3) = "en")
+                  }
+                }
+                UNION
+                {
+                  OPTIONAL {
+                    ?item3 <http://www.w3.org/2004/02/skos/core#definition> ?itemDefinition3 .
+                    FILTER(LANG(?itemDefinition3) = "en")
+                  }
+                }
+                UNION
+                {
+                  SELECT ?item3 (COUNT(DISTINCT ?production3) AS ?count3) WHERE {
+                    ?production3 <http://erlangen-crm.org/current/P32_used_general_technique> ?item3 .
+                  }
                 }
               }
             }
@@ -592,6 +621,12 @@ module.exports = {
                 label: '?itemLabel2',
                 description: '?itemDefinition2',
                 count: '?count2',
+                items: {
+                  '@id': '?item3',
+                  label: '?itemLabel3',
+                  description: '?itemDefinition3',
+                  count: '?count3',
+                },
               },
             },
           },
@@ -640,6 +675,29 @@ module.exports = {
               {
                 SELECT ?item2 (COUNT(DISTINCT ?production2) AS ?count2) WHERE {
                   ?production2 <http://erlangen-crm.org/current/P126_employed> ?item2 .
+                }
+              }
+
+              OPTIONAL {
+                ?item2 <http://www.w3.org/2004/02/skos/core#narrower> ?item3 .
+                {
+                  OPTIONAL {
+                    ?item3 <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel3 .
+                    FILTER(LANG(?itemLabel3) = "en")
+                  }
+                }
+                UNION
+                {
+                  OPTIONAL {
+                    ?item3 <http://www.w3.org/2004/02/skos/core#definition> ?itemDefinition3 .
+                    FILTER(LANG(?itemDefinition3) = "en")
+                  }
+                }
+                UNION
+                {
+                  SELECT ?item3 (COUNT(DISTINCT ?production3) AS ?count3) WHERE {
+                    ?production3 <http://erlangen-crm.org/current/P126_employed> ?item3 .
+                  }
                 }
               }
             }
@@ -718,6 +776,12 @@ module.exports = {
                 label: '?itemLabel2',
                 description: '?itemDefinition2',
                 count: '?count2',
+                items: {
+                  '@id': '?item3',
+                  label: '?itemLabel3',
+                  description: '?itemDefinition3',
+                  count: '?count3',
+                },
               },
             },
           },
@@ -760,6 +824,29 @@ module.exports = {
               {
                 SELECT ?item2 (COUNT(DISTINCT ?production2) AS ?count2) WHERE {
                   ?production2 <http://erlangen-crm.org/current/P62_depicts> ?item2 .
+                }
+              }
+
+              OPTIONAL {
+                ?item2 <http://www.w3.org/2004/02/skos/core#narrower> ?item3 .
+                {
+                  OPTIONAL {
+                    ?item3 <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel3 .
+                    FILTER(LANG(?itemLabel3) = "en")
+                  }
+                }
+                UNION
+                {
+                  OPTIONAL {
+                    ?item3 <http://www.w3.org/2004/02/skos/core#definition> ?itemDefinition3 .
+                    FILTER(LANG(?itemDefinition3) = "en")
+                  }
+                }
+                UNION
+                {
+                  SELECT ?item3 (COUNT(DISTINCT ?production3) AS ?count3) WHERE {
+                    ?production3 <http://erlangen-crm.org/current/P62_depicts> ?item3 .
+                  }
                 }
               }
             }
