@@ -456,6 +456,12 @@ module.exports = {
               label: '?itemLabel',
               description: '?itemDefinition',
               count: '?count',
+              items: {
+                '@id': '?item2',
+                label: '?itemLabel2',
+                description: '?itemDefinition2',
+                count: '?count2',
+              },
             },
           },
         ],
@@ -463,7 +469,7 @@ module.exports = {
           'VALUES ?member { <http://data.silknow.org/vocabulary/827> <http://data.silknow.org/vocabulary/318> }',
           '?member <http://www.w3.org/2004/02/skos/core#prefLabel> ?memberLabel',
           `OPTIONAL {
-            ?member <http://www.w3.org/2004/02/skos/core#narrower>* ?item .
+            ?member <http://www.w3.org/2004/02/skos/core#narrower> ?item .
             {
               OPTIONAL {
                 ?item <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel .
@@ -481,6 +487,29 @@ module.exports = {
             {
               SELECT ?item (COUNT(DISTINCT ?production) AS ?count) WHERE {
                 ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?item .
+              }
+            }
+
+            OPTIONAL {
+              ?item <http://www.w3.org/2004/02/skos/core#narrower> ?item2 .
+              {
+                OPTIONAL {
+                  ?item2 <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel2 .
+                  FILTER(LANG(?itemLabel2) = "en")
+                }
+              }
+              UNION
+              {
+                OPTIONAL {
+                  ?item2 <http://www.w3.org/2004/02/skos/core#definition> ?itemDefinition2 .
+                  FILTER(LANG(?itemDefinition2) = "en")
+                }
+              }
+              UNION
+              {
+                SELECT ?item2 (COUNT(DISTINCT ?production2) AS ?count2) WHERE {
+                  ?production2 <http://erlangen-crm.org/current/P32_used_general_technique> ?item2 .
+                }
               }
             }
           }`,
@@ -556,7 +585,13 @@ module.exports = {
               '@id': '?item',
               label: '?itemLabel',
               description: '?itemDefinition',
-              count: '?count'
+              count: '?count',
+              items: {
+                '@id': '?item2',
+                label: '?itemLabel2',
+                description: '?itemDefinition2',
+                count: '?count2',
+              },
             },
           },
         ],
@@ -564,7 +599,7 @@ module.exports = {
           'VALUES ?member { <http://data.silknow.org/vocabulary/209> <http://data.silknow.org/vocabulary/268> }',
           '?member <http://www.w3.org/2004/02/skos/core#prefLabel> ?memberLabel',
           `OPTIONAL {
-            ?member <http://www.w3.org/2004/02/skos/core#narrower>* ?item .
+            ?member <http://www.w3.org/2004/02/skos/core#narrower> ?item .
             {
               OPTIONAL {
                 ?item <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel .
@@ -582,6 +617,29 @@ module.exports = {
             {
               SELECT ?item (COUNT(DISTINCT ?production) AS ?count) WHERE {
                 ?production <http://erlangen-crm.org/current/P126_employed> ?item .
+              }
+            }
+
+            OPTIONAL {
+              ?item <http://www.w3.org/2004/02/skos/core#narrower> ?item2 .
+              {
+                OPTIONAL {
+                  ?item2 <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel2 .
+                  FILTER(LANG(?itemLabel2) = "en")
+                }
+              }
+              UNION
+              {
+                OPTIONAL {
+                  ?item2 <http://www.w3.org/2004/02/skos/core#definition> ?itemDefinition2 .
+                  FILTER(LANG(?itemDefinition2) = "en")
+                }
+              }
+              UNION
+              {
+                SELECT ?item2 (COUNT(DISTINCT ?production2) AS ?count2) WHERE {
+                  ?production2 <http://erlangen-crm.org/current/P126_employed> ?item2 .
+                }
               }
             }
           }`,
@@ -653,7 +711,13 @@ module.exports = {
               '@id': '?item',
               label: '?itemLabel',
               description: '?itemDefinition',
-              count: '?count'
+              count: '?count',
+              items: {
+                '@id': '?item2',
+                label: '?itemLabel2',
+                description: '?itemDefinition2',
+                count: '?count2',
+              },
             },
           },
         ],
@@ -673,6 +737,29 @@ module.exports = {
             {
               SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
                 ?object <http://erlangen-crm.org/current/P62_depicts> ?item .
+              }
+            }
+
+            OPTIONAL {
+              ?item <http://www.w3.org/2004/02/skos/core#narrower> ?item2 .
+              {
+                OPTIONAL {
+                  ?item2 <http://www.w3.org/2004/02/skos/core#prefLabel> ?itemLabel2 .
+                  FILTER(LANG(?itemLabel2) = "en")
+                }
+              }
+              UNION
+              {
+                OPTIONAL {
+                  ?item2 <http://www.w3.org/2004/02/skos/core#definition> ?itemDefinition2 .
+                  FILTER(LANG(?itemDefinition2) = "en")
+                }
+              }
+              UNION
+              {
+                SELECT ?item2 (COUNT(DISTINCT ?production2) AS ?count2) WHERE {
+                  ?production2 <http://erlangen-crm.org/current/P62_depicts> ?item2 .
+                }
               }
             }
           }`,
