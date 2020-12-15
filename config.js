@@ -979,13 +979,17 @@ module.exports = {
         ],
         $where: [
           `
-          { ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique . }
-          UNION
-          { <http://data.silknow.org/vocabulary/facet/techniques> (skos:member|skos:narrower)* ?technique . }
-          ?technique <http://www.w3.org/2004/02/skos/core#prefLabel> ?techniqueLabel
-          `,
+          VALUES ?vocabulary {
+            <http://data.silknow.org/vocabulary/827>
+            <http://data.silknow.org/vocabulary/318>
+          }
+          ?vocabulary (skos:member|skos:narrower)* ?technique
+          OPTIONAL {
+            ?technique <http://www.w3.org/2004/02/skos/core#prefLabel> ?techniqueLabel .
+            FILTER(LANG(?techniqueLabel) = "en")
+          }
+          `
         ],
-        $filter: ['lang(?techniqueLabel) = "en"'],
         $langTag: 'hide',
       },
     },
@@ -999,13 +1003,17 @@ module.exports = {
         ],
         $where: [
           `
-          { ?production <http://erlangen-crm.org/current/P126_employed> ?material . }
-          UNION
-          { <http://data.silknow.org/vocabulary/facet/materials> (skos:member|skos:narrower)* ?material . }
-          ?material <http://www.w3.org/2004/02/skos/core#prefLabel> ?materialLabel
-          `,
+          VALUES ?vocabulary {
+            <http://data.silknow.org/vocabulary/209>
+            <http://data.silknow.org/vocabulary/268>
+          }
+          ?vocabulary (skos:member|skos:narrower)* ?material .
+          OPTIONAL {
+            ?material <http://www.w3.org/2004/02/skos/core#prefLabel> ?materialLabel .
+            FILTER(LANG(?materialLabel) = "en")
+          }
+          `
         ],
-        $filter: ['lang(?materialLabel) = "en"'],
         $langTag: 'hide',
       },
     },
@@ -1019,13 +1027,16 @@ module.exports = {
         ],
         $where: [
           `
-          { ?id <http://erlangen-crm.org/current/P62_depicts> ?depiction . }
-          UNION
-          { <http://data.silknow.org/vocabulary/facet/depiction> (skos:member|skos:narrower)* ?depiction . }
-          ?depiction <http://www.w3.org/2004/02/skos/core#prefLabel> ?depictionLabel
+          VALUES ?vocabulary {
+            <http://data.silknow.org/vocabulary/742>
+          }
+          ?vocabulary (skos:member|skos:narrower)* ?depiction
+          OPTIONAL {
+            ?depiction <http://www.w3.org/2004/02/skos/core#prefLabel> ?depictionLabel .
+            FILTER(LANG(?depictionLabel) = "en")
+          }
           `,
         ],
-        $filter: ['lang(?depictionLabel) = "en"'],
         $langTag: 'hide',
       },
     },
