@@ -261,15 +261,18 @@ module.exports = {
             },
             material: {
               '@id': '?material',
+              label: '?materialLabel',
             },
             technique: {
               '@id': '?technique',
+              label: '?techniqueLabel',
             },
             usedType: {
               '@id': '?usedType',
             },
             depiction: {
               '@id': '?depiction',
+              label: '?depictionLabel',
             },
             dimension: {
               '@id': '?dimension',
@@ -341,6 +344,8 @@ module.exports = {
               {
                 OPTIONAL {
                   ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique .
+                  ?technique skos:prefLabel ?techniqueLabel .
+                  FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
                 }
               }
               UNION
@@ -353,6 +358,8 @@ module.exports = {
               {
                 OPTIONAL {
                   ?production <http://erlangen-crm.org/current/P126_employed> ?material .
+                  ?material skos:prefLabel ?materialLabel .
+                  FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
                 }
               }
               UNION
@@ -397,6 +404,8 @@ module.exports = {
           {
             OPTIONAL {
               ?id <http://erlangen-crm.org/current/P62_depicts> ?depiction .
+              ?depiction skos:prefLabel ?depictionLabel .
+              FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
             }
           }
           UNION
