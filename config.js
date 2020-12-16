@@ -1,7 +1,7 @@
 const object = require('./config/routes/object');
 const techniques = require('./config/routes/techniques');
 const materials = require('./config/routes/materials');
-const depictions = require('./config/routes/materials');
+const depictions = require('./config/routes/depictions');
 
 module.exports = {
   debug: typeof process !== 'undefined' && process.env.NODE_ENV === 'development',
