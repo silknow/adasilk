@@ -135,6 +135,26 @@ module.exports = {
       label: 'Musée des Tissus',
       icon: '/images/graphs/http-data-silknow-org-mtmad.png',
     },
+    'http://data.silknow.org/graph/versailles': {
+      label: 'Versailles',
+      icon: '/images/graphs/http-data-silknow-org-versailles.png',
+    },
+    'http://data.silknow.org/graph/smithsonian': {
+      label: 'Smithsonian',
+      icon: '/images/graphs/http-data-silknow-org-smithsonian.png',
+    },
+    'http://data.silknow.org/graph/venezia': {
+      label: 'Musei di Venezia',
+      icon: '/images/graphs/http-data-silknow-org-venezia.png',
+    },
+    'http://data.silknow.org/graph/mobilier': {
+      label: 'Collection du Mobilier International',
+      icon: '/images/graphs/http-data-silknow-org-mobilier.png',
+    },
+    'http://data.silknow.org/graph/paris-musees': {
+      label: 'Paris Musées',
+      icon: '/images/graphs/http-data-silknow-org-paris-musees.png',
+    },
   },
   vocabularies: {
     technique: {
