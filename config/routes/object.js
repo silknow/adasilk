@@ -297,7 +297,9 @@ module.exports = {
           UNION
           {
             OPTIONAL {
-              ?production <http://erlangen-crm.org/current/P4_has_time-span> ?time .
+              { ?production <http://erlangen-crm.org/current/P4_has_time-span> ?time . }
+              UNION
+              { ?production <http://erlangen-crm.org/current/P4_has_time-span>/<http://erlangen-crm.org/current/P86_falls_within> ?time . }
               ?time skos:prefLabel ?timeLabel .
               FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
             }
