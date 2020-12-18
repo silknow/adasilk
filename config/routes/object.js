@@ -22,16 +22,16 @@ module.exports = {
           },
         ],
         $where: [
-          '?production <http://erlangen-crm.org/current/P4_has_time-span> ?time',
-          '?time <http://erlangen-crm.org/current/P86_falls_within> ?fallsWithin',
-          '?fallsWithin <http://www.w3.org/2004/02/skos/core#prefLabel> ?label',
+          '?production ecrm:P4_has_time-span ?time',
+          '?time ecrm:P86_falls_within ?fallsWithin',
+          '?fallsWithin skos:prefLabel ?label',
         ],
         $filter: ['langmatches(lang(?label), "en") || lang(?label) = ""'],
         $langTag: 'hide',
       },
       whereFunc: () => [
-        '?production <http://erlangen-crm.org/current/P4_has_time-span> ?time',
-        'OPTIONAL { ?time <http://erlangen-crm.org/current/P86_falls_within> ?fallsWithin . }'
+        '?production ecrm:P4_has_time-span ?time',
+        'OPTIONAL { ?time ecrm:P86_falls_within ?fallsWithin . }'
       ],
       filterFunc: (values) => {
         return [values.map((val) => `?time = <${val}> || ?fallsWithin = <${val}>`).join(' || ')];
@@ -49,8 +49,8 @@ module.exports = {
           },
         ],
         $where: [
-          '?production <http://erlangen-crm.org/current/P8_took_place_on_or_within> ?location',
-          '?location <http://www.geonames.org/ontology#name> ?locationLabel',
+          '?production ecrm:P8_took_place_on_or_within ?location',
+          '?location geonames:name ?locationLabel',
         ],
         $filter: [
           'langmatches(lang(?locationLabel), "en") || lang(?locationLabel) = ""',
@@ -59,7 +59,7 @@ module.exports = {
         $langTag: 'hide',
       },
       whereFunc: () => [
-        '?production <http://erlangen-crm.org/current/P8_took_place_on_or_within> ?location',
+        '?production ecrm:P8_took_place_on_or_within ?location',
         'OPTIONAL { ?location geonames:parentCountry ?parentCountry . }'
       ],
       filterFunc: (values) => {
@@ -72,7 +72,7 @@ module.exports = {
       isSortable: true,
       vocabulary: 'material',
       whereFunc: () => [
-        '?production <http://erlangen-crm.org/current/P126_employed> ?material',
+        '?production ecrm:P126_employed ?material',
         'OPTIONAL { ?broaderMaterial (skos:member|skos:narrower)* ?material }'
       ],
       filterFunc: (values) => {
@@ -85,7 +85,7 @@ module.exports = {
       isSortable: true,
       vocabulary: 'technique',
       whereFunc: () => [
-        '?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique',
+        '?production ecrm:P32_used_general_technique ?technique',
         'OPTIONAL { ?broaderTechnique (skos:member|skos:narrower)* ?technique }'
       ],
       filterFunc: (values) => {
@@ -98,7 +98,7 @@ module.exports = {
       isSortable: true,
       vocabulary: 'depiction',
       whereFunc: () => [
-        '?id <http://erlangen-crm.org/current/P62_depicts> ?depiction',
+        '?id ecrm:P62_depicts ?depiction',
         'OPTIONAL { ?broaderDepiction (skos:member|skos:narrower)* ?depiction }'
       ],
       filterFunc: (values) => {
@@ -135,8 +135,8 @@ module.exports = {
       id: 'show-only-images',
       isOption: true,
       whereFunc: () => [
-        '?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation',
-        '?representation <http://schema.org/contentUrl> ?representationUrl',
+        '?id ecrm:P138i_has_representation ?representation',
+        '?representation schema:contentUrl ?representationUrl',
         'FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))',
       ],
     },
@@ -144,9 +144,9 @@ module.exports = {
       id: 'show-only-location',
       isOption: true,
       whereFunc: () => [
-        '?production <http://erlangen-crm.org/current/P8_took_place_on_or_within> ?location',
-        '?location <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?locationLat',
-        '?location <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?locationLong',
+        '?production ecrm:P8_took_place_on_or_within ?location',
+        '?location geo:lat ?locationLat',
+        '?location geo:long ?locationLong',
       ],
     },
     {
@@ -156,8 +156,8 @@ module.exports = {
   ],
   labelFunc: (props) => props.label || props.identifier,
   baseWhere: [
-    'GRAPH ?g { ?id a <http://erlangen-crm.org/current/E22_Man-Made_Object> }',
-    '?production <http://erlangen-crm.org/current/P108_has_produced> ?id',
+    'GRAPH ?g { ?id a ecrm:E22_Man-Made_Object }',
+    '?production ecrm:P108_has_produced ?id',
   ],
   metadata: {
     dimension: (value, index, { dimension }) => {
@@ -174,9 +174,9 @@ module.exports = {
         '@type': 'http://erlangen-crm.org/current/E22_Man-Made_Object',
         '@id': '?id',
         '@graph': '?g',
-        label: '$<http://www.w3.org/2000/01/rdf-schema#label>$var:label',
-        identifier: '$<http://purl.org/dc/elements/1.1/identifier>$var:identifier',
-        description: '$<http://erlangen-crm.org/current/P3_has_note>$lang:en$var:description',
+        label: '$rdfs:label$var:label',
+        identifier: '$dc:identifier$var:identifier',
+        description: '$ecrm:P3_has_note$lang:en$var:description',
         representation: {
           '@id': '?representation',
           image: '?representationUrl',
@@ -234,30 +234,30 @@ module.exports = {
       },
     ],
     $where: [
-      'GRAPH ?g { ?id a <http://erlangen-crm.org/current/E22_Man-Made_Object> }',
+      'GRAPH ?g { ?id a ecrm:E22_Man-Made_Object }',
       `
       {
         OPTIONAL {
-          ?custody <http://erlangen-crm.org/current/P30_transferred_custody_of> ?id .
-          ?custody <http://erlangen-crm.org/current/P29_custody_received_by> ?legalBody .
-          ?legalBody <http://www.w3.org/2000/01/rdf-schema#label> ?legalBodyLabel .
+          ?custody ecrm:P30_transferred_custody_of ?id .
+          ?custody ecrm:P29_custody_received_by ?legalBody .
+          ?legalBody rdfs:label ?legalBodyLabel .
           FILTER(LANG(?legalBodyLabel) = "en" || LANG(?legalBodyLabel) = "")
         }
       }
       UNION
       {
         OPTIONAL {
-          ?collection <http://erlangen-crm.org/current/P106_is_composed_of> ?id .
-          ?collection <http://www.w3.org/2000/01/rdf-schema#label> ?collectionLabel .
+          ?collection ecrm:P106_is_composed_of ?id .
+          ?collection rdfs:label ?collectionLabel .
         }
       }
       UNION
       {
         OPTIONAL {
-          ?id <http://erlangen-crm.org/current/P43_has_dimension> ?dimension .
-          ?dimension <http://erlangen-crm.org/current/P2_has_type> ?dimensionType .
-          ?dimension <http://erlangen-crm.org/current/P90_has_value> ?dimensionValue .
-          ?dimension <http://erlangen-crm.org/current/P91_has_unit> ?dimensionUnit .
+          ?id ecrm:P43_has_dimension ?dimension .
+          ?dimension ecrm:P2_has_type ?dimensionType .
+          ?dimension ecrm:P90_has_value ?dimensionValue .
+          ?dimension ecrm:P91_has_unit ?dimensionUnit .
         }
       }
       UNION
@@ -272,10 +272,10 @@ module.exports = {
       UNION
       {
         OPTIONAL {
-          ?production <http://erlangen-crm.org/current/P108_has_produced> ?id .
+          ?production ecrm:P108_has_produced ?id .
           {
             OPTIONAL {
-              ?production <http://erlangen-crm.org/current/P32_used_general_technique> ?technique .
+              ?production ecrm:P32_used_general_technique ?technique .
               ?technique skos:prefLabel ?techniqueLabel .
               FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
             }
@@ -283,13 +283,13 @@ module.exports = {
           UNION
           {
             OPTIONAL {
-              ?production <http://erlangen-crm.org/current/P125_used_object_of_type> ?usedType .
+              ?production ecrm:P125_used_object_of_type ?usedType .
             }
           }
           UNION
           {
             OPTIONAL {
-              ?production <http://erlangen-crm.org/current/P126_employed> ?material .
+              ?production ecrm:P126_employed ?material .
               ?material skos:prefLabel ?materialLabel .
               FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
             }
@@ -297,9 +297,9 @@ module.exports = {
           UNION
           {
             OPTIONAL {
-              { ?production <http://erlangen-crm.org/current/P4_has_time-span> ?time . }
+              { ?production ecrm:P4_has_time-span ?time . }
               UNION
-              { ?production <http://erlangen-crm.org/current/P4_has_time-span>/<http://erlangen-crm.org/current/P86_falls_within> ?time . }
+              { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?time . }
               ?time skos:prefLabel ?timeLabel .
               FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
             }
@@ -307,15 +307,15 @@ module.exports = {
           UNION
           {
             OPTIONAL {
-              ?production <http://erlangen-crm.org/current/P8_took_place_on_or_within> ?location .
+              ?production ecrm:P8_took_place_on_or_within ?location .
               OPTIONAL {
-                ?location <http://www.geonames.org/ontology#name>|rdfs:label ?locationLabel .
+                ?location geonames:name|rdfs:label ?locationLabel .
                 FILTER(LANG(?locationLabel) = "en" || LANG(?locationLabel) = "")
               }
-              OPTIONAL { ?location <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?locationLat . }
-              OPTIONAL { ?location <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?locationLong . }
-              OPTIONAL { ?location <http://www.geonames.org/ontology#parentCountry>/<http://www.geonames.org/ontology#name> ?locationCountry . }
-              OPTIONAL { ?location <http://www.geonames.org/ontology#featureCode> ?locationFeatureCode . }
+              OPTIONAL { ?location geo:lat ?locationLat . }
+              OPTIONAL { ?location geo:long ?locationLong . }
+              OPTIONAL { ?location geonames:parentCountry/geonames:name ?locationCountry . }
+              OPTIONAL { ?location geonames:featureCode ?locationFeatureCode . }
             }
           }
           UNION
@@ -327,7 +327,7 @@ module.exports = {
               ?digAssignedGroup skos:member ?digTypeAssigned .
               <http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAssignedGroup .
               OPTIONAL {
-                ?digAssignedGroup <http://www.w3.org/2004/02/skos/core#prefLabel> ?digAssignedGroupLabel .
+                ?digAssignedGroup skos:prefLabel ?digAssignedGroupLabel .
                 FILTER(LANG(?digAssignedGroupLabel) = "en" || LANG(?digAssignedGroupLabel) = "")
               }
             }
@@ -337,7 +337,7 @@ module.exports = {
       UNION
       {
         OPTIONAL {
-          ?id <http://erlangen-crm.org/current/P62_depicts> ?depiction .
+          ?id ecrm:P62_depicts ?depiction .
           ?depiction skos:prefLabel ?depictionLabel .
           FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
         }
@@ -346,9 +346,9 @@ module.exports = {
       {
         OPTIONAL {
           SELECT ?id ?representation ?representationRightComment (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
-            ?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation .
+            ?id ecrm:P138i_has_representation ?representation .
             OPTIONAL {
-              ?representation <http://schema.org/contentUrl> ?representationUrl .
+              ?representation schema:contentUrl ?representationUrl .
               FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))
             }
             OPTIONAL {

@@ -39,15 +39,15 @@ module.exports = {
       ],
       $where: [
         '?id a ?rdfType',
-        'VALUES ?rdfType { <http://erlangen-crm.org/current/E22_Man-Made_Object> }',
-        '?id <http://www.w3.org/2000/01/rdf-schema#label> ?label',
+        'VALUES ?rdfType { ecrm:E22_Man-Made_Object }',
+        '?id rdfs:label ?label',
         // Needed because silknow has 2 duplicate images (the source one and the one hosted on silknow.org cloud server)
         // We should only return the silknow.org one
         `OPTIONAL {
           SELECT ?id ?representation (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
-            ?id <http://erlangen-crm.org/current/P138i_has_representation> ?representation .
+            ?id ecrm:P138i_has_representation ?representation .
             OPTIONAL {
-              ?representation <http://schema.org/contentUrl> ?representationUrl .
+              ?representation schema:contentUrl ?representationUrl .
               FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))
             }
           }
@@ -69,6 +69,15 @@ module.exports = {
   },
   api: {
     endpoint: 'https://data.silknow.org/sparql',
+    prefixes: {
+      'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
+      'schema': 'http://schema.org/',
+      'ecrm': 'http://erlangen-crm.org/current/',
+      'dc': 'http://purl.org/dc/elements/1.1/',
+      'geo': 'http://www.w3.org/2003/01/geo/wgs84_pos#',
+      'geonames': 'http://www.geonames.org/ontology#',
+      'skos': 'http://www.w3.org/2004/02/skos/core#'
+    }
   },
   routes: {
     object,
@@ -173,7 +182,7 @@ module.exports = {
           }
           ?vocabulary (skos:member|skos:narrower)* ?technique
           OPTIONAL {
-            ?technique <http://www.w3.org/2004/02/skos/core#prefLabel> ?techniqueLabel .
+            ?technique skos:prefLabel ?techniqueLabel .
             FILTER(LANG(?techniqueLabel) = "en")
           }
           `
@@ -197,7 +206,7 @@ module.exports = {
           }
           ?vocabulary (skos:member|skos:narrower)* ?material .
           OPTIONAL {
-            ?material <http://www.w3.org/2004/02/skos/core#prefLabel> ?materialLabel .
+            ?material skos:prefLabel ?materialLabel .
             FILTER(LANG(?materialLabel) = "en")
           }
           `
@@ -220,7 +229,7 @@ module.exports = {
           }
           ?vocabulary (skos:member|skos:narrower)* ?depiction
           OPTIONAL {
-            ?depiction <http://www.w3.org/2004/02/skos/core#prefLabel> ?depictionLabel .
+            ?depiction skos:prefLabel ?depictionLabel .
             FILTER(LANG(?depictionLabel) = "en")
           }
           `,
@@ -243,7 +252,7 @@ module.exports = {
           '?digAsignedGroup skos:member ?digTypeAssigned',
           '<http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAsignedGroup',
           `OPTIONAL {
-            ?digAsignedGroup <http://www.w3.org/2004/02/skos/core#prefLabel> ?digAssignedGroupLabel .
+            ?digAsignedGroup skos:prefLabel ?digAssignedGroupLabel .
             FILTER(LANG(?digAssignedGroupLabel) = "en" || LANG(?digAssignedGroupLabel) = "")
           }`,
         ],
