@@ -216,6 +216,10 @@ module.exports = {
           '@id': '?time',
           label: '?timeLabel'
         },
+        century: {
+          '@id': '?century',
+          label: '?centuryLabel'
+        },
         location: {
           '@id': '?location',
           featureCode: '?locationFeatureCode',
@@ -302,6 +306,17 @@ module.exports = {
               { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?time . }
               ?time skos:prefLabel ?timeLabel .
               FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
+            }
+          }
+          UNION
+          {
+            OPTIONAL {
+              { ?production ecrm:P4_has_time-span ?century . }
+              UNION
+              { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?century . }
+              <http://vocab.getty.edu/aat/300404464> skos:member ?century .
+              ?century skos:prefLabel ?centuryLabel .
+              FILTER(LANG(?centuryLabel) = "en" || LANG(?centuryLabel) = "")
             }
           }
           UNION
