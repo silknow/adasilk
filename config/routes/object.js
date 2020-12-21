@@ -114,7 +114,7 @@ module.exports = {
         '?dig ecrm:P129_is_about ?production',
         '?dig a crmdig:D1_Digital_Object',
         '?dig ecrm:P129_is_about/ecrm:P42_assigned ?digTypeAssigned',
-        '?assignedGroup skos:member ?digTypeAssigned',
+        '?digAssignedGroup skos:member ?digTypeAssigned',
         '<http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAssignedGroup',
       ],
       filterFunc: (values) => {
