@@ -175,8 +175,8 @@ module.exports = {
         '@id': '?id',
         '@graph': '?g',
         label: '$rdfs:label$var:label',
-        identifier: '$dc:identifier$var:identifier',
-        description: '$ecrm:P3_has_note$lang:en$var:description',
+        identifier: '?identifier',
+        description: '?description',
         representation: {
           '@id': '?representation',
           image: '?representationUrl',
@@ -241,136 +241,118 @@ module.exports = {
       'GRAPH ?g { ?id a ecrm:E22_Man-Made_Object }',
       `
       {
-        OPTIONAL {
-          ?custody ecrm:P30_transferred_custody_of ?id .
-          ?custody ecrm:P29_custody_received_by ?legalBody .
-          ?legalBody rdfs:label ?legalBodyLabel .
-          FILTER(LANG(?legalBodyLabel) = "en" || LANG(?legalBodyLabel) = "")
-        }
+        ?id dc:identifier ?identifier .
       }
       UNION
       {
-        OPTIONAL {
-          ?collection ecrm:P106_is_composed_of ?id .
-          ?collection rdfs:label ?collectionLabel .
-        }
+        ?id ecrm:P3_has_note ?description .
+        FILTER(LANG(?description) = "en" || LANG(?description) = "")
       }
       UNION
       {
-        OPTIONAL {
-          ?id ecrm:P43_has_dimension ?dimension .
-          ?dimension ecrm:P2_has_type ?dimensionType .
-          ?dimension ecrm:P90_has_value ?dimensionValue .
-          ?dimension ecrm:P91_has_unit ?dimensionUnit .
-        }
+        ?custody ecrm:P30_transferred_custody_of ?id .
+        ?custody ecrm:P29_custody_received_by ?legalBody .
+        ?legalBody rdfs:label ?legalBodyLabel .
+        FILTER(LANG(?legalBodyLabel) = "en" || LANG(?legalBodyLabel) = "")
       }
       UNION
       {
-        OPTIONAL {
-          ?classified ecrm:P41_classified ?id .
-          ?classified ecrm:P42_assigned ?assigned .
-          ?assigned skos:prefLabel ?assignedLabel .
-          FILTER(LANG(?assignedLabel) = "en" || LANG(?assignedLabel) = "")
-        }
+        ?collection ecrm:P106_is_composed_of ?id .
+        ?collection rdfs:label ?collectionLabel .
       }
       UNION
       {
-        OPTIONAL {
-          ?production ecrm:P108_has_produced ?id .
-          {
-            OPTIONAL {
-              ?production ecrm:P32_used_general_technique ?technique .
-              ?technique skos:prefLabel ?techniqueLabel .
-              FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
-            }
-          }
+        ?id ecrm:P43_has_dimension ?dimension .
+        ?dimension ecrm:P2_has_type ?dimensionType .
+        ?dimension ecrm:P90_has_value ?dimensionValue .
+        ?dimension ecrm:P91_has_unit ?dimensionUnit .
+      }
+      UNION
+      {
+        ?classified ecrm:P41_classified ?id .
+        ?classified ecrm:P42_assigned ?assigned .
+        ?assigned skos:prefLabel ?assignedLabel .
+        FILTER(LANG(?assignedLabel) = "en" || LANG(?assignedLabel) = "")
+      }
+      UNION
+      {
+        ?production ecrm:P108_has_produced ?id .
+        {
+          ?production ecrm:P32_used_general_technique ?technique .
+          ?technique skos:prefLabel ?techniqueLabel .
+          FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
+        }
+        UNION
+        {
+          ?production ecrm:P125_used_object_of_type ?usedType .
+        }
+        UNION
+        {
+          ?production ecrm:P126_employed ?material .
+          ?material skos:prefLabel ?materialLabel .
+          FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
+        }
+        UNION
+        {
+          { ?production ecrm:P4_has_time-span ?time . }
           UNION
-          {
-            OPTIONAL {
-              ?production ecrm:P125_used_object_of_type ?usedType .
-            }
-          }
+          { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?time . }
+          ?time skos:prefLabel ?timeLabel .
+          FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
+        }
+        UNION
+        {
+          { ?production ecrm:P4_has_time-span ?century . }
           UNION
-          {
-            OPTIONAL {
-              ?production ecrm:P126_employed ?material .
-              ?material skos:prefLabel ?materialLabel .
-              FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
-            }
+          { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?century . }
+          <http://vocab.getty.edu/aat/300404464> skos:member ?century .
+          ?century skos:prefLabel ?centuryLabel .
+          FILTER(LANG(?centuryLabel) = "en" || LANG(?centuryLabel) = "")
+        }
+        UNION
+        {
+          ?production ecrm:P8_took_place_on_or_within ?location .
+          OPTIONAL {
+            ?location ?locationProp ?locationLabel .
+            VALUES ?locationProp { geonames:name rdfs:label }
+            FILTER(LANG(?locationLabel) = "en" || LANG(?locationLabel) = "")
           }
-          UNION
-          {
-            OPTIONAL {
-              { ?production ecrm:P4_has_time-span ?time . }
-              UNION
-              { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?time . }
-              ?time skos:prefLabel ?timeLabel .
-              FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
-            }
-          }
-          UNION
-          {
-            OPTIONAL {
-              { ?production ecrm:P4_has_time-span ?century . }
-              UNION
-              { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?century . }
-              <http://vocab.getty.edu/aat/300404464> skos:member ?century .
-              ?century skos:prefLabel ?centuryLabel .
-              FILTER(LANG(?centuryLabel) = "en" || LANG(?centuryLabel) = "")
-            }
-          }
-          UNION
-          {
-            OPTIONAL {
-              ?production ecrm:P8_took_place_on_or_within ?location .
-              OPTIONAL {
-                ?location geonames:name|rdfs:label ?locationLabel .
-                FILTER(LANG(?locationLabel) = "en" || LANG(?locationLabel) = "")
-              }
-              OPTIONAL { ?location geo:lat ?locationLat . }
-              OPTIONAL { ?location geo:long ?locationLong . }
-              OPTIONAL { ?location geonames:parentCountry/geonames:name ?locationCountry . }
-              OPTIONAL { ?location geonames:featureCode ?locationFeatureCode . }
-            }
-          }
-          UNION
-          {
-            OPTIONAL {
-              ?dig ecrm:P129_is_about ?production .
-              ?dig a crmdig:D1_Digital_Object .
-              ?dig ecrm:P129_is_about/ecrm:P42_assigned ?digTypeAssigned .
-              ?digAssignedGroup skos:member ?digTypeAssigned .
-              <http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAssignedGroup .
-              OPTIONAL {
-                ?digAssignedGroup skos:prefLabel ?digAssignedGroupLabel .
-                FILTER(LANG(?digAssignedGroupLabel) = "en" || LANG(?digAssignedGroupLabel) = "")
-              }
-            }
+          OPTIONAL { ?location geo:lat ?locationLat . }
+          OPTIONAL { ?location geo:long ?locationLong . }
+          OPTIONAL { ?location geonames:parentCountry/geonames:name ?locationCountry . }
+          OPTIONAL { ?location geonames:featureCode ?locationFeatureCode . }
+        }
+        UNION
+        {
+          ?dig ecrm:P129_is_about ?production .
+          ?dig a crmdig:D1_Digital_Object .
+          ?dig ecrm:P129_is_about/ecrm:P42_assigned ?digTypeAssigned .
+          ?digAssignedGroup skos:member ?digTypeAssigned .
+          <http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAssignedGroup .
+          OPTIONAL {
+            ?digAssignedGroup skos:prefLabel ?digAssignedGroupLabel .
+            FILTER(LANG(?digAssignedGroupLabel) = "en" || LANG(?digAssignedGroupLabel) = "")
           }
         }
       }
       UNION
       {
-        OPTIONAL {
-          ?id ecrm:P62_depicts ?depiction .
-          ?depiction skos:prefLabel ?depictionLabel .
-          FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
-        }
+        ?id ecrm:P62_depicts ?depiction .
+        ?depiction skos:prefLabel ?depictionLabel .
+        FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
       }
       UNION
       {
-        OPTIONAL {
-          SELECT ?id ?representation ?representationRightComment (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
-            ?id ecrm:P138i_has_representation ?representation .
-            OPTIONAL {
-              ?representation schema:contentUrl ?representationUrl .
-              FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))
-            }
-            OPTIONAL {
-              ?representationRight a ecrm:E30_Right .
-              ?representationRight ecrm:P104i_applies_to ?id .
-              ?representationRight rdfs:comment ?representationRightComment .
-            }
+        SELECT ?id ?representation ?representationRightComment (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
+          ?id ecrm:P138i_has_representation ?representation .
+          OPTIONAL {
+            ?representation schema:contentUrl ?representationUrl .
+            FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))
+          }
+          OPTIONAL {
+            ?representationRight a ecrm:E30_Right .
+            ?representationRight ecrm:P104i_applies_to ?id .
+            ?representationRight rdfs:comment ?representationRightComment .
           }
         }
       }
