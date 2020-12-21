@@ -9,8 +9,6 @@ services:
       - NODE_ENV=${NODE_ENV}
   mongo:
     image: mongo
-    ports:
-      - '27017:27017'
     volumes:
       - mongo:/data/db
   imaginary:
@@ -20,12 +18,8 @@ services:
     environment:
       PORT: 9000
     command: -enable-url-source -mount /mnt/data -allowed-origins ${IMAGINARY_ALLOWED_ORIGINS} -http-cache-ttl 31556926
-    ports:
-      - '9000:9000'
   redis:
     image: redis
-    ports:
-      - '6379:6379'
 volumes:
   mongo: {}
   images: {}

@@ -68,7 +68,7 @@ module.exports = {
     defaultLanguage: 'en',
   },
   api: {
-    endpoint: 'https://data.silknow.org/sparql',
+    endpoint: process.env.API_ENDPOINT || 'https://data.silknow.org/sparql',
     prefixes: {
       'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
       'schema': 'http://schema.org/',

@@ -1,0 +1,20 @@
+version: '3'
+services:
+  web:
+    ports:
+      - '4734:3000'
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./.env.staging:/usr/src/app/.env
+    network_mode: bridge
+    restart: unless-stopped
+  mongo:
+    network_mode: bridge
+    restart: unless-stopped
+  imaginary:
+    network_mode: bridge
+    restart: unless-stopped
+  redis:
+    network_mode: bridge
+    restart: unless-stopped
