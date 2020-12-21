@@ -174,7 +174,7 @@ module.exports = {
         '@type': 'http://erlangen-crm.org/current/E22_Man-Made_Object',
         '@id': '?id',
         '@graph': '?g',
-        label: '$rdfs:label$var:label',
+        label: '?label',
         identifier: '?identifier',
         description: '?description',
         representation: {
@@ -242,6 +242,10 @@ module.exports = {
       `
       {
         ?id dc:identifier ?identifier .
+      }
+      UNION
+      {
+        ?id rdfs:label ?label .
       }
       UNION
       {
