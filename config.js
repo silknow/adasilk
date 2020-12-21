@@ -73,6 +73,7 @@ module.exports = {
       'rdfs': 'http://www.w3.org/2000/01/rdf-schema#',
       'schema': 'http://schema.org/',
       'ecrm': 'http://erlangen-crm.org/current/',
+      'crmdig': 'http://www.ics.forth.gr/isl/CRMext/CRMdig.rdfs/',
       'dc': 'http://purl.org/dc/elements/1.1/',
       'geo': 'http://www.w3.org/2003/01/geo/wgs84_pos#',
       'geonames': 'http://www.geonames.org/ontology#',
