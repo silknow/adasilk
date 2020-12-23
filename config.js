@@ -277,4 +277,7 @@ module.exports = {
       show: true
     }
   },
+  analytics: {
+    id: 'G-V38ZZ1WE9V'
+  }
 };
