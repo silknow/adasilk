@@ -122,6 +122,18 @@ module.exports = {
       },
     },
     {
+      id: 'composed',
+      isMulti: true,
+      vocabulary: 'collection',
+      whereFunc: () => [
+        '?collection a ecrm:E78_Collection',
+        '?collection ecrm:P106_is_composed_of ?id',
+      ],
+      filterFunc: (values) => {
+        return [values.map((val) => `?collection = <${val}>`).join(' || ')];
+      },
+    },
+    {
       id: 'show-only-fabric',
       isOption: true,
       whereFunc: () => [

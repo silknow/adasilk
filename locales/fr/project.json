@@ -23,7 +23,11 @@
     "object": "Objets",
     "techniques": "Techniques",
     "materials": "Matériaux",
-    "depictions": "Représentations"
+    "depictions": "Représentations",
+    "museums": "Musées",
+    "places": "Lieux",
+    "time": "Dates",
+    "collections": "Collections"
   },
   "filters": {
     "time": "Date de production",

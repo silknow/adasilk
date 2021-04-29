@@ -23,7 +23,11 @@
     "object": "Objects",
     "techniques": "Techniques",
     "materials": "Materials",
-    "depictions": "Depictions"
+    "depictions": "Depictions",
+    "museums": "Museums",
+    "places": "Places",
+    "time": "Time",
+    "collections": "Collections"
   },
   "filters": {
     "time": "Production time",

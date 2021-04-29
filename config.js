@@ -2,6 +2,10 @@ const object = require('./config/routes/object');
 const techniques = require('./config/routes/techniques');
 const materials = require('./config/routes/materials');
 const depictions = require('./config/routes/depictions');
+const museums = require('./config/routes/museums');
+const time = require('./config/routes/time');
+const places = require('./config/routes/places');
+const collections = require('./config/routes/collections');
 
 module.exports = {
   debug: typeof process !== 'undefined' && process.env.NODE_ENV === 'development',
@@ -84,7 +88,11 @@ module.exports = {
     object,
     techniques,
     materials,
-    depictions
+    depictions,
+    museums,
+    places,
+    time,
+    collections,
   },
   gallery: {
     options: {
@@ -258,6 +266,21 @@ module.exports = {
           }`,
         ],
         $filter: ['lang(?digAssignedGroupLabel) = "en"'],
+        $langTag: 'hide',
+      },
+    },
+    collection: {
+      query: {
+        '@graph': [
+          {
+            '@id': '?collection',
+            label: '?collectionLabel',
+          },
+        ],
+        $where: [
+          '?collection a ecrm:E78_Collection',
+          '?collection rdfs:label ?collectionLabel',
+        ],
         $langTag: 'hide',
       },
     },
