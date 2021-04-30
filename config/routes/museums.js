@@ -67,6 +67,18 @@ module.exports = {
     '@id': 'http://data.silknow.org/graph/paris-musees',
     label: 'Paris Musées',
     icon: '/images/graphs/http-data-silknow-org-paris-musees.png',
+  }, {
+    '@id': 'http://data.silknow.org/graph/artic',
+    label: 'Art Institute of Chicago',
+    icon: '/images/graphs/http-data-silknow-org-artic.png',
+  }, {
+    '@id': 'http://data.silknow.org/graph/europeana',
+    label: 'Europeana',
+    icon: '/images/graphs/http-data-silknow-org-europeana.png',
+  }, {
+    '@id': 'http://data.silknow.org/graph/gallica',
+    label: 'Gallica',
+    icon: '/images/graphs/http-data-silknow-org-gallica.png',
   }],
   useWith: [
     {

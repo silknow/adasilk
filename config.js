@@ -108,72 +108,10 @@ module.exports = {
       emulateTouch: true,
     },
   },
-  graphs: {
-    'http://data.silknow.org/graph/met': {
-      label: 'Metropolitan Museum of Art',
-      icon: '/images/graphs/http-data-silknow-org-met.png',
-    },
-    'http://data.silknow.org/graph/unipa': {
-      label: 'Sicily Cultural Heritage',
-      icon: '/images/graphs/http-data-silknow-org-unipa.png',
-    },
-    'http://data.silknow.org/graph/imatex': {
-      label: 'CDMT Terrassa',
-      icon: '/images/graphs/http-data-silknow-org-imatex.png',
-    },
-    'http://data.silknow.org/graph/vam': {
-      label: 'Victoria and Albert Museum',
-      icon: '/images/graphs/http-data-silknow-org-vam.png',
-    },
-    'http://data.silknow.org/graph/garin': {
-      label: 'Garín 1820',
-      icon: '/images/graphs/http-data-silknow-org-garin.png',
-    },
-    'http://data.silknow.org/graph/mad': {
-      label: 'Musée des Arts Décoratifs',
-      icon: '/images/graphs/http-data-silknow-org-mad.png',
-    },
-    'http://data.silknow.org/graph/mfa': {
-      label: 'Boston Museum of Fine Arts',
-      icon: '/images/graphs/http-data-silknow-org-mfa.png',
-    },
-    'http://data.silknow.org/graph/risd': {
-      label: 'Rhode Island School of Design',
-      icon: '/images/graphs/http-data-silknow-org-risd.png',
-    },
-    'http://data.silknow.org/graph/cer': {
-      label: 'Red Digital de Colecciones de Museos de España',
-      icon: '/images/graphs/http-data-silknow-org-cer.png',
-    },
-    'http://data.silknow.org/graph/joconde': {
-      label: 'Joconde Database of French Museum Collections',
-      icon: '/images/graphs/http-data-silknow-org-joconde.png',
-    },
-    'http://data.silknow.org/graph/mtmad': {
-      label: 'Musée des Tissus',
-      icon: '/images/graphs/http-data-silknow-org-mtmad.png',
-    },
-    'http://data.silknow.org/graph/versailles': {
-      label: 'Versailles',
-      icon: '/images/graphs/http-data-silknow-org-versailles.png',
-    },
-    'http://data.silknow.org/graph/smithsonian': {
-      label: 'Smithsonian',
-      icon: '/images/graphs/http-data-silknow-org-smithsonian.png',
-    },
-    'http://data.silknow.org/graph/venezia': {
-      label: 'Musei di Venezia',
-      icon: '/images/graphs/http-data-silknow-org-venezia.png',
-    },
-    'http://data.silknow.org/graph/mobilier': {
-      label: 'Collection du Mobilier International',
-      icon: '/images/graphs/http-data-silknow-org-mobilier.png',
-    },
-    'http://data.silknow.org/graph/paris-musees': {
-      label: 'Paris Musées',
-      icon: '/images/graphs/http-data-silknow-org-paris-musees.png',
-    },
-  },
+  graphs: museums.items.reduce((acc, cur) => {
+    acc[cur['@id']] = { label: cur.label, icon: cur.icon };
+    return acc;
+  }, {}),
   vocabularies: {
     technique: {
       query: {
