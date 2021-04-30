@@ -79,6 +79,10 @@ module.exports = {
     '@id': 'http://data.silknow.org/graph/gallica',
     label: 'Gallica',
     icon: '/images/graphs/http-data-silknow-org-gallica.png',
+  }, {
+    '@id': 'http://data.silknow.org/graph/el-tesoro',
+    label: 'Museo de Arte Sacro El Tesoro de la Concepción',
+    icon: '/images/graphs/http-data-silknow-org-el-tesoro.png',
   }],
   useWith: [
     {
