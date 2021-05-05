@@ -42,7 +42,7 @@ module.exports = {
         }
         {
           SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
-            ?object ecrm:P62_depicts ?item .
+            ?object ecrm:P65_shows_visual_item ?item .
           }
         }
 
@@ -64,7 +64,7 @@ module.exports = {
           UNION
           {
             SELECT ?item2 (COUNT(DISTINCT ?production2) AS ?count2) WHERE {
-              ?production2 ecrm:P62_depicts ?item2 .
+              ?production2 ecrm:P65_shows_visual_item ?item2 .
             }
           }
 
@@ -86,7 +86,7 @@ module.exports = {
             UNION
             {
               SELECT ?item3 (COUNT(DISTINCT ?production3) AS ?count3) WHERE {
-                ?production3 ecrm:P62_depicts ?item3 .
+                ?production3 ecrm:P65_shows_visual_item ?item3 .
               }
             }
           }
@@ -133,14 +133,14 @@ module.exports = {
         UNION
         {
           SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
-            ?object ecrm:P62_depicts ?item .
+            ?object ecrm:P65_shows_visual_item ?item .
           }
         }
         UNION
         {
           SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
             ?item skos:member* ?member .
-            ?object ecrm:P62_depicts ?member .
+            ?object ecrm:P65_shows_visual_item ?member .
           }
         }`
       ],

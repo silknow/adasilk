@@ -98,7 +98,7 @@ module.exports = {
       isSortable: true,
       vocabulary: 'depiction',
       whereFunc: () => [
-        '?id ecrm:P62_depicts ?depiction',
+        '?id ecrm:P65_shows_visual_item ?depiction',
         'OPTIONAL { ?broaderDepiction (skos:member|skos:narrower)* ?depiction }'
       ],
       filterFunc: (values) => {
@@ -353,7 +353,7 @@ module.exports = {
       }
       UNION
       {
-        ?id ecrm:P62_depicts ?depiction .
+        ?id ecrm:P65_shows_visual_item ?depiction .
         ?depiction skos:prefLabel ?depictionLabel .
         FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
       }
