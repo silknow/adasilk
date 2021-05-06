@@ -279,7 +279,7 @@ module.exports = {
       UNION
       {
         ?id ecrm:P43_has_dimension ?dimension .
-        ?dimension ecrm:P2_has_type ?dimensionType .
+        ?dimension ecrm:P2_has_type/skos:prefLabel ?dimensionType .
         ?dimension ecrm:P90_has_value ?dimensionValue .
         ?dimension ecrm:P91_has_unit ?dimensionUnit .
       }
