@@ -1,0 +1,52 @@
+{
+  "site": {
+    "description": "Viaggia nel patrimonio della seta"
+  },
+  "search": "Cerca",
+  "footer": {
+    "text": "I dati contenuti in ADASilk provengono dagli archivi del Boston Museum of Fine Arts, CDMT Terrassa, Garín 1820, Joconde Database of French Museum Collections, Metropolitan Museum of Art, Mobilier International, Musée des Arts Décoratifs, Musée des Tissus, Paris Musées, Red Digital de Colecciones de Museos de España, Rhode Island School of Design, Sicily Cultural Heritage, Smithsonian, Versailles, Victoria and Albert Museum. \n\n La visualizzazione del telatio virtuale e della mappa spazio temporale è stata sviluppata dall'Università di Valencia. ADASilk è basato su un motore di ricerca esplorativo generico per grafi di conoscenza sviluppato presso EURECOM e include contributi scientifici dell'Università di Valencia, Centre National de la Recherche Scientifique - Lyon 2, Università degli Studi di Palermo, GARIN 1820 S.A., Institut Jozef Stefan, Gottfried Wilhelm Leibniz Universitaet Hannover, Monkeyfab e Instituto Cervantes."
+  },
+  "metadata": {
+    "@id": "Permalink",
+    "identifier": "identificatore",
+    "composed": "Collezione",
+    "material": "Materiale",
+    "technique": "Tecnica",
+    "usedType": "Tipo di oggetto usato",
+    "depiction": "Descrizione",
+    "time": "Periodo",
+    "location": "Luogo di produzione",
+    "dimension": "Dimensione",
+    "type": "Tipo di oggetto"
+  },
+  "routes": {
+    "object": "Oggetti",
+    "techniques": "Tecnica",
+    "materials": "Materiali",
+    "depictions": "Descrizione",
+    "museums": "Musei",
+    "places": "Luoghi",
+    "time": "Periodo",
+    "collections": "Collezioni"
+  },
+  "filters": {
+    "time": "Periodo di produzione",
+    "location": "Luogo di produzione",
+    "technique": "Tecnica",
+    "material": "Materiale",
+    "depiction": "Descrizione",
+    "composed": "Collezione",
+    "type": "Tipo di oggetto",
+    "show-only-fabric": "Solo tessuto",
+    "show-only-images": "Con immagini",
+    "show-only-vloom": "Con Telaio Virtuale",
+    "show-only-location": "Con localizzazione"
+  },
+  "consent": {
+    "title": "Progetto SILKNOW - ADASilk",
+    "text": "Stai facendo l'accesso ad una versione di valutazione del motore di ricerca exsplorativo che si chaima ADASilk e che è stato sviluppato in seno al progetto SILKNOW (<a href=\"https://silknow.eu/\" target=\"_blank\" rel=\"noopener noreferrer\">https://silknow.eu/</a>) e finanziato dal programma di innovazione e ricerca Horizon 2020 dell'Unionie Europea, convenzione Nº 769504.\n\nPuoi trovare la versione di valutazione di ADASilk al seguente URL <a href=\"https://ada.silknow.org/\" target=\"_blank\" rel=\"noopener noreferrer\">https://ada.silknow.org/</a> (da ora \"questo sito\").\n\n Se dai il tuo consenso, alcuni dati (per esempio, il tempo impiegato nell'uso del sito) verranno automaticamente raccolti in modo da poter monitorare la tua interazione con ADASilk. La raccolta di questi dati è finalizzata a  migliorare i tool integrati in ADASIlk (per esempio il Telaio Virtuale) e verranno usati solo all'interno del progetto SILKNOW e per i suoi specifici scopi.\n\n I dati saranno raccolti in forma anonima quindi non conserveremo nessun tipo di informazione personale che possa identificarti come nome, e-mail o indirizzo IP\n\n Per favore metti una spunta nel quadratino sotto per consentire che le tue informazioni vengano prese automaticamente durante la tua interazione con ADASilk. Nel caso che tu non voglia dare il tuo consenso sarai comunque in grado di interagire con il tool e ultimare la sua valutazione ma noi non monitoreremo la tua interazione con ADASilk.",
+    "accept": "Consento",
+    "decline": "Non consento",
+    "submit": "Invia"
+  }
+}

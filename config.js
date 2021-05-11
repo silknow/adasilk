@@ -65,11 +65,13 @@ module.exports = {
       en: 'English',
       es: 'Español',
       fr: 'Français',
+      it: 'Italiano',
     },
     graphFieldLabel: {
       en: 'Museum',
       fr: 'Musée',
       es: 'Museo',
+      it: 'Museo',
     },
     defaultLanguage: 'en',
   },
