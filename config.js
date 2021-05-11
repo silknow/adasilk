@@ -63,11 +63,13 @@ module.exports = {
     placeholderImage: '/images/silknow-placeholder.png',
     languages: {
       en: 'English',
+      es: 'Español',
       fr: 'Français',
     },
     graphFieldLabel: {
       en: 'Museum',
       fr: 'Musée',
+      es: 'Museo',
     },
     defaultLanguage: 'en',
   },

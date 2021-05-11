@@ -1,0 +1,52 @@
+{
+  "site": {
+    "description": "Viaja al patrimonio de la seda"
+  },
+  "search": "Buscar",
+  "footer": {
+    "text": "Los datos contenidos en ADASilk proceden de las colecciones del Museo de Bellas Artes de Boston, CDMT Terrassa, Garín 1820, Base de Datos Joconde-Colecciones de Museos Franceses, Metropolitan Museum of Art, Mobilier International, Musée des Arts Décoratifs, Musée des Tissus, Paris Musées, Red Digital de Colecciones de Museos de España, Rhode Island School of Design, Patrimonio Cultural Siciliano, Smithsonian, Versailles, Victoria and Albert Museum.\n\n Las visualizaciones del Telar Virtual y los mapas espacio temporales han sido desarrollados por la Universitat de València. ADASilk se basa en un motor de búsqueda exploratoria genérico para grafos de conocimiento que se está desarrollando en EURECOM e incluye contribuciones científicas de la Universitat de Valencia, Centre National de la Recherche Scientifique - Lyon 2, Universita Degli Studi di Palermo, GARIN 1820 S.A., Institut Jozef Stefan, Gottfried Wilhelm Leibniz Universitaet Hannover, Monkeyfab, y el Instituto Cervantes."
+  },
+  "metadata": {
+    "@id": "Permalink",
+    "identifier": "Identificador",
+    "composed": "Colección",
+    "material": "Material",
+    "technique": "Técnica",
+    "usedType": "Tipo de objeto utilizado",
+    "depiction": "Representación",
+    "time": "Fecha",
+    "location": "Lugar de producción",
+    "dimension": "Dimensión",
+    "type": "Tipo de objeto"
+  },
+  "routes": {
+    "object": "Objetos",
+    "techniques": "Técnica",
+    "materials": "Materiales",
+    "depictions": "Representaciones",
+    "museums": "Museos",
+    "places": "Lugares",
+    "time": "Fecha",
+    "collections": "Colecciones"
+  },
+  "filters": {
+    "time": "Fecha de producción",
+    "location": "Lugar de producción",
+    "technique": "Técnica",
+    "material": "Material",
+    "depiction": "Representación",
+    "composed": "Colección",
+    "type": "Tipo de objeto",
+    "show-only-fabric": "Solo tejido",
+    "show-only-images": "Con imágenes",
+    "show-only-vloom": "Con Telar Virtual",
+    "show-only-location": "Con localización"
+  },
+  "consent": {
+    "title": "Proyecto SILKNOW - ADASilk",
+    "text": "Está accediendo a una versión de evaluación del motor de búsqueda exploratoria denominado ADASilk, desarrollado en el marco del proyecto SILKNOW (<a href=\"https://silknow.eu/\" target=\"_blank\" rel=\"noopener noreferrer\">https://silknow.eu/</a>), financiado por el programa de investigación e innovación Horizonte 2020 de la Unión Europea mediante el acuerdo de subvención nº 769504. \n\n La versión de evaluación de ADASilk se encuentra en la URL <a href=\"https://ada.silknow.org/\" target=\"_blank\" rel=\"noopener noreferrer\">https://ada.silknow.org/</a> (\"este sitio\", de ahora en adelante). La finalidad de la recogida de estos datos es mejorar las herramientas integradas en ADASilk (por ejemplo, el Telar Virtual) y sólo se utilizarán con fines de investigación en el ámbito del proyecto SILKNOW.\n\n Los datos que recogemos son completamente anónimos, lo que significa que no recopilaremos ningún tipo de información personal que pueda identificarle, como su nombre, dirección de correo electrónico o dirección IP.\n\n Por favor, marque la casilla que aparece a continuación para indicar si acepta que recopilemos automáticamente información sobre su interacción con ADASilk. En caso de que no desee dar su consentimiento, podrá seguir interactuando con la herramienta y cumpliendo con la evaluación, pero no supervisaremos su interacción con ADASilk.",
+    "accept": "Consiento",
+    "decline": "No consiento",
+    "submit": "Enviar"
+  }
+}
