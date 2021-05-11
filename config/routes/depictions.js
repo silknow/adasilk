@@ -2,7 +2,7 @@ module.exports = {
   view: 'vocabulary',
   backgroundColor: '#5c81a6',
   textColor: '#ffffff',
-  query: {
+  query: ({ language }) => ({
     '@graph': [
       {
         '@id': '?member',
@@ -34,11 +34,11 @@ module.exports = {
         ?member skos:narrower ?item .
         OPTIONAL {
           ?item skos:prefLabel ?itemLabel .
-          FILTER(LANG(?itemLabel) = "en")
+          FILTER(LANG(?itemLabel) = "${language}")
         }
         OPTIONAL {
           ?item skos:definition ?itemDefinition .
-          FILTER(LANG(?itemDefinition) = "en")
+          FILTER(LANG(?itemDefinition) = "${language}")
         }
         {
           SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
@@ -51,14 +51,14 @@ module.exports = {
           {
             OPTIONAL {
               ?item2 skos:prefLabel ?itemLabel2 .
-              FILTER(LANG(?itemLabel2) = "en")
+              FILTER(LANG(?itemLabel2) = "${language}")
             }
           }
           UNION
           {
             OPTIONAL {
               ?item2 skos:definition ?itemDefinition2 .
-              FILTER(LANG(?itemDefinition2) = "en")
+              FILTER(LANG(?itemDefinition2) = "${language}")
             }
           }
           UNION
@@ -73,14 +73,14 @@ module.exports = {
             {
               OPTIONAL {
                 ?item3 skos:prefLabel ?itemLabel3 .
-                FILTER(LANG(?itemLabel3) = "en")
+                FILTER(LANG(?itemLabel3) = "${language}")
               }
             }
             UNION
             {
               OPTIONAL {
                 ?item3 skos:definition ?itemDefinition3 .
-                FILTER(LANG(?itemDefinition3) = "en")
+                FILTER(LANG(?itemDefinition3) = "${language}")
               }
             }
             UNION
@@ -93,10 +93,10 @@ module.exports = {
         }
       }`,
     ],
-    $filter: ['lang(?memberLabel) = "en"'],
+    $filter: [`lang(?memberLabel) = "${language}"`],
     $orderby: ['DESC(?count)'],
     $langTag: 'hide',
-  },
+  }),
   skosmos: {
     uri: 'http://data.silknow.org/vocabulary/facet/depiction'
   },
@@ -107,7 +107,7 @@ module.exports = {
     },
   ],
   featured: {
-    query: {
+    query: ({ language }) => ({
       '@graph': [
         {
           '@id': '?item',
@@ -127,7 +127,7 @@ module.exports = {
         {
           OPTIONAL {
             ?item skos:prefLabel ?itemLabel .
-            FILTER(LANG(?itemLabel) = "en")
+            FILTER(LANG(?itemLabel) = "${language}")
           }
         }
         UNION
@@ -145,6 +145,6 @@ module.exports = {
         }`
       ],
       $langTag: 'hide',
-    },
+    }),
   },
 };

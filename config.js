@@ -116,7 +116,7 @@ module.exports = {
   }, {}),
   vocabularies: {
     technique: {
-      query: {
+      query: ({ language }) => ({
         '@graph': [
           {
             '@id': '?technique',
@@ -132,15 +132,15 @@ module.exports = {
           ?vocabulary (skos:member|skos:narrower)* ?technique
           OPTIONAL {
             ?technique skos:prefLabel ?techniqueLabel .
-            FILTER(LANG(?techniqueLabel) = "en")
+            FILTER(LANG(?techniqueLabel) = "${language}")
           }
           `
         ],
         $langTag: 'hide',
-      },
+      }),
     },
     material: {
-      query: {
+      query: ({ language }) => ({
         '@graph': [
           {
             '@id': '?material',
@@ -156,15 +156,15 @@ module.exports = {
           ?vocabulary (skos:member|skos:narrower)* ?material .
           OPTIONAL {
             ?material skos:prefLabel ?materialLabel .
-            FILTER(LANG(?materialLabel) = "en")
+            FILTER(LANG(?materialLabel) = "${language}")
           }
           `
         ],
         $langTag: 'hide',
-      },
+      }),
     },
     depiction: {
-      query: {
+      query: ({ language }) => ({
         '@graph': [
           {
             '@id': '?depiction',
@@ -179,15 +179,15 @@ module.exports = {
           ?vocabulary (skos:member|skos:narrower)* ?depiction
           OPTIONAL {
             ?depiction skos:prefLabel ?depictionLabel .
-            FILTER(LANG(?depictionLabel) = "en")
+            FILTER(LANG(?depictionLabel) = "${language}")
           }
           `,
         ],
         $langTag: 'hide',
-      },
+      }),
     },
     type: {
-      query: {
+      query: ({ language }) => ({
         '@graph': [
           {
             '@id': '?digAsignedGroup',
@@ -202,12 +202,12 @@ module.exports = {
           '<http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAsignedGroup',
           `OPTIONAL {
             ?digAsignedGroup skos:prefLabel ?digAssignedGroupLabel .
-            FILTER(LANG(?digAssignedGroupLabel) = "en" || LANG(?digAssignedGroupLabel) = "")
+            FILTER(LANG(?digAssignedGroupLabel) = "${language}" || LANG(?digAssignedGroupLabel) = "")
           }`,
         ],
-        $filter: ['lang(?digAssignedGroupLabel) = "en"'],
+        $filter: ['lang(?digAssignedGroupLabel) = "${language}"'],
         $langTag: 'hide',
-      },
+      }),
     },
     collection: {
       query: {
