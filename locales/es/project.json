@@ -13,8 +13,8 @@
     "material": "Material",
     "technique": "Técnica",
     "usedType": "Tipo de objeto utilizado",
-    "depiction": "Representación",
-    "time": "Fecha",
+    "depiction": "Motivos",
+    "time": "Siglo",
     "location": "Lugar de producción",
     "dimension": "Dimensión",
     "type": "Tipo de objeto"
@@ -23,10 +23,10 @@
     "object": "Objetos",
     "techniques": "Técnica",
     "materials": "Materiales",
-    "depictions": "Representaciones",
+    "depictions": "Motivos",
     "museums": "Museos",
     "places": "Lugares",
-    "time": "Fecha",
+    "time": "Siglo",
     "collections": "Colecciones"
   },
   "filters": {
@@ -34,7 +34,7 @@
     "location": "Lugar de producción",
     "technique": "Técnica",
     "material": "Material",
-    "depiction": "Representación",
+    "depiction": "Motivos",
     "composed": "Colección",
     "type": "Tipo de objeto",
     "show-only-fabric": "Solo tejido",
