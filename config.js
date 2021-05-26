@@ -193,22 +193,22 @@ module.exports = {
       query: ({ language }) => ({
         '@graph': [
           {
-            '@id': '?digAsignedGroup',
+            '@id': '?digAssignedGroup',
             label: '?digAssignedGroupLabel',
           },
         ],
         $where: [
-          '?dig ecrm:P129_is_about ?production',
-          '?dig a crmdig:D1_Digital_Object',
-          '?dig ecrm:P129_is_about/ecrm:P42_assigned ?digTypeAssigned',
-          '?digAsignedGroup skos:member ?digTypeAssigned',
-          '<http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAsignedGroup',
+          '?type_a ecrm:P41_classified ?id',
+          '?type_a silk:L4|silk:L1 ?digTypeAssigned',
+          '?type_a_group skos:member ?digTypeAssigned',
+          '?digAssignedGroup skos:member ?digTypeAssigned',
+          '<http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAssignedGroup',
           `OPTIONAL {
-            ?digAsignedGroup skos:prefLabel ?digAssignedGroupLabel .
+            ?digAssignedGroup skos:prefLabel ?digAssignedGroupLabel .
             FILTER(LANG(?digAssignedGroupLabel) = "${language}" || LANG(?digAssignedGroupLabel) = "")
           }`,
         ],
-        $filter: ['lang(?digAssignedGroupLabel) = "${language}"'],
+        $filter: [`lang(?digAssignedGroupLabel) = "${language}"`],
         $langTag: 'hide',
       }),
     },
