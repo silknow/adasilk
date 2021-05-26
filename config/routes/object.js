@@ -285,8 +285,10 @@ module.exports = {
       }
       UNION
       {
-        ?classified ecrm:P41_classified ?id .
-        ?classified ecrm:P42_assigned ?assigned .
+        ?type_a ecrm:P41_classified ?id .
+        ?type_a silk:L4|silk:L1 ?assigned .
+        ?type_a_group skos:member ?assigned .
+        FILTER(CONTAINS(STR(?type_a_group), "facet"))
         ?assigned skos:prefLabel ?assignedLabel .
         FILTER(LANG(?assignedLabel) = "en" || LANG(?assignedLabel) = "")
       }
@@ -340,9 +342,10 @@ module.exports = {
         }
         UNION
         {
-          ?dig ecrm:P129_is_about ?production .
-          ?dig a crmdig:D1_Digital_Object .
-          ?dig ecrm:P129_is_about/ecrm:P42_assigned ?digTypeAssigned .
+          ?type_a ecrm:P41_classified ?id .
+          ?type_a silk:L4|silk:L1 ?digTypeAssigned .
+          ?type_a_group skos:member ?digTypeAssigned .
+          FILTER(CONTAINS(STR(?type_a_group), "facet"))
           ?digAssignedGroup skos:member ?digTypeAssigned .
           <http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAssignedGroup .
           OPTIONAL {
