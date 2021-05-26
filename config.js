@@ -85,7 +85,8 @@ module.exports = {
       'dc': 'http://purl.org/dc/elements/1.1/',
       'geo': 'http://www.w3.org/2003/01/geo/wgs84_pos#',
       'geonames': 'http://www.geonames.org/ontology#',
-      'skos': 'http://www.w3.org/2004/02/skos/core#'
+      'skos': 'http://www.w3.org/2004/02/skos/core#',
+      'silk': 'http://data.silknow.org/ontology/property/',
     }
   },
   routes: {
