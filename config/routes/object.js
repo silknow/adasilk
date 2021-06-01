@@ -72,8 +72,14 @@ module.exports = {
       isSortable: true,
       vocabulary: 'material',
       whereFunc: () => [
-        '?production ecrm:P126_employed ?material',
-        'OPTIONAL { ?broaderMaterial (skos:member|skos:narrower)* ?material }'
+        `
+        ?production ecrm:P126_employed ?material .
+        {
+          SELECT ?material ?broaderMaterial WHERE {
+            OPTIONAL { ?broaderMaterial (skos:member|skos:narrower)* ?material. }
+          }
+        }
+        `
       ],
       filterFunc: (values) => {
         return [values.map((val) => `?material = <${val}> || ?broaderMaterial = <${val}>`).join(' || ')];
@@ -85,8 +91,14 @@ module.exports = {
       isSortable: true,
       vocabulary: 'technique',
       whereFunc: () => [
-        '?production ecrm:P32_used_general_technique ?technique',
-        'OPTIONAL { ?broaderTechnique (skos:member|skos:narrower)* ?technique }'
+        `
+        ?production ecrm:P32_used_general_technique ?technique .
+        {
+          SELECT ?technique ?broaderTechnique WHERE {
+            OPTIONAL { ?broaderTechnique (skos:member|skos:narrower)* ?technique. }
+          }
+        }
+        `
       ],
       filterFunc: (values) => {
         return [values.map((val) => `?technique = <${val}> || ?broaderTechnique = <${val}>`).join(' || ')];
