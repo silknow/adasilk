@@ -24,7 +24,8 @@ module.exports = {
       '/images/silknow-footer.png',
       '/images/virtual-loom-logo.png',
       '/images/stmaps-logo.png'
-    ]
+    ],
+    email: 'silknow@uv.es'
   },
   search: {
     route: 'object',
