@@ -241,7 +241,7 @@ module.exports = {
       baseUrl: 'https://skosmos.silknow.org/thesaurus/en/page/?uri=',
     },
     consent: {
-      show: true
+      show: false
     }
   },
   analytics: {
