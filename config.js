@@ -115,7 +115,7 @@ module.exports = {
     },
   },
   graphs: museums.items.reduce((acc, cur) => {
-    acc[cur['@id']] = { label: cur.label, icon: cur.icon };
+    acc[cur['@id']] = { label: cur.label, icon: cur.icon, url: cur.url };
     return acc;
   }, {}),
   vocabularies: {
