@@ -173,10 +173,6 @@ module.exports = {
         '?location geo:long ?locationLong',
       ],
     },
-    {
-      id: 'show-only-vloom',
-      isOption: true,
-    },
   ],
   labelFunc: (props) => props.label || props.identifier,
   baseWhere: [

@@ -39,7 +39,6 @@
     "type": "Type of object",
     "show-only-fabric": "Only fabric",
     "show-only-images": "With images",
-    "show-only-vloom": "With Virtual Loom",
     "show-only-location": "With location"
   },
   "consent": {
