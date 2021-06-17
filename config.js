@@ -60,7 +60,7 @@ module.exports = {
       ],
       $langTag: 'hide',
     },
-    allowImageSearch: false,
+    allowImageSearch: true,
     placeholderImage: '/images/silknow-placeholder.png',
     languages: {
       en: 'English',
