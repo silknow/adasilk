@@ -88,6 +88,7 @@ module.exports = {
       'geonames': 'http://www.geonames.org/ontology#',
       'skos': 'http://www.w3.org/2004/02/skos/core#',
       'silk': 'http://data.silknow.org/ontology/property/',
+      'prov': 'http://www.w3.org/ns/prov#',
     }
   },
   routes: {

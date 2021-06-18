@@ -215,6 +215,11 @@ module.exports = {
           '@id': '?material',
           label: '?materialLabel',
         },
+        __material: {
+          '@id': '?predictedMaterial',
+          label: '?predictedMaterialLabel',
+          score: '?predictedMaterialScore',
+        },
         technique: {
           '@id': '?technique',
           label: '?techniqueLabel',
@@ -316,6 +321,19 @@ module.exports = {
           ?production ecrm:P126_employed ?material .
           ?material skos:prefLabel ?materialLabel .
           FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
+        }
+        UNION
+        {
+          SELECT DISTINCT ?predictedMaterial ?predictedMaterialLabel ?predictedMaterialScore WHERE {
+            GRAPH <http://data.silknow.org/pred_test> {
+              ?statement rdf:subject ?production .
+              ?statement rdf:predicate ecrm:P126_employed .
+              ?statement rdf:object ?predictedMaterial .
+              ?statement <http://data.silknow.org/ontology/propertyL18> ?predictedMaterialScore .
+            }
+            ?predictedMaterial skos:prefLabel ?predictedMaterialLabel .
+            FILTER(LANG(?predictedMaterialLabel) = "en" || LANG(?predictedMaterialLabel) = "")
+          }
         }
         UNION
         {
