@@ -219,6 +219,7 @@ module.exports = {
         technique: {
           '@id': '?technique',
           label: '?techniqueLabel',
+          score: '?predictedTechniqueScore',
         },
         usedType: {
           '@id': '?usedType',
@@ -235,7 +236,8 @@ module.exports = {
         },
         time: {
           '@id': '?time',
-          label: '?timeLabel'
+          label: '?timeLabel',
+          score: '?predictedTimeScore',
         },
         century: {
           '@id': '?century',
@@ -247,6 +249,7 @@ module.exports = {
           label: '?locationLabel',
           latitude: '?locationLat',
           longitude: '?locationLong',
+          score: '?predictedLocationScore',
         },
         type: {
           '@id': '?digAssignedGroup',
@@ -310,6 +313,19 @@ module.exports = {
         }
         UNION
         {
+          SELECT DISTINCT ?production ?technique ?techniqueLabel ?predictedTechniqueScore WHERE {
+            GRAPH <http://data.silknow.org/predictions> {
+              ?statement rdf:subject ?production .
+              ?statement rdf:predicate ecrm:P32_used_general_technique .
+              ?statement rdf:object ?technique .
+              ?statement <http://data.silknow.org/ontology/L18> ?predictedTechniqueScore .
+            }
+            ?technique skos:prefLabel ?techniqueLabel .
+            FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
+          }
+        }
+        UNION
+        {
           ?production ecrm:P125_used_object_of_type ?usedType .
         }
         UNION
@@ -320,12 +336,12 @@ module.exports = {
         }
         UNION
         {
-          SELECT DISTINCT ?material ?materialLabel ?predictedMaterialScore WHERE {
-            GRAPH <http://data.silknow.org/pred_test> {
+          SELECT DISTINCT ?production ?material ?materialLabel ?predictedMaterialScore WHERE {
+            GRAPH <http://data.silknow.org/predictions> {
               ?statement rdf:subject ?production .
               ?statement rdf:predicate ecrm:P126_employed .
               ?statement rdf:object ?material .
-              ?statement silk:L18 ?predictedMaterialScore .
+              ?statement <http://data.silknow.org/ontology/L18> ?predictedMaterialScore .
             }
             ?material skos:prefLabel ?materialLabel .
             FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
@@ -338,6 +354,21 @@ module.exports = {
           { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?time . }
           ?time skos:prefLabel ?timeLabel .
           FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
+        }
+        UNION
+        {
+          SELECT DISTINCT ?production ?time ?timeLabel ?predictedTimeScore WHERE {
+            GRAPH <http://data.silknow.org/predictions> {
+              ?statement rdf:subject ?production .
+              ?statement rdf:predicate ecrm:P4_has_time-span .
+              { ?statement rdf:object ?time . }
+              UNION
+              { ?statement rdf:object/ecrm:P86_falls_within ?time . }
+              ?statement <http://data.silknow.org/ontology/L18> ?predictedTimeScore .
+            }
+            ?time skos:prefLabel ?timeLabel .
+            FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
+          }
         }
         UNION
         {
@@ -360,6 +391,26 @@ module.exports = {
           OPTIONAL { ?location geo:long ?locationLong . }
           OPTIONAL { ?location geonames:parentCountry/geonames:name ?locationCountry . }
           OPTIONAL { ?location geonames:featureCode ?locationFeatureCode . }
+        }
+        UNION
+        {
+          SELECT DISTINCT ?production ?location ?locationLabel ?locationFeatureCode ?locationLat ?locationLong ?predictedLocationScore WHERE {
+            GRAPH <http://data.silknow.org/predictions> {
+              ?statement rdf:subject ?production .
+              ?statement rdf:predicate ecrm:P7_took_place_at .
+              ?statement rdf:object ?location .
+              ?statement <http://data.silknow.org/ontology/L18> ?predictedLocationScore .
+            }
+            OPTIONAL {
+              ?location ?locationProp ?locationLabel .
+              VALUES ?locationProp { geonames:name rdfs:label }
+              FILTER(LANG(?locationLabel) = "en" || LANG(?locationLabel) = "")
+            }
+            OPTIONAL { ?location geo:lat ?locationLat . }
+            OPTIONAL { ?location geo:long ?locationLong . }
+            OPTIONAL { ?location geonames:parentCountry/geonames:name ?locationCountry . }
+            OPTIONAL { ?location geonames:featureCode ?locationFeatureCode . }
+          }
         }
         UNION
         {
