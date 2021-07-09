@@ -227,6 +227,7 @@ module.exports = {
         depiction: {
           '@id': '?depiction',
           label: '?depictionLabel',
+          score: '?predictedDepictionScore',
         },
         dimension: {
           '@id': '?dimension',
@@ -397,7 +398,7 @@ module.exports = {
           SELECT DISTINCT ?production ?location ?locationLabel ?locationFeatureCode ?locationLat ?locationLong ?predictedLocationScore WHERE {
             GRAPH <http://data.silknow.org/predictions> {
               ?statement rdf:subject ?production .
-              ?statement rdf:predicate ecrm:P7_took_place_at .
+              ?statement rdf:predicate ecrm:P8_took_place_on_or_within .
               ?statement rdf:object ?location .
               ?statement <http://data.silknow.org/ontology/L18> ?predictedLocationScore .
             }
@@ -422,6 +423,21 @@ module.exports = {
           OPTIONAL {
             ?digAssignedGroup skos:prefLabel ?digAssignedGroupLabel .
             FILTER(LANG(?digAssignedGroupLabel) = "en" || LANG(?digAssignedGroupLabel) = "")
+          }
+        }
+        UNION
+        {
+          SELECT DISTINCT ?production ?depiction ?depictionLabel ?predictedDepictionScore WHERE {
+            GRAPH <http://data.silknow.org/predictions> {
+              ?statement rdf:subject ?production .
+              ?statement rdf:predicate ecrm:P65_shows_visual_item .
+              ?statement rdf:object ?depiction .
+              ?statement <http://data.silknow.org/ontology/L18> ?predictedDepictionScore .
+            }
+            OPTIONAL {
+              ?depiction skos:prefLabel ?depictionLabel .
+              FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
+            }
           }
         }
       }
