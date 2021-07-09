@@ -220,6 +220,9 @@ module.exports = {
           '@id': '?technique',
           label: '?techniqueLabel',
           score: '?predictedTechniqueScore',
+          kind: '?predictedTechniqueKind',
+          explanation: '?predictedTechniqueExplanation',
+          used: '?predictedTechniqueUsed',
         },
         usedType: {
           '@id': '?usedType',
@@ -314,12 +317,15 @@ module.exports = {
         }
         UNION
         {
-          SELECT DISTINCT ?production ?technique ?techniqueLabel ?predictedTechniqueScore WHERE {
+          SELECT DISTINCT ?production ?technique ?techniqueLabel ?predictedTechniqueScore ?predictedTechniqueKind ?predictedTechniqueUsed WHERE {
             GRAPH <http://data.silknow.org/predictions> {
               ?statement rdf:subject ?production .
               ?statement rdf:predicate ecrm:P32_used_general_technique .
               ?statement rdf:object ?technique .
               ?statement <http://data.silknow.org/ontology/L18> ?predictedTechniqueScore .
+              ?statement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedTechniqueKind .
+              ?statement prov:wasGeneratedBy/prov:used ?predictedTechniqueUsed .
+              ?predictedTechniqueKind ecrm:P70_documents ?predictedTechniqueExplanation .
             }
             ?technique skos:prefLabel ?techniqueLabel .
             FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
