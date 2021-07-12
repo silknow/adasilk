@@ -75,7 +75,7 @@ module.exports = {
     url: 'http://www.archiviodellacomunicazione.it/',
   }, {
     '@id': 'http://data.silknow.org/graph/mobilier',
-    label: 'Collection du Mobilier International',
+    label: 'Collection du Mobilier National',
     icon: '/images/graphs/http-data-silknow-org-mobilier.png',
     url: 'https://collection.mobiliernational.culture.gouv.fr/',
   }, {
