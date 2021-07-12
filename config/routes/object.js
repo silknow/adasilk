@@ -214,15 +214,25 @@ module.exports = {
         material: {
           '@id': '?material',
           label: '?materialLabel',
-          score: '?predictedMaterialScore',
+          prediction: {
+            '@id': '?materialStatement',
+            score: '?predictedMaterialScore',
+            kind: '?predictedMaterialKind',
+            explanation: '?predictedMaterialExplanation',
+            used: '?predictedMaterialUsed',
+          }
         },
         technique: {
           '@id': '?technique',
           label: '?techniqueLabel',
-          score: '?predictedTechniqueScore',
-          kind: '?predictedTechniqueKind',
-          explanation: '?predictedTechniqueExplanation',
-          used: '?predictedTechniqueUsed',
+          prediction: {
+            '@id': '?techniqueStatement',
+            label: '?techniqueLabel',
+            score: '?predictedTechniqueScore',
+            kind: '?predictedTechniqueKind',
+            explanation: '?predictedTechniqueExplanation',
+            used: '?predictedTechniqueUsed',
+          }
         },
         usedType: {
           '@id': '?usedType',
@@ -230,7 +240,13 @@ module.exports = {
         depiction: {
           '@id': '?depiction',
           label: '?depictionLabel',
-          score: '?predictedDepictionScore',
+          prediction: {
+            '@id': '?depictionStatement',
+            score: '?predictedDepictionScore',
+            kind: '?predictedDepictionKind',
+            explanation: '?predictedDepictionExplanation',
+            used: '?predictedDepictionUsed',
+          }
         },
         dimension: {
           '@id': '?dimension',
@@ -241,7 +257,13 @@ module.exports = {
         time: {
           '@id': '?time',
           label: '?timeLabel',
-          score: '?predictedTimeScore',
+          prediction: {
+            '@id': '?timeStatement',
+            score: '?predictedTimeScore',
+            kind: '?predictedTimeKind',
+            explanation: '?predictedTimeExplanation',
+            used: '?predictedTimeUsed',
+          }
         },
         century: {
           '@id': '?century',
@@ -249,11 +271,17 @@ module.exports = {
         },
         location: {
           '@id': '?location',
-          featureCode: '?locationFeatureCode',
           label: '?locationLabel',
+          featureCode: '?locationFeatureCode',
           latitude: '?locationLat',
           longitude: '?locationLong',
-          score: '?predictedLocationScore',
+          prediction: {
+            '@id': '?locationStatement',
+            score: '?predictedLocationScore',
+            kind: '?predictedLocationKind',
+            explanation: '?predictedLocationExplanation',
+            used: '?predictedLocationUsed',
+          }
         },
         type: {
           '@id': '?digAssignedGroup',
@@ -309,20 +337,23 @@ module.exports = {
       {
         ?production ecrm:P108_has_produced ?id .
         {
-          ?production ecrm:P32_used_general_technique ?technique .
-          ?technique skos:prefLabel ?techniqueLabel .
-          FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
+          GRAPH ?graph {
+            ?production ecrm:P32_used_general_technique ?technique .
+            ?technique skos:prefLabel ?techniqueLabel .
+            FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
+          }
+          FILTER(?graph != <http://data.silknow.org/predictions>)
         }
         UNION
         {
-          SELECT DISTINCT ?production ?technique ?techniqueLabel ?predictedTechniqueScore ?predictedTechniqueKind ?predictedTechniqueUsed WHERE {
+          SELECT DISTINCT ?production ?techniqueStatement ?technique ?techniqueLabel ?predictedTechniqueScore ?predictedTechniqueKind ?predictedTechniqueUsed ?predictedTechniqueExplanation WHERE {
             GRAPH <http://data.silknow.org/predictions> {
-              ?statement rdf:subject ?production .
-              ?statement rdf:predicate ecrm:P32_used_general_technique .
-              ?statement rdf:object ?technique .
-              ?statement <http://data.silknow.org/ontology/L18> ?predictedTechniqueScore .
-              ?statement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedTechniqueKind .
-              ?statement prov:wasGeneratedBy/prov:used ?predictedTechniqueUsed .
+              ?techniqueStatement rdf:subject ?production .
+              ?techniqueStatement rdf:predicate ecrm:P32_used_general_technique .
+              ?techniqueStatement rdf:object ?technique .
+              ?techniqueStatement <http://data.silknow.org/ontology/L18> ?predictedTechniqueScore .
+              ?techniqueStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedTechniqueKind .
+              ?techniqueStatement prov:wasGeneratedBy/prov:used ?predictedTechniqueUsed .
               ?predictedTechniqueKind ecrm:P70_documents ?predictedTechniqueExplanation .
             }
             ?technique skos:prefLabel ?techniqueLabel .
@@ -335,18 +366,24 @@ module.exports = {
         }
         UNION
         {
-          ?production ecrm:P126_employed ?material .
-          ?material skos:prefLabel ?materialLabel .
-          FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
+          GRAPH ?graph {
+            ?production ecrm:P126_employed ?material .
+            ?material skos:prefLabel ?materialLabel .
+            FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
+          }
+          FILTER(?graph != <http://data.silknow.org/predictions>)
         }
         UNION
         {
-          SELECT DISTINCT ?production ?material ?materialLabel ?predictedMaterialScore WHERE {
+          SELECT DISTINCT ?production ?materialStatement ?material ?materialLabel ?predictedMaterialScore ?predictedMaterialKind ?predictedMaterialUsed ?predictedMaterialExplanation WHERE {
             GRAPH <http://data.silknow.org/predictions> {
-              ?statement rdf:subject ?production .
-              ?statement rdf:predicate ecrm:P126_employed .
-              ?statement rdf:object ?material .
-              ?statement <http://data.silknow.org/ontology/L18> ?predictedMaterialScore .
+              ?materialStatement rdf:subject ?production .
+              ?materialStatement rdf:predicate ecrm:P126_employed .
+              ?materialStatement rdf:object ?material .
+              ?materialStatement <http://data.silknow.org/ontology/L18> ?predictedMaterialScore .
+              ?materialStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedMaterialKind .
+              ?materialStatement prov:wasGeneratedBy/prov:used ?predictedMaterialUsed .
+              ?predictedMaterialKind ecrm:P70_documents ?predictedMaterialExplanation .
             }
             ?material skos:prefLabel ?materialLabel .
             FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
@@ -354,22 +391,28 @@ module.exports = {
         }
         UNION
         {
-          { ?production ecrm:P4_has_time-span ?time . }
-          UNION
-          { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?time . }
+          GRAPH ?graph {
+            { ?production ecrm:P4_has_time-span ?time . }
+            UNION
+            { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?time . }
+          }
           ?time skos:prefLabel ?timeLabel .
           FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
+          FILTER(?graph != <http://data.silknow.org/predictions>)
         }
         UNION
         {
-          SELECT DISTINCT ?production ?time ?timeLabel ?predictedTimeScore WHERE {
+          SELECT DISTINCT ?production ?productionStatement ?time ?timeLabel ?predictedTimeScore ?predictedTimeKind ?predictedTimeUsed ?predictedTimeExplanation WHERE {
             GRAPH <http://data.silknow.org/predictions> {
-              ?statement rdf:subject ?production .
-              ?statement rdf:predicate ecrm:P4_has_time-span .
-              { ?statement rdf:object ?time . }
+              ?productionStatement rdf:subject ?production .
+              ?productionStatement rdf:predicate ecrm:P4_has_time-span .
+              { ?productionStatement rdf:object ?time . }
               UNION
-              { ?statement rdf:object/ecrm:P86_falls_within ?time . }
-              ?statement <http://data.silknow.org/ontology/L18> ?predictedTimeScore .
+              { ?productionStatement rdf:object/ecrm:P86_falls_within ?time . }
+              ?productionStatement <http://data.silknow.org/ontology/L18> ?predictedTimeScore .
+              ?productionStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedTimeKind .
+              ?productionStatement prov:wasGeneratedBy/prov:used ?predictedTimeUsed .
+              ?predictedTimeKind ecrm:P70_documents ?predictedTimeExplanation .
             }
             ?time skos:prefLabel ?timeLabel .
             FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
@@ -386,7 +429,10 @@ module.exports = {
         }
         UNION
         {
-          ?production ecrm:P8_took_place_on_or_within ?location .
+          GRAPH ?graph {
+            ?production ecrm:P8_took_place_on_or_within ?location .
+          }
+          FILTER(?graph != <http://data.silknow.org/predictions>)
           OPTIONAL {
             ?location ?locationProp ?locationLabel .
             VALUES ?locationProp { geonames:name rdfs:label }
@@ -399,12 +445,15 @@ module.exports = {
         }
         UNION
         {
-          SELECT DISTINCT ?production ?location ?locationLabel ?locationFeatureCode ?locationLat ?locationLong ?predictedLocationScore WHERE {
+          SELECT DISTINCT ?production ?locationStatement ?location ?locationLabel ?locationFeatureCode ?locationLat ?locationLong ?predictedLocationScore ?predictedLocationKind ?predictedLocationUsed ?predictedLocationExplanation WHERE {
             GRAPH <http://data.silknow.org/predictions> {
-              ?statement rdf:subject ?production .
-              ?statement rdf:predicate ecrm:P8_took_place_on_or_within .
-              ?statement rdf:object ?location .
-              ?statement <http://data.silknow.org/ontology/L18> ?predictedLocationScore .
+              ?locationStatement rdf:subject ?production .
+              ?locationStatement rdf:predicate ecrm:P8_took_place_on_or_within .
+              ?locationStatement rdf:object ?location .
+              ?locationStatement <http://data.silknow.org/ontology/L18> ?predictedLocationScore .
+              ?locationStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedLocationKind .
+              ?locationStatement prov:wasGeneratedBy/prov:used ?predictedLocationUsed .
+              ?predictedLocationKind ecrm:P70_documents ?predictedLocationExplanation .
             }
             OPTIONAL {
               ?location ?locationProp ?locationLabel .
@@ -431,12 +480,15 @@ module.exports = {
         }
         UNION
         {
-          SELECT DISTINCT ?production ?depiction ?depictionLabel ?predictedDepictionScore WHERE {
+          SELECT DISTINCT ?production ?depictionStatement ?depiction ?depictionLabel ?predictedDepictionScore ?predictedDepictionKind ?predictedDepictionUsed ?predictedDepictionExplanation WHERE {
             GRAPH <http://data.silknow.org/predictions> {
-              ?statement rdf:subject ?production .
-              ?statement rdf:predicate ecrm:P65_shows_visual_item .
-              ?statement rdf:object ?depiction .
-              ?statement <http://data.silknow.org/ontology/L18> ?predictedDepictionScore .
+              ?depictionStatement rdf:subject ?production .
+              ?depictionStatement rdf:predicate ecrm:P65_shows_visual_item .
+              ?depictionStatement rdf:object ?depiction .
+              ?depictionStatement <http://data.silknow.org/ontology/L18> ?predictedDepictionScore .
+              ?depictionStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedDepictionKind .
+              ?depictionStatement prov:wasGeneratedBy/prov:used ?predictedDepictionUsed .
+              ?predictedDepictionKind ecrm:P70_documents ?predictedDepictionExplanation .
             }
             OPTIONAL {
               ?depiction skos:prefLabel ?depictionLabel .
@@ -447,9 +499,12 @@ module.exports = {
       }
       UNION
       {
-        ?id ecrm:P65_shows_visual_item ?depiction .
-        ?depiction skos:prefLabel ?depictionLabel .
-        FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
+        GRAPH ?graph {
+          ?id ecrm:P65_shows_visual_item ?depiction .
+          ?depiction skos:prefLabel ?depictionLabel .
+          FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
+        }
+        FILTER(?graph != <http://data.silknow.org/predictions>)
       }
       UNION
       {
