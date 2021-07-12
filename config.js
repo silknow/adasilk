@@ -87,7 +87,7 @@ module.exports = {
       'geo': 'http://www.w3.org/2003/01/geo/wgs84_pos#',
       'geonames': 'http://www.geonames.org/ontology#',
       'skos': 'http://www.w3.org/2004/02/skos/core#',
-      'silk': 'http://data.silknow.org/ontology/property/',
+      'silk': 'http://data.silknow.org/ontology/',
       'prov': 'http://www.w3.org/ns/prov#',
     }
   },
@@ -204,7 +204,6 @@ module.exports = {
           '?type_a silk:L4|silk:L1 ?digTypeAssigned',
           '?type_a_group skos:member ?digTypeAssigned',
           '?digAssignedGroup skos:member ?digTypeAssigned',
-          '<http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAssignedGroup',
           `OPTIONAL {
             ?digAssignedGroup skos:prefLabel ?digAssignedGroupLabel .
             FILTER(LANG(?digAssignedGroupLabel) = "${language}" || LANG(?digAssignedGroupLabel) = "")

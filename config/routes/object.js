@@ -127,7 +127,6 @@ module.exports = {
         '?type_a silk:L4|silk:L1 ?digTypeAssigned',
         '?type_a_group skos:member ?digTypeAssigned',
         '?digAssignedGroup skos:member ?digTypeAssigned',
-        '<http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAssignedGroup',
       ],
       filterFunc: (values) => {
         return [values.map((val) => `?digAssignedGroup = <${val}>`).join(' || ')];
@@ -351,7 +350,7 @@ module.exports = {
               ?techniqueStatement rdf:subject ?production .
               ?techniqueStatement rdf:predicate ecrm:P32_used_general_technique .
               ?techniqueStatement rdf:object ?technique .
-              ?techniqueStatement <http://data.silknow.org/ontology/L18> ?predictedTechniqueScore .
+              ?techniqueStatement silk:L18 ?predictedTechniqueScore .
               ?techniqueStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedTechniqueKind .
               ?techniqueStatement prov:wasGeneratedBy/prov:used ?predictedTechniqueUsed .
               ?predictedTechniqueKind ecrm:P70_documents ?predictedTechniqueExplanation .
@@ -380,7 +379,7 @@ module.exports = {
               ?materialStatement rdf:subject ?production .
               ?materialStatement rdf:predicate ecrm:P126_employed .
               ?materialStatement rdf:object ?material .
-              ?materialStatement <http://data.silknow.org/ontology/L18> ?predictedMaterialScore .
+              ?materialStatement silk:L18 ?predictedMaterialScore .
               ?materialStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedMaterialKind .
               ?materialStatement prov:wasGeneratedBy/prov:used ?predictedMaterialUsed .
               ?predictedMaterialKind ecrm:P70_documents ?predictedMaterialExplanation .
@@ -409,7 +408,7 @@ module.exports = {
               { ?productionStatement rdf:object ?time . }
               UNION
               { ?productionStatement rdf:object/ecrm:P86_falls_within ?time . }
-              ?productionStatement <http://data.silknow.org/ontology/L18> ?predictedTimeScore .
+              ?productionStatement silk:L18 ?predictedTimeScore .
               ?productionStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedTimeKind .
               ?productionStatement prov:wasGeneratedBy/prov:used ?predictedTimeUsed .
               ?predictedTimeKind ecrm:P70_documents ?predictedTimeExplanation .
@@ -450,7 +449,7 @@ module.exports = {
               ?locationStatement rdf:subject ?production .
               ?locationStatement rdf:predicate ecrm:P8_took_place_on_or_within .
               ?locationStatement rdf:object ?location .
-              ?locationStatement <http://data.silknow.org/ontology/L18> ?predictedLocationScore .
+              ?locationStatement silk:L18 ?predictedLocationScore .
               ?locationStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedLocationKind .
               ?locationStatement prov:wasGeneratedBy/prov:used ?predictedLocationUsed .
               ?predictedLocationKind ecrm:P70_documents ?predictedLocationExplanation .
@@ -472,7 +471,6 @@ module.exports = {
           ?type_a silk:L4|silk:L1 ?digTypeAssigned .
           ?type_a_group skos:member ?digTypeAssigned .
           ?digAssignedGroup skos:member ?digTypeAssigned .
-          <http://data.silknow.org/vocabulary/facet/assignedtypes> skos:member ?digAssignedGroup .
           OPTIONAL {
             ?digAssignedGroup skos:prefLabel ?digAssignedGroupLabel .
             FILTER(LANG(?digAssignedGroupLabel) = "en" || LANG(?digAssignedGroupLabel) = "")
@@ -485,7 +483,7 @@ module.exports = {
               ?depictionStatement rdf:subject ?production .
               ?depictionStatement rdf:predicate ecrm:P65_shows_visual_item .
               ?depictionStatement rdf:object ?depiction .
-              ?depictionStatement <http://data.silknow.org/ontology/L18> ?predictedDepictionScore .
+              ?depictionStatement silk:L18 ?predictedDepictionScore .
               ?depictionStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedDepictionKind .
               ?depictionStatement prov:wasGeneratedBy/prov:used ?predictedDepictionUsed .
               ?predictedDepictionKind ecrm:P70_documents ?predictedDepictionExplanation .
