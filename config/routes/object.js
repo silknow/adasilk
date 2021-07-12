@@ -278,14 +278,12 @@ module.exports = {
       UNION
       {
         ?id ecrm:P3_has_note ?description .
-        FILTER(LANG(?description) = "en" || LANG(?description) = "")
       }
       UNION
       {
         ?custody ecrm:P30_transferred_custody_of ?id .
         ?custody ecrm:P29_custody_received_by ?legalBody .
         ?legalBody rdfs:label ?legalBodyLabel .
-        FILTER(LANG(?legalBodyLabel) = "en" || LANG(?legalBodyLabel) = "")
       }
       UNION
       {
