@@ -14,7 +14,7 @@ module.exports = {
       id: 'time',
       isMulti: true,
       isSortable: true,
-      query: {
+      query: ({ language }) => ({
         '@graph': [
           {
             '@id': '?fallsWithin',
@@ -26,9 +26,9 @@ module.exports = {
           '?time ecrm:P86_falls_within ?fallsWithin',
           '?fallsWithin skos:prefLabel ?label',
         ],
-        $filter: ['langmatches(lang(?label), "en") || lang(?label) = ""'],
+        $filter: [`langmatches(lang(?label), "${language}") || lang(?label) = ""`],
         $langTag: 'hide',
-      },
+      }),
       whereFunc: () => [
         '?production ecrm:P4_has_time-span ?time',
         'OPTIONAL { ?time ecrm:P86_falls_within ?fallsWithin . }'
