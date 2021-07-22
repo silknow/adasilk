@@ -476,24 +476,6 @@ module.exports = {
             FILTER(LANG(?digAssignedGroupLabel) = "en" || LANG(?digAssignedGroupLabel) = "")
           }
         }
-        UNION
-        {
-          SELECT DISTINCT ?production ?depictionStatement ?depiction ?depictionLabel ?predictedDepictionScore ?predictedDepictionKind ?predictedDepictionUsed ?predictedDepictionExplanation WHERE {
-            GRAPH <http://data.silknow.org/predictions> {
-              ?depictionStatement rdf:subject ?production .
-              ?depictionStatement rdf:predicate ecrm:P65_shows_visual_item .
-              ?depictionStatement rdf:object ?depiction .
-              ?depictionStatement silk:L18 ?predictedDepictionScore .
-              ?depictionStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedDepictionKind .
-              ?depictionStatement prov:wasGeneratedBy/prov:used ?predictedDepictionUsed .
-              ?predictedDepictionKind ecrm:P70_documents ?predictedDepictionExplanation .
-            }
-            OPTIONAL {
-              ?depiction skos:prefLabel ?depictionLabel .
-              FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
-            }
-          }
-        }
       }
       UNION
       {
@@ -503,6 +485,24 @@ module.exports = {
           FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
         }
         FILTER(?graph != <http://data.silknow.org/predictions>)
+      }
+      UNION
+      {
+        SELECT DISTINCT ?id ?depictionStatement ?depiction ?depictionLabel ?predictedDepictionScore ?predictedDepictionKind ?predictedDepictionUsed ?predictedDepictionExplanation WHERE {
+          GRAPH <http://data.silknow.org/predictions> {
+            ?depictionStatement rdf:subject ?id .
+            ?depictionStatement rdf:predicate ecrm:P65_shows_visual_item .
+            ?depictionStatement rdf:object ?depiction .
+            ?depictionStatement silk:L18 ?predictedDepictionScore .
+            ?depictionStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedDepictionKind .
+            ?depictionStatement prov:wasGeneratedBy/prov:used ?predictedDepictionUsed .
+            ?predictedDepictionKind ecrm:P70_documents ?predictedDepictionExplanation .
+          }
+          OPTIONAL {
+            ?depiction skos:prefLabel ?depictionLabel .
+            FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
+          }
+        }
       }
       UNION
       {
