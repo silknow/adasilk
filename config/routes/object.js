@@ -352,7 +352,7 @@ module.exports = {
               ?techniqueStatement rdf:object ?technique .
               ?techniqueStatement silk:L18 ?predictedTechniqueScore .
               ?techniqueStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedTechniqueKind .
-              ?techniqueStatement prov:wasGeneratedBy/prov:used ?predictedTechniqueUsed .
+              OPTIONAL { ?techniqueStatement prov:wasGeneratedBy/prov:used ?predictedTechniqueUsed . }
               ?predictedTechniqueKind ecrm:P70_documents ?predictedTechniqueExplanation .
             }
             ?technique skos:prefLabel ?techniqueLabel .
@@ -381,7 +381,7 @@ module.exports = {
               ?materialStatement rdf:object ?material .
               ?materialStatement silk:L18 ?predictedMaterialScore .
               ?materialStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedMaterialKind .
-              ?materialStatement prov:wasGeneratedBy/prov:used ?predictedMaterialUsed .
+              OPTIONAL { ?materialStatement prov:wasGeneratedBy/prov:used ?predictedMaterialUsed . }
               ?predictedMaterialKind ecrm:P70_documents ?predictedMaterialExplanation .
             }
             ?material skos:prefLabel ?materialLabel .
@@ -410,7 +410,7 @@ module.exports = {
               { ?productionStatement rdf:object/ecrm:P86_falls_within ?time . }
               ?productionStatement silk:L18 ?predictedTimeScore .
               ?productionStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedTimeKind .
-              ?productionStatement prov:wasGeneratedBy/prov:used ?predictedTimeUsed .
+              OPTIONAL { ?productionStatement prov:wasGeneratedBy/prov:used ?predictedTimeUsed . }
               ?predictedTimeKind ecrm:P70_documents ?predictedTimeExplanation .
             }
             ?time skos:prefLabel ?timeLabel .
@@ -451,7 +451,7 @@ module.exports = {
               ?locationStatement rdf:object ?location .
               ?locationStatement silk:L18 ?predictedLocationScore .
               ?locationStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedLocationKind .
-              ?locationStatement prov:wasGeneratedBy/prov:used ?predictedLocationUsed .
+              OPTIONAL { ?locationStatement prov:wasGeneratedBy/prov:used ?predictedLocationUsed . }
               ?predictedLocationKind ecrm:P70_documents ?predictedLocationExplanation .
             }
             OPTIONAL {
@@ -495,7 +495,7 @@ module.exports = {
             ?depictionStatement rdf:object ?depiction .
             ?depictionStatement silk:L18 ?predictedDepictionScore .
             ?depictionStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedDepictionKind .
-            ?depictionStatement prov:wasGeneratedBy/prov:used ?predictedDepictionUsed .
+            OPTIONAL { ?depictionStatement prov:wasGeneratedBy/prov:used ?predictedDepictionUsed . }
             ?predictedDepictionKind ecrm:P70_documents ?predictedDepictionExplanation .
           }
           OPTIONAL {
