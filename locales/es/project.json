@@ -47,5 +47,13 @@
     "accept": "Consiento",
     "decline": "No consiento",
     "submit": "Enviar"
+  },
+  "predictions": {
+    "text": "Este valor se ha predicho en función de {{kind}}. ¡Haz clic para saber más!",
+    "kinds": {
+      "http://data.silknow.org/actor/jsi-text-analysis/1": "descripciones textuales",
+      "http://data.silknow.org/actor/luh-image-analysis/1": "imagenes",
+      "http://data.silknow.org/actor/XGBoost-classifier/1": "valores categóricos"
+    }
   }
 }
