@@ -98,6 +98,11 @@ const museums = [{
   label: 'Museo de Arte Sacro El Tesoro de la Concepción',
   icon: '/images/graphs/http-data-silknow-org-el-tesoro.png',
   url: 'https://www.facebook.com/tesoroconcepcionorotava',
+}, {
+  '@id': 'http://data.silknow.org/graph/louvre',
+  label: 'Musée du Louvre',
+  icon: '/images/graphs/http-data-silknow-org-louvre.png',
+  url: 'https://www.louvre.fr/',
 }];
 
 museums.sort((a, b) => a.label.localeCompare(b.label));
