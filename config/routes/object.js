@@ -226,7 +226,6 @@ module.exports = {
           label: '?techniqueLabel',
           prediction: {
             '@id': '?techniqueStatement',
-            label: '?techniqueLabel',
             score: '?predictedTechniqueScore',
             kind: '?predictedTechniqueKind',
             explanation: '?predictedTechniqueExplanation',
@@ -336,12 +335,11 @@ module.exports = {
       {
         ?production ecrm:P108_has_produced ?id .
         {
-          GRAPH ?graph {
+          GRAPH ?g {
             ?production ecrm:P32_used_general_technique ?technique .
-            ?technique skos:prefLabel ?techniqueLabel .
-            FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
           }
-          FILTER(?graph != <http://data.silknow.org/predictions>)
+          ?technique skos:prefLabel ?techniqueLabel .
+          FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
         }
         UNION
         {
@@ -365,12 +363,11 @@ module.exports = {
         }
         UNION
         {
-          GRAPH ?graph {
+          GRAPH ?g {
             ?production ecrm:P126_employed ?material .
-            ?material skos:prefLabel ?materialLabel .
-            FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
           }
-          FILTER(?graph != <http://data.silknow.org/predictions>)
+          ?material skos:prefLabel ?materialLabel .
+          FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
         }
         UNION
         {
@@ -390,14 +387,13 @@ module.exports = {
         }
         UNION
         {
-          GRAPH ?graph {
+          GRAPH ?g {
             { ?production ecrm:P4_has_time-span ?time . }
             UNION
             { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?time . }
           }
           ?time skos:prefLabel ?timeLabel .
           FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
-          FILTER(?graph != <http://data.silknow.org/predictions>)
         }
         UNION
         {
@@ -428,10 +424,9 @@ module.exports = {
         }
         UNION
         {
-          GRAPH ?graph {
+          GRAPH ?g {
             ?production ecrm:P8_took_place_on_or_within ?location .
           }
-          FILTER(?graph != <http://data.silknow.org/predictions>)
           OPTIONAL {
             ?location ?locationProp ?locationLabel .
             VALUES ?locationProp { geonames:name rdfs:label }
@@ -479,12 +474,11 @@ module.exports = {
       }
       UNION
       {
-        GRAPH ?graph {
+        GRAPH ?g {
           ?id ecrm:P65_shows_visual_item ?depiction .
-          ?depiction skos:prefLabel ?depictionLabel .
-          FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
         }
-        FILTER(?graph != <http://data.silknow.org/predictions>)
+        ?depiction skos:prefLabel ?depictionLabel .
+        FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
       }
       UNION
       {
