@@ -5,7 +5,7 @@ module.exports = {
   uriBase: 'http://data.silknow.org/object',
   details: {
     view: 'gallery',
-    excludedMetadata: ['representation', 'description', 'category', 'usedType', 'century'],
+    excludedMetadata: ['representation', 'description', 'category', 'usedType', 'century', 'sameAs'],
     showPermalink: true,
   },
   filterByGraph: true,
@@ -194,6 +194,7 @@ module.exports = {
         '@id': '?id',
         '@graph': '?g',
         label: '?label',
+        sameAs: '?sameAs',
         identifier: '?identifier',
         description: '?description',
         representation: {
@@ -300,6 +301,10 @@ module.exports = {
       UNION
       {
         ?id rdfs:label ?label .
+      }
+      UNION
+      {
+        ?id owl:sameAs ?sameAs .
       }
       UNION
       {
