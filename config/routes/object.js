@@ -5,7 +5,7 @@ module.exports = {
   uriBase: 'http://data.silknow.org/object',
   details: {
     view: 'gallery',
-    excludedMetadata: ['representation', 'description', 'category', 'usedType', 'century', 'sameAs'],
+    excludedMetadata: ['representation', 'description', 'category', 'usedType', 'century', 'sameAs', 'legalBody'],
     showPermalink: true,
   },
   filterByGraph: true,
