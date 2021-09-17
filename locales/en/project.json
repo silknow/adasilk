@@ -17,7 +17,8 @@
     "time": "Production time",
     "location": "Production place",
     "dimension": "Dimension",
-    "type": "Type of object"
+    "type": "Type of object",
+    "acquisition": "Acquisition"
   },
   "routes": {
     "object": "Objects",

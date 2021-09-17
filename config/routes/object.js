@@ -206,6 +206,10 @@ module.exports = {
           '@id': '?legalBody',
           label: '?legalBodyLabel',
         },
+        acquisition: {
+          '@id': '?acquisition',
+          label: '?acquisitionLabel',
+        },
         composed: {
           '@id': '?collection',
           '@type': 'http://erlangen-crm.org/current/E78_Collection',
@@ -315,6 +319,11 @@ module.exports = {
         ?custody ecrm:P30_transferred_custody_of ?id .
         ?custody ecrm:P29_custody_received_by ?legalBody .
         ?legalBody rdfs:label ?legalBodyLabel .
+      }
+      UNION
+      {
+        ?acquisition ecrm:P24_transferred_title_of ?id .
+        ?acquisition ecrm:P23_transferred_title_from ?acquisitionLabel .
       }
       UNION
       {

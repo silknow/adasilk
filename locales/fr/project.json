@@ -17,7 +17,8 @@
     "time": "Date de production",
     "location": "Lieu de production",
     "dimension": "Dimension",
-    "type": "Type d'objet"
+    "type": "Type d'objet",
+    "acquisition": "Acquisition"
   },
   "routes": {
     "object": "Objets",

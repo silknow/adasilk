@@ -17,7 +17,8 @@
     "time": "Siglo",
     "location": "Lugar de producción",
     "dimension": "Dimensión",
-    "type": "Tipo de objeto"
+    "type": "Tipo de objeto",
+    "acquisition": "Adquisición"
   },
   "routes": {
     "object": "Objetos",
