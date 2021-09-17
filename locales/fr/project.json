@@ -18,7 +18,8 @@
     "location": "Lieu de production",
     "dimension": "Dimension",
     "type": "Type d'objet",
-    "acquisition": "Acquisition"
+    "acquisition": "Acquisition",
+    "carriedOut": "Réalisé par"
   },
   "routes": {
     "object": "Objets",

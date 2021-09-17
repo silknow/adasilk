@@ -185,7 +185,10 @@ module.exports = {
     technique: (value, index, { usedType }) => {
       // Combine technique and used object type
       return `${value}${usedType && usedType[index] ? ` / ${usedType[index]['@id']}` : ''}`;
-    }
+    },
+    carriedOut: (value, index, { carriedOut }) => {
+      return `${value}${carriedOut[index] && carriedOut[index].type ? ` (${carriedOut[index].type})` : ''}`;
+    },
   },
   query: {
     '@graph': [
@@ -209,6 +212,12 @@ module.exports = {
         acquisition: {
           '@id': '?acquisition',
           label: '?acquisitionLabel',
+        },
+        carriedOut: {
+          '@id': '?carriedOut',
+          label: '?carriedOutLabel',
+          type: '?carriedOutType',
+          url: '?carriedOutUrl',
         },
         composed: {
           '@id': '?collection',
@@ -484,6 +493,14 @@ module.exports = {
             ?digAssignedGroup skos:prefLabel ?digAssignedGroupLabel .
             FILTER(LANG(?digAssignedGroupLabel) = "en" || LANG(?digAssignedGroupLabel) = "")
           }
+        }
+        UNION
+        {
+          ?production ecrm:P9_consists_of ?activityCarried .
+          ?activityCarried ecrm:P14_carried_out_by ?carriedOut .
+          OPTIONAL { ?activityCarried ecrm:P2_has_type ?carriedOutType . }
+          ?carriedOut ecrm:P1_is_identified_by ?carriedOutLabel .
+          OPTIONAL { ?carriedOut foaf:isPrimaryTopicOf ?carriedOutUrl . }
         }
       }
       UNION
