@@ -19,7 +19,8 @@
     "dimension": "Dimension",
     "type": "Type d'objet",
     "acquisition": "Acquisition",
-    "carriedOut": "Réalisé par"
+    "carriedOut": "Réalisé par",
+    "legalBody": "Transfert de garde"
   },
   "routes": {
     "object": "Objets",

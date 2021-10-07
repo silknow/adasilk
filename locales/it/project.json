@@ -19,7 +19,8 @@
     "dimension": "Dimensione",
     "type": "Tipo di oggetto",
     "acquisition": "Acquisizione",
-    "carriedOut": "Eseguito da"
+    "carriedOut": "Eseguito da",
+    "legalBody": "Trasferimento di custodia"
   },
   "routes": {
     "object": "Oggetti",
