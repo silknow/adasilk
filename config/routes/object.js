@@ -539,7 +539,7 @@ module.exports = {
           }
           OPTIONAL {
             ?representationRight a ecrm:E30_Right .
-            ?representationRight ecrm:P104i_applies_to ?id .
+            ?representationRight ecrm:P104i_applies_to ?representation .
             ?representationRight rdfs:comment ?representationRightComment .
           }
         }
