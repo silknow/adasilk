@@ -2,17 +2,20 @@ version: '3'
 services:
   web:
     ports:
-      - '4733:3000'
+      - '4833:3000'
     environment:
       - NODE_ENV=production
-    network_mode: bridge
+    volumes:
+      - ./.env:/custom/.env
+      - ./public:/custom/public
+      - ./config:/custom/config
+      - ./config.js:/custom/config.js
+      - ./theme.js:/custom/theme.js
+    command: sh -c "cp -r /custom/. /usr/src/app/ && npm run build && npm start"
     restart: unless-stopped
   mongo:
-    network_mode: bridge
     restart: unless-stopped
   imaginary:
-    network_mode: bridge
     restart: unless-stopped
   redis:
-    network_mode: bridge
     restart: unless-stopped

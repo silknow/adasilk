@@ -3,11 +3,34 @@ services:
   web:
     command: npm run dev
     ports:
-      - '3000:3000'
+      - '3001:3001'
     volumes:
+      - /usr/src/app/node_modules
+      - /usr/src/app/.next
+      - ./.env:/usr/src/app/.env
       - ./config.js:/usr/src/app/config.js
+      - ./config/:/usr/src/app/config/
       - ./theme.js:/usr/src/app/theme.js
-      - ./images:/usr/src/app/public/images
-      - ./locales:/usr/src/app/public/static/locales
+      - ./public/images/graphs/:/usr/src/app/public/images/graphs/
+      - ./public/images/pages/:/usr/src/app/public/images/pages/
+      - ./public/images/silknow-hero.jpg:/usr/src/app/public/images/silknow-hero.jpg
+      - ./public/images/silknow-footer.png:/usr/src/app/public/images/silknow-footer.png
+      - ./public/images/silknow-logo.png:/usr/src/app/public/images/silknow-logo.png
+      - ./public/images/virtual-loom-logo.png:/usr/src/app/public/images/virtual-loom-logo.png
+      - ./public/images/stmaps-logo.png:/usr/src/app/public/images/stmaps-logo.png
+      - ./public/images/silknow-placeholder.png:/usr/src/app/public/images/silknow-placeholder.png
+      - ./public/images/favicon.png:/usr/src/app/public/images/favicon.png
+      - ./public/locales/en/project.json:/usr/src/app/public/static/locales/en/project.json
+      - ./public/locales/en/home.json:/usr/src/app/public/static/locales/en/home.json
+      - ./public/locales/fr/project.json:/usr/src/app/public/static/locales/fr/project.json
+      - ./public/locales/fr/home.json:/usr/src/app/public/static/locales/fr/home.json
+      - ./public/locales/es/project.json:/usr/src/app/public/static/locales/es/project.json
+      - ./public/locales/es/home.json:/usr/src/app/public/static/locales/es/home.json
+      - ./public/locales/it/project.json:/usr/src/app/public/static/locales/it/project.json
+      - ./public/locales/it/home.json:/usr/src/app/public/static/locales/it/home.json
     environment:
       - NODE_ENV=development
+      - PORT=3001
+  mongo:
+    ports:
+      - '27019:27017'

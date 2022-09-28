@@ -1,20 +1,25 @@
 version: '3'
 services:
   web:
+    container_name: adasilk-staging_web
     ports:
       - '4734:3000'
     environment:
       - NODE_ENV=production
     volumes:
-      - ./.env.staging:/usr/src/app/.env
-    network_mode: bridge
+      - ./.env.staging:/custom/.env
+      - ./public:/custom/public
+      - ./config:/custom/config
+      - ./config.js:/custom/config.js
+      - ./theme.js:/custom/theme.js
+    command: sh -c "cp -r /custom/. /usr/src/app/ && npm run build && npm start"
     restart: unless-stopped
   mongo:
-    network_mode: bridge
+    container_name: adasilk-staging_mongo
     restart: unless-stopped
   imaginary:
-    network_mode: bridge
+    container_name: adasilk-staging_imaginary
     restart: unless-stopped
   redis:
-    network_mode: bridge
+    container_name: adasilk-staging_redis
     restart: unless-stopped

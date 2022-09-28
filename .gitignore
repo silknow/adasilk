@@ -1,7 +1,7 @@
+.vscode
 node_modules
 .next
 .env
-.env.*
 out
 *.bak
 *.log

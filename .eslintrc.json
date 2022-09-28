@@ -1,0 +1,64 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["plugin:react/recommended", "airbnb", "prettier"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "node_modules/exploratory-search/node_modules"]
+      },
+      "babel-module": {
+        "root": ["./node_modules/exploratory-search", "."],
+        "alias": {
+          "@components": ["./node_modules/exploratory-search/src/components", "./src/components"],
+          "@helpers": ["./node_modules/exploratory-search/src/helpers", "./src/helpers"],
+          "@pages": ["./node_modules/exploratory-search/src/pages", "./src/pages"],
+          "@styles": ["./node_modules/exploratory-search/src/styles", "./src/styles"],
+          "~": ["./node_modules/exploratory-search", "."]
+        }
+      }
+    }
+  },
+  "rules": {
+    "react/no-danger": 0,
+    "react/react-in-jsx-scope": 0,
+    "react/prop-types": 0,
+    "react/jsx-filename-extension": 0,
+    "react/destructuring-assignment": 0,
+    "react/jsx-props-no-spreading": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "no-nested-ternary": 0,
+    "no-await-in-loop": 0,
+    "array-callback-return": 0,
+    "consistent-return": 0,
+    "no-param-reassign": 0,
+    "lines-between-class-members": 0,
+    "global-require": 0,
+    "import/prefer-default-export": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/no-named-as-default-member": 0,
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "assert": "nesting",
+        "controlComponents": ["Input", "Switch"]
+      }
+    ],
+    "no-underscore-dangle": [
+      "error",
+      {
+        "allow": ["_id"]
+      }
+    ]
+  }
+}
