@@ -21,8 +21,6 @@ services:
     environment:
       PORT: 9000
     command: -enable-url-source -mount /mnt/data -allowed-origins ${IMAGINARY_ALLOWED_ORIGINS} -http-cache-ttl 31556926
-    ports:
-      - '9000:9000'
   redis:
     container_name: adasilk_redis
     image: redis
