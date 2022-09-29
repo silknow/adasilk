@@ -54,9 +54,9 @@
   "predictions": {
     "text": "Cette valeur a été prédite sur la base {{kind}}. Cliquez pour en savoir plus !",
     "kinds": {
-      "http://data.silknow.org/actor/jsi-text-analysis/1": "de descriptions textuelles ",
-      "http://data.silknow.org/actor/luh-image-analysis/1": "d'images",
-      "http://data.silknow.org/actor/XGBoost-classifier/1": "de valeurs catégoriques"
+      "http://data.silknow.org/actor/jsi-text-analysis/": "de descriptions textuelles ",
+      "http://data.silknow.org/actor/luh-image-analysis/": "d'images",
+      "http://data.silknow.org/actor/XGBoost-classifier/": "de valeurs catégoriques"
     }
   }
 }
