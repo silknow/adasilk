@@ -2,6 +2,7 @@
 node_modules
 .next
 .env
+.env.staging
 out
 *.bak
 *.log
