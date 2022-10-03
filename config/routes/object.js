@@ -33,9 +33,7 @@ module.exports = {
         '?production ecrm:P4_has_time-span ?time',
         'OPTIONAL { ?time ecrm:P86_falls_within ?fallsWithin . }'
       ],
-      filterFunc: (values) => {
-        return [values.map((val) => `?time = <${val}> || ?fallsWithin = <${val}>`).join(' || ')];
-      },
+      filterFunc: (val) => `?time = <${val}> || ?fallsWithin = <${val}>`,
     },
     {
       id: 'location',
@@ -62,9 +60,7 @@ module.exports = {
         '?production ecrm:P8_took_place_on_or_within ?location',
         'OPTIONAL { ?location geonames:parentCountry ?parentCountry . }'
       ],
-      filterFunc: (values) => {
-        return [values.map((val) => `?location = <${val}> || ?parentCountry = <${val}>`).join(' || ')];
-      },
+      filterFunc: (val) => `?location = <${val}> || ?parentCountry = <${val}>`,
     },
     {
       id: 'material',
@@ -81,9 +77,7 @@ module.exports = {
         }
         `
       ],
-      filterFunc: (values) => {
-        return [values.map((val) => `?material = <${val}> || ?broaderMaterial = <${val}>`).join(' || ')];
-      },
+      filterFunc: (val) => `?material = <${val}> || ?broaderMaterial = <${val}>`,
     },
     {
       id: 'technique',
@@ -100,9 +94,7 @@ module.exports = {
         }
         `
       ],
-      filterFunc: (values) => {
-        return [values.map((val) => `?technique = <${val}> || ?broaderTechnique = <${val}>`).join(' || ')];
-      },
+      filterFunc: (val) => `?technique = <${val}> || ?broaderTechnique = <${val}>`,
     },
     {
       id: 'depiction',
@@ -113,9 +105,7 @@ module.exports = {
         '?id ecrm:P65_shows_visual_item ?depiction',
         'OPTIONAL { ?broaderDepiction (skos:member|skos:narrower)* ?depiction }'
       ],
-      filterFunc: (values) => {
-        return [values.map((val) => `?depiction = <${val}> || ?broaderDepiction = <${val}>`).join(' || ')];
-      },
+      filterFunc: (val) => `?depiction = <${val}> || ?broaderDepiction = <${val}>`,
     },
     {
       id: 'type',
@@ -128,9 +118,7 @@ module.exports = {
         '?type_a_group skos:member ?digTypeAssigned',
         '?digAssignedGroup skos:member ?digTypeAssigned',
       ],
-      filterFunc: (values) => {
-        return [values.map((val) => `?digAssignedGroup = <${val}>`).join(' || ')];
-      },
+      filterFunc: (val) => `?digAssignedGroup = <${val}>`,
     },
     {
       id: 'composed',
@@ -140,9 +128,7 @@ module.exports = {
         '?collection a ecrm:E78_Collection',
         '?collection ecrm:P106_is_composed_of ?id',
       ],
-      filterFunc: (values) => {
-        return [values.map((val) => `?collection = <${val}>`).join(' || ')];
-      },
+      filterFunc: (val) => `?collection = <${val}>`,
     },
     {
       id: 'show-only-fabric',
