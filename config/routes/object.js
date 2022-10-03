@@ -165,16 +165,12 @@ module.exports = {
     '?production ecrm:P108_has_produced ?id',
   ],
   metadata: {
-    dimension: (value, index, { dimension }) => {
-      return `${dimension[index].value} ${dimension[index].unit} (${dimension[index].type})`;
-    },
-    technique: (value, index, { usedType }) => {
+    dimension: (value, index, { dimension }) => `${dimension[index].value} ${dimension[index].unit} (${dimension[index].type})`,
+    technique: (value, index, { usedType }) =>
       // Combine technique and used object type
-      return `${value}${usedType && usedType[index] ? ` / ${usedType[index]['@id']}` : ''}`;
-    },
-    carriedOut: (value, index, { carriedOut }) => {
-      return `${value}${carriedOut[index] && carriedOut[index].type ? ` (${carriedOut[index].type})` : ''}`;
-    },
+      `${value}${usedType && usedType[index] ? ` / ${usedType[index]['@id']}` : ''}`
+    ,
+    carriedOut: (value, index, { carriedOut }) => `${value}${carriedOut[index] && carriedOut[index].type ? ` (${carriedOut[index].type})` : ''}`,
   },
   query: {
     '@graph': [
