@@ -20,14 +20,14 @@ services:
       - ./public/images/stmaps-logo.png:/usr/src/app/public/images/stmaps-logo.png
       - ./public/images/silknow-placeholder.png:/usr/src/app/public/images/silknow-placeholder.png
       - ./public/images/favicon.png:/usr/src/app/public/images/favicon.png
-      - ./public/locales/en/project.json:/usr/src/app/public/static/locales/en/project.json
-      - ./public/locales/en/home.json:/usr/src/app/public/static/locales/en/home.json
-      - ./public/locales/fr/project.json:/usr/src/app/public/static/locales/fr/project.json
-      - ./public/locales/fr/home.json:/usr/src/app/public/static/locales/fr/home.json
-      - ./public/locales/es/project.json:/usr/src/app/public/static/locales/es/project.json
-      - ./public/locales/es/home.json:/usr/src/app/public/static/locales/es/home.json
-      - ./public/locales/it/project.json:/usr/src/app/public/static/locales/it/project.json
-      - ./public/locales/it/home.json:/usr/src/app/public/static/locales/it/home.json
+      - ./public/static/locales/en/project.json:/usr/src/app/public/static/locales/en/project.json
+      - ./public/static/locales/en/home.json:/usr/src/app/public/static/locales/en/home.json
+      - ./public/static/locales/fr/project.json:/usr/src/app/public/static/locales/fr/project.json
+      - ./public/static/locales/fr/home.json:/usr/src/app/public/static/locales/fr/home.json
+      - ./public/static/locales/es/project.json:/usr/src/app/public/static/locales/es/project.json
+      - ./public/static/locales/es/home.json:/usr/src/app/public/static/locales/es/home.json
+      - ./public/static/locales/it/project.json:/usr/src/app/public/static/locales/it/project.json
+      - ./public/static/locales/it/home.json:/usr/src/app/public/static/locales/it/home.json
     environment:
       - NODE_ENV=development
       - PORT=3001
