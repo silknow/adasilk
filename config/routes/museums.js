@@ -103,6 +103,11 @@ const museums = [{
   label: 'Musée du Louvre',
   icon: '/images/graphs/http-data-silknow-org-louvre.png',
   url: 'https://www.louvre.fr/',
+}, {
+  '@id': 'http://data.silknow.org/graph/musee-st-etienne',
+  label: 'Musée d\'Art et d\'Industrie de Saint-Etienne',
+  icon: '/images/graphs/http-data-silknow-org-st-etienne.png',
+  url: 'https://mai.saint-etienne.fr/',
 }];
 
 museums.sort((a, b) => a.label.localeCompare(b.label));
