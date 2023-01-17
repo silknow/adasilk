@@ -13,6 +13,7 @@ const theme = {
     background: '#f7f7ef',
     primary: '#f38468',
     secondary: '#144168',
+    danger: '#dc3545',
     linkHover: '#a02a0c',
     light: '#f5b1a1',
     prediction: '#00578c',
