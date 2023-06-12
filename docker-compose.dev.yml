@@ -28,6 +28,7 @@ services:
       - ./public/static/locales/es/home.json:/usr/src/app/public/static/locales/es/home.json
       - ./public/static/locales/it/project.json:/usr/src/app/public/static/locales/it/project.json
       - ./public/static/locales/it/home.json:/usr/src/app/public/static/locales/it/home.json
+      - ./src/pages/details/silknow-gallery.js:/usr/src/app/src/pages/details/silknow-gallery.js
     environment:
       - NODE_ENV=development
       - PORT=3001

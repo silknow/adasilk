@@ -4,7 +4,7 @@ module.exports = {
   rdfType: 'http://erlangen-crm.org/current/E22_Man-Made_Object',
   uriBase: 'http://data.silknow.org/object',
   details: {
-    view: 'gallery',
+    view: 'silknow-gallery',
     excludedMetadata: ['representation', 'description', 'category', 'usedType', 'century', 'sameAs'],
     showPermalink: true,
   },
