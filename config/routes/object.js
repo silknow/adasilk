@@ -260,7 +260,7 @@ module.exports = {
           '@id': '?time',
           label: '?timeLabel',
           prediction: {
-            '@id': '?timeStatement',
+            '@id': '?productionStatement',
             score: '?predictedTimeScore',
             kind: '?predictedTimeKind',
             explanation: '?predictedTimeExplanation',
