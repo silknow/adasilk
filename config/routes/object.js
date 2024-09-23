@@ -5,7 +5,14 @@ module.exports = {
   uriBase: 'http://data.silknow.org/object',
   details: {
     view: 'silknow-gallery',
-    excludedMetadata: ['representation', 'description', 'category', 'usedType', 'century', 'sameAs'],
+    excludedMetadata: [
+      'representation',
+      'description',
+      'category',
+      'usedType',
+      'century',
+      'sameAs',
+    ],
     showPermalink: true,
   },
   filterByGraph: true,
@@ -31,7 +38,7 @@ module.exports = {
       }),
       whereFunc: () => [
         '?production ecrm:P4_has_time-span ?time',
-        'OPTIONAL { ?time ecrm:P86_falls_within ?fallsWithin . }'
+        'OPTIONAL { ?time ecrm:P86_falls_within ?fallsWithin . }',
       ],
       filterFunc: (val) => `?time = <${val}> || ?fallsWithin = <${val}>`,
     },
@@ -50,15 +57,13 @@ module.exports = {
           '?production ecrm:P8_took_place_on_or_within ?location',
           '?location geonames:name ?locationLabel',
         ],
-        $filter: [
-          'langmatches(lang(?locationLabel), "en") || lang(?locationLabel) = ""',
-        ],
+        $filter: ['langmatches(lang(?locationLabel), "en") || lang(?locationLabel) = ""'],
         $orderby: ['ASC(?locationLabel)'],
         $langTag: 'hide',
       },
       whereFunc: () => [
         '?production ecrm:P8_took_place_on_or_within ?location',
-        'OPTIONAL { ?location geonames:parentCountry ?parentCountry . }'
+        'OPTIONAL { ?location geonames:parentCountry ?parentCountry . }',
       ],
       filterFunc: (val) => `?location = <${val}> || ?parentCountry = <${val}>`,
     },
@@ -75,7 +80,7 @@ module.exports = {
             OPTIONAL { ?broaderMaterial (skos:member|skos:narrower)* ?material. }
           }
         }
-        `
+        `,
       ],
       filterFunc: (val) => `?material = <${val}> || ?broaderMaterial = <${val}>`,
     },
@@ -92,7 +97,7 @@ module.exports = {
             OPTIONAL { ?broaderTechnique (skos:member|skos:narrower)* ?technique. }
           }
         }
-        `
+        `,
       ],
       filterFunc: (val) => `?technique = <${val}> || ?broaderTechnique = <${val}>`,
     },
@@ -103,7 +108,7 @@ module.exports = {
       vocabulary: 'depiction',
       whereFunc: () => [
         '?id ecrm:P65_shows_visual_item ?depiction',
-        'OPTIONAL { ?broaderDepiction (skos:member|skos:narrower)* ?depiction }'
+        'OPTIONAL { ?broaderDepiction (skos:member|skos:narrower)* ?depiction }',
       ],
       filterFunc: (val) => `?depiction = <${val}> || ?broaderDepiction = <${val}>`,
     },
@@ -165,12 +170,15 @@ module.exports = {
     '?production ecrm:P108_has_produced ?id',
   ],
   metadata: {
-    dimension: (value, index, { dimension }) => `${dimension[index].value} ${dimension[index].unit} (${dimension[index].type})`,
+    dimension: (value, index, { dimension }) =>
+      `${dimension[index].value} ${dimension[index].unit} (${dimension[index].type})`,
     technique: (value, index, { usedType }) =>
       // Combine technique and used object type
-      `${value}${usedType && usedType[index] ? ` / ${usedType[index]['@id']}` : ''}`
-    ,
-    carriedOut: (value, index, { carriedOut }) => `${value}${carriedOut[index] && carriedOut[index].type ? ` (${carriedOut[index].type})` : ''}`,
+      `${value}${usedType && usedType[index] ? ` / ${usedType[index]['@id']}` : ''}`,
+    carriedOut: (value, index, { carriedOut }) =>
+      `${value}${
+        carriedOut[index] && carriedOut[index].type ? ` (${carriedOut[index].type})` : ''
+      }`,
   },
   query: {
     '@graph': [
@@ -185,7 +193,7 @@ module.exports = {
         representation: {
           '@id': '?representation',
           image: '?representationUrl',
-          label: '?representationRightComment'
+          label: '?representationRightComment',
         },
         legalBody: {
           '@id': '?legalBody',
@@ -215,7 +223,7 @@ module.exports = {
             kind: '?predictedMaterialKind',
             explanation: '?predictedMaterialExplanation',
             used: '?predictedMaterialUsed',
-          }
+          },
         },
         technique: {
           '@id': '?technique',
@@ -226,7 +234,7 @@ module.exports = {
             kind: '?predictedTechniqueKind',
             explanation: '?predictedTechniqueExplanation',
             used: '?predictedTechniqueUsed',
-          }
+          },
         },
         usedType: {
           '@id': '?usedType',
@@ -240,7 +248,7 @@ module.exports = {
             kind: '?predictedDepictionKind',
             explanation: '?predictedDepictionExplanation',
             used: '?predictedDepictionUsed',
-          }
+          },
         },
         dimension: {
           '@id': '?dimension',
@@ -257,11 +265,11 @@ module.exports = {
             kind: '?predictedTimeKind',
             explanation: '?predictedTimeExplanation',
             used: '?predictedTimeUsed',
-          }
+          },
         },
         century: {
           '@id': '?century',
-          label: '?centuryLabel'
+          label: '?centuryLabel',
         },
         location: {
           '@id': '?location',
@@ -275,16 +283,16 @@ module.exports = {
             kind: '?predictedLocationKind',
             explanation: '?predictedLocationExplanation',
             used: '?predictedLocationUsed',
-          }
+          },
         },
         type: {
           '@id': '?digAssignedGroup',
-          'label': '?digAssignedGroupLabel',
+          label: '?digAssignedGroupLabel',
         },
         category: {
           '@id': '?assigned',
-          'label': '?assignedLabel',
-        }
+          label: '?assignedLabel',
+        },
       },
     ],
     $where: [
@@ -526,13 +534,13 @@ module.exports = {
           }
         }
       }
-      `
+      `,
     ],
     $langTag: 'hide',
   },
   textSearchFunc: (q) => {
     const quotedValue = JSON.stringify(q);
-    const bifValue = `${q.replace(/'/g, '\\\'')}*`;
+    const bifValue = `${q.replace(/'/g, "\\'")}*`;
     const quotedBifValue = JSON.stringify(bifValue);
     return [
       `
@@ -549,7 +557,7 @@ module.exports = {
         UNION
         { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o ?_s3p ?_s3o . FILTER(?_s3o = ${quotedValue}) }
       }
-      `
-    ]
+      `,
+    ];
   },
 };
