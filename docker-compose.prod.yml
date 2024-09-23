@@ -1,6 +1,8 @@
 version: '3'
 services:
   web:
+    build:
+      dockerfile: ./dev.Dockerfile
     ports:
       - '4733:3000'
     environment:

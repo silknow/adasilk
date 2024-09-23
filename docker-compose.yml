@@ -2,7 +2,8 @@ version: '3'
 services:
   web:
     container_name: adasilk_web
-    build: https://github.com/D2KLab/explorer.git
+    build:
+      context: https://github.com/D2KLab/explorer.git
     depends_on:
       - mongo
       - redis

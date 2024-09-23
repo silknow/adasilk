@@ -1,6 +1,8 @@
 version: '3'
 services:
   web:
+    build:
+      dockerfile: ./dev.Dockerfile
     command: npm run dev
     ports:
       - '3001:3001'
