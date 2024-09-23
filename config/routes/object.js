@@ -356,7 +356,7 @@ module.exports = {
         }
         UNION
         {
-          SELECT DISTINCT ?production ?techniqueStatement ?technique ?techniqueLabel ?predictedTechniqueScore ?predictedTechniqueKind ?predictedTechniqueUsed ?predictedTechniqueExplanation WHERE {
+          SELECT ?production ?techniqueStatement ?technique ?techniqueLabel ?predictedTechniqueScore ?predictedTechniqueKind ?predictedTechniqueUsed ?predictedTechniqueExplanation WHERE {
             GRAPH <http://data.silknow.org/predictions> {
               ?techniqueStatement rdf:subject ?production .
               ?techniqueStatement rdf:predicate ecrm:P32_used_general_technique .
@@ -384,7 +384,7 @@ module.exports = {
         }
         UNION
         {
-          SELECT DISTINCT ?production ?materialStatement ?material ?materialLabel ?predictedMaterialScore ?predictedMaterialKind ?predictedMaterialUsed ?predictedMaterialExplanation WHERE {
+          SELECT ?production ?materialStatement ?material ?materialLabel ?predictedMaterialScore ?predictedMaterialKind ?predictedMaterialUsed ?predictedMaterialExplanation WHERE {
             GRAPH <http://data.silknow.org/predictions> {
               ?materialStatement rdf:subject ?production .
               ?materialStatement rdf:predicate ecrm:P126_employed .
@@ -410,7 +410,7 @@ module.exports = {
         }
         UNION
         {
-          SELECT DISTINCT ?production ?productionStatement ?time ?timeLabel ?predictedTimeScore ?predictedTimeKind ?predictedTimeUsed ?predictedTimeExplanation WHERE {
+          SELECT ?production ?productionStatement ?time ?timeLabel ?predictedTimeScore ?predictedTimeKind ?predictedTimeUsed ?predictedTimeExplanation WHERE {
             GRAPH <http://data.silknow.org/predictions> {
               ?productionStatement rdf:subject ?production .
               ?productionStatement rdf:predicate ecrm:P4_has_time-span .
@@ -440,19 +440,19 @@ module.exports = {
           GRAPH ?g {
             ?production ecrm:P8_took_place_on_or_within ?location .
           }
-          OPTIONAL {
+          {
             ?location ?locationProp ?locationLabel .
             VALUES ?locationProp { geonames:name rdfs:label }
             FILTER(LANG(?locationLabel) = "en" || LANG(?locationLabel) = "")
           }
-          OPTIONAL { ?location geo:lat ?locationLat . }
-          OPTIONAL { ?location geo:long ?locationLong . }
-          OPTIONAL { ?location geonames:parentCountry/geonames:name ?locationCountry . }
-          OPTIONAL { ?location geonames:featureCode ?locationFeatureCode . }
+          UNION { ?location geo:lat ?locationLat . }
+          UNION { ?location geo:long ?locationLong . }
+          UNION { ?location geonames:parentCountry/geonames:name ?locationCountry . }
+          UNION { ?location geonames:featureCode ?locationFeatureCode . }
         }
         UNION
         {
-          SELECT DISTINCT ?production ?locationStatement ?location ?locationLabel ?locationFeatureCode ?locationLat ?locationLong ?predictedLocationScore ?predictedLocationKind ?predictedLocationUsed ?predictedLocationExplanation WHERE {
+          SELECT ?production ?locationStatement ?location ?locationLabel ?locationFeatureCode ?locationLat ?locationLong ?predictedLocationScore ?predictedLocationKind ?predictedLocationUsed ?predictedLocationExplanation WHERE {
             GRAPH <http://data.silknow.org/predictions> {
               ?locationStatement rdf:subject ?production .
               ?locationStatement rdf:predicate ecrm:P8_took_place_on_or_within .
@@ -462,15 +462,15 @@ module.exports = {
               OPTIONAL { ?locationStatement prov:wasGeneratedBy/prov:used ?predictedLocationUsed . }
               ?predictedLocationKind ecrm:P70_documents ?predictedLocationExplanation .
             }
-            OPTIONAL {
+            {
               ?location ?locationProp ?locationLabel .
               VALUES ?locationProp { geonames:name rdfs:label }
               FILTER(LANG(?locationLabel) = "en" || LANG(?locationLabel) = "")
             }
-            OPTIONAL { ?location geo:lat ?locationLat . }
-            OPTIONAL { ?location geo:long ?locationLong . }
-            OPTIONAL { ?location geonames:parentCountry/geonames:name ?locationCountry . }
-            OPTIONAL { ?location geonames:featureCode ?locationFeatureCode . }
+            UNION { ?location geo:lat ?locationLat . }
+            UNION { ?location geo:long ?locationLong . }
+            UNION { ?location geonames:parentCountry/geonames:name ?locationCountry . }
+            UNION { ?location geonames:featureCode ?locationFeatureCode . }
           }
         }
         UNION
@@ -503,7 +503,7 @@ module.exports = {
       }
       UNION
       {
-        SELECT DISTINCT ?id ?depictionStatement ?depiction ?depictionLabel ?predictedDepictionScore ?predictedDepictionKind ?predictedDepictionUsed ?predictedDepictionExplanation WHERE {
+        SELECT ?id ?depictionStatement ?depiction ?depictionLabel ?predictedDepictionScore ?predictedDepictionKind ?predictedDepictionUsed ?predictedDepictionExplanation WHERE {
           GRAPH <http://data.silknow.org/predictions> {
             ?depictionStatement rdf:subject ?id .
             ?depictionStatement rdf:predicate ecrm:P65_shows_visual_item .
