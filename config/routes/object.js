@@ -14,6 +14,364 @@ module.exports = {
       'sameAs',
     ],
     showPermalink: true,
+    query: () => ({
+      '@graph': [
+        {
+          '@type': 'http://erlangen-crm.org/current/E22_Man-Made_Object',
+          '@id': '?id',
+          '@graph': '?g',
+          label: '?label',
+          sameAs: '?sameAs',
+          identifier: '?identifier',
+          description: '?description',
+          representation: {
+            '@id': '?representation',
+            image: '?representationUrl',
+            label: '?representationRightComment',
+          },
+          legalBody: {
+            '@id': '?legalBody',
+            label: '?legalBodyLabel',
+          },
+          acquisition: {
+            '@id': '?acquisition',
+            label: '?acquisitionLabel',
+          },
+          carriedOut: {
+            '@id': '?carriedOut',
+            label: '?carriedOutLabel',
+            type: '?carriedOutType',
+            url: '?carriedOutUrl',
+          },
+          composed: {
+            '@id': '?collection',
+            '@type': 'http://erlangen-crm.org/current/E78_Collection',
+            label: '?collectionLabel',
+          },
+          material: {
+            '@id': '?material',
+            label: '?materialLabel',
+            prediction: {
+              '@id': '?materialStatement',
+              score: '?predictedMaterialScore',
+              kind: '?predictedMaterialKind',
+              explanation: '?predictedMaterialExplanation',
+              used: '?predictedMaterialUsed',
+            },
+          },
+          technique: {
+            '@id': '?technique',
+            label: '?techniqueLabel',
+            prediction: {
+              '@id': '?techniqueStatement',
+              score: '?predictedTechniqueScore',
+              kind: '?predictedTechniqueKind',
+              explanation: '?predictedTechniqueExplanation',
+              used: '?predictedTechniqueUsed',
+            },
+          },
+          usedType: {
+            '@id': '?usedType',
+          },
+          depiction: {
+            '@id': '?depiction',
+            label: '?depictionLabel',
+            prediction: {
+              '@id': '?depictionStatement',
+              score: '?predictedDepictionScore',
+              kind: '?predictedDepictionKind',
+              explanation: '?predictedDepictionExplanation',
+              used: '?predictedDepictionUsed',
+            },
+          },
+          dimension: {
+            '@id': '?dimension',
+            type: '?dimensionType',
+            value: '?dimensionValue',
+            unit: '?dimensionUnit',
+          },
+          time: {
+            '@id': '?time',
+            label: '?timeLabel',
+            prediction: {
+              '@id': '?productionStatement',
+              score: '?predictedTimeScore',
+              kind: '?predictedTimeKind',
+              explanation: '?predictedTimeExplanation',
+              used: '?predictedTimeUsed',
+            },
+          },
+          century: {
+            '@id': '?century',
+            label: '?centuryLabel',
+          },
+          location: {
+            '@id': '?location',
+            label: '?locationLabel',
+            featureCode: '?locationFeatureCode',
+            latitude: '?locationLat',
+            longitude: '?locationLong',
+            prediction: {
+              '@id': '?locationStatement',
+              score: '?predictedLocationScore',
+              kind: '?predictedLocationKind',
+              explanation: '?predictedLocationExplanation',
+              used: '?predictedLocationUsed',
+            },
+          },
+          type: {
+            '@id': '?digAssignedGroup',
+            label: '?digAssignedGroupLabel',
+          },
+          category: {
+            '@id': '?assigned',
+            label: '?assignedLabel',
+          },
+        },
+      ],
+      $where: [
+        'GRAPH ?g { ?id a ecrm:E22_Man-Made_Object }',
+        `
+        {
+          ?id dc:identifier ?identifier .
+        }
+        UNION
+        {
+          ?id rdfs:label ?label .
+        }
+        UNION
+        {
+          ?id owl:sameAs ?sameAs .
+        }
+        UNION
+        {
+          ?id ecrm:P3_has_note ?description .
+        }
+        UNION
+        {
+          ?custody ecrm:P30_transferred_custody_of ?id .
+          ?custody ecrm:P29_custody_received_by ?legalBody .
+          ?legalBody rdfs:label ?legalBodyLabel .
+        }
+        UNION
+        {
+          ?acquisition ecrm:P24_transferred_title_of ?id .
+          ?acquisition ecrm:P23_transferred_title_from ?acquisitionLabel .
+        }
+        UNION
+        {
+          ?collection ecrm:P106_is_composed_of ?id .
+          ?collection rdfs:label ?collectionLabel .
+        }
+        UNION
+        {
+          ?id ecrm:P43_has_dimension ?dimension .
+          ?dimension ecrm:P2_has_type/skos:prefLabel ?dimensionType .
+          ?dimension ecrm:P90_has_value ?dimensionValue .
+          ?dimension ecrm:P91_has_unit ?dimensionUnit .
+        }
+        UNION
+        {
+          ?type_a ecrm:P41_classified ?id .
+          ?type_a silk:L4|silk:L1 ?assigned .
+          ?type_a_group skos:member ?assigned .
+          ?assigned skos:prefLabel ?assignedLabel .
+          FILTER(LANG(?assignedLabel) = "en" || LANG(?assignedLabel) = "")
+        }
+        UNION
+        {
+          ?production ecrm:P108_has_produced ?id .
+          {
+            GRAPH ?g {
+              ?production ecrm:P32_used_general_technique ?technique .
+            }
+            ?technique skos:prefLabel ?techniqueLabel .
+            FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
+          }
+          UNION
+          {
+            SELECT ?production ?techniqueStatement ?technique ?techniqueLabel ?predictedTechniqueScore ?predictedTechniqueKind ?predictedTechniqueUsed ?predictedTechniqueExplanation WHERE {
+              GRAPH <http://data.silknow.org/predictions> {
+                ?techniqueStatement rdf:subject ?production .
+                ?techniqueStatement rdf:predicate ecrm:P32_used_general_technique .
+                ?techniqueStatement rdf:object ?technique .
+                ?techniqueStatement silk:L18 ?predictedTechniqueScore .
+                ?techniqueStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedTechniqueKind .
+                OPTIONAL { ?techniqueStatement prov:wasGeneratedBy/prov:used ?predictedTechniqueUsed . }
+                ?predictedTechniqueKind ecrm:P70_documents ?predictedTechniqueExplanation .
+              }
+              ?technique skos:prefLabel ?techniqueLabel .
+              FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
+            }
+          }
+          UNION
+          {
+            ?production ecrm:P125_used_object_of_type ?usedType .
+          }
+          UNION
+          {
+            GRAPH ?g {
+              ?production ecrm:P126_employed ?material .
+            }
+            ?material skos:prefLabel ?materialLabel .
+            FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
+          }
+          UNION
+          {
+            SELECT ?production ?materialStatement ?material ?materialLabel ?predictedMaterialScore ?predictedMaterialKind ?predictedMaterialUsed ?predictedMaterialExplanation WHERE {
+              GRAPH <http://data.silknow.org/predictions> {
+                ?materialStatement rdf:subject ?production .
+                ?materialStatement rdf:predicate ecrm:P126_employed .
+                ?materialStatement rdf:object ?material .
+                ?materialStatement silk:L18 ?predictedMaterialScore .
+                ?materialStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedMaterialKind .
+                OPTIONAL { ?materialStatement prov:wasGeneratedBy/prov:used ?predictedMaterialUsed . }
+                ?predictedMaterialKind ecrm:P70_documents ?predictedMaterialExplanation .
+              }
+              ?material skos:prefLabel ?materialLabel .
+              FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
+            }
+          }
+          UNION
+          {
+            GRAPH ?g {
+              { ?production ecrm:P4_has_time-span ?time . }
+              UNION
+              { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?time . }
+            }
+            ?time skos:prefLabel ?timeLabel .
+            FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
+          }
+          UNION
+          {
+            SELECT ?production ?productionStatement ?time ?timeLabel ?predictedTimeScore ?predictedTimeKind ?predictedTimeUsed ?predictedTimeExplanation WHERE {
+              GRAPH <http://data.silknow.org/predictions> {
+                ?productionStatement rdf:subject ?production .
+                ?productionStatement rdf:predicate ecrm:P4_has_time-span .
+                { ?productionStatement rdf:object ?time . }
+                UNION
+                { ?productionStatement rdf:object/ecrm:P86_falls_within ?time . }
+                ?productionStatement silk:L18 ?predictedTimeScore .
+                ?productionStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedTimeKind .
+                OPTIONAL { ?productionStatement prov:wasGeneratedBy/prov:used ?predictedTimeUsed . }
+                ?predictedTimeKind ecrm:P70_documents ?predictedTimeExplanation .
+              }
+              ?time skos:prefLabel ?timeLabel .
+              FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
+            }
+          }
+          UNION
+          {
+            { ?production ecrm:P4_has_time-span ?century . }
+            UNION
+            { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?century . }
+            <http://vocab.getty.edu/aat/300404464> skos:member ?century .
+            ?century skos:prefLabel ?centuryLabel .
+            FILTER(LANG(?centuryLabel) = "en" || LANG(?centuryLabel) = "")
+          }
+          UNION
+          {
+            GRAPH ?g {
+              ?production ecrm:P8_took_place_on_or_within ?location .
+            }
+            {
+              ?location ?locationProp ?locationLabel .
+              VALUES ?locationProp { geonames:name rdfs:label }
+              FILTER(LANG(?locationLabel) = "en" || LANG(?locationLabel) = "")
+            }
+            UNION { ?location geo:lat ?locationLat . }
+            UNION { ?location geo:long ?locationLong . }
+            UNION { ?location geonames:parentCountry/geonames:name ?locationCountry . }
+            UNION { ?location geonames:featureCode ?locationFeatureCode . }
+          }
+          UNION
+          {
+            SELECT ?production ?locationStatement ?location ?locationLabel ?locationFeatureCode ?locationLat ?locationLong ?predictedLocationScore ?predictedLocationKind ?predictedLocationUsed ?predictedLocationExplanation WHERE {
+              GRAPH <http://data.silknow.org/predictions> {
+                ?locationStatement rdf:subject ?production .
+                ?locationStatement rdf:predicate ecrm:P8_took_place_on_or_within .
+                ?locationStatement rdf:object ?location .
+                ?locationStatement silk:L18 ?predictedLocationScore .
+                ?locationStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedLocationKind .
+                OPTIONAL { ?locationStatement prov:wasGeneratedBy/prov:used ?predictedLocationUsed . }
+                ?predictedLocationKind ecrm:P70_documents ?predictedLocationExplanation .
+              }
+              {
+                ?location ?locationProp ?locationLabel .
+                VALUES ?locationProp { geonames:name rdfs:label }
+                FILTER(LANG(?locationLabel) = "en" || LANG(?locationLabel) = "")
+              }
+              UNION { ?location geo:lat ?locationLat . }
+              UNION { ?location geo:long ?locationLong . }
+              UNION { ?location geonames:parentCountry/geonames:name ?locationCountry . }
+              UNION { ?location geonames:featureCode ?locationFeatureCode . }
+            }
+          }
+          UNION
+          {
+            ?type_a ecrm:P41_classified ?id .
+            ?type_a silk:L4|silk:L1 ?digTypeAssigned .
+            ?type_a_group skos:member ?digTypeAssigned .
+            ?digAssignedGroup skos:member ?digTypeAssigned .
+            OPTIONAL {
+              ?digAssignedGroup skos:prefLabel ?digAssignedGroupLabel .
+              FILTER(LANG(?digAssignedGroupLabel) = "en" || LANG(?digAssignedGroupLabel) = "")
+            }
+          }
+          UNION
+          {
+            ?production ecrm:P9_consists_of ?activityCarried .
+            ?activityCarried ecrm:P14_carried_out_by ?carriedOut .
+            OPTIONAL { ?activityCarried ecrm:P2_has_type ?carriedOutType . }
+            ?carriedOut ecrm:P1_is_identified_by ?carriedOutLabel .
+            OPTIONAL { ?carriedOut foaf:isPrimaryTopicOf ?carriedOutUrl . }
+          }
+        }
+        UNION
+        {
+          GRAPH ?g {
+            ?id ecrm:P65_shows_visual_item ?depiction .
+          }
+          ?depiction skos:prefLabel ?depictionLabel .
+          FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
+        }
+        UNION
+        {
+          SELECT ?id ?depictionStatement ?depiction ?depictionLabel ?predictedDepictionScore ?predictedDepictionKind ?predictedDepictionUsed ?predictedDepictionExplanation WHERE {
+            GRAPH <http://data.silknow.org/predictions> {
+              ?depictionStatement rdf:subject ?id .
+              ?depictionStatement rdf:predicate ecrm:P65_shows_visual_item .
+              ?depictionStatement rdf:object ?depiction .
+              ?depictionStatement silk:L18 ?predictedDepictionScore .
+              ?depictionStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedDepictionKind .
+              OPTIONAL { ?depictionStatement prov:wasGeneratedBy/prov:used ?predictedDepictionUsed . }
+              ?predictedDepictionKind ecrm:P70_documents ?predictedDepictionExplanation .
+            }
+            OPTIONAL {
+              ?depiction skos:prefLabel ?depictionLabel .
+              FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
+            }
+          }
+        }
+        UNION
+        {
+          SELECT ?id ?representation ?representationRightComment (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
+            ?id ecrm:P138i_has_representation ?representation .
+            OPTIONAL {
+              ?representation schema:contentUrl ?representationUrl .
+              FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))
+            }
+            OPTIONAL {
+              ?representationRight a ecrm:E30_Right .
+              ?representationRight ecrm:P104i_applies_to ?representation .
+              ?representationRight rdfs:comment ?representationRightComment .
+            }
+          }
+        }
+        `
+      ],
+      $langTag: 'hide',
+    }),
   },
   filterByGraph: true,
   filters: [
@@ -187,111 +545,10 @@ module.exports = {
         '@id': '?id',
         '@graph': '?g',
         label: '?label',
-        sameAs: '?sameAs',
-        identifier: '?identifier',
-        description: '?description',
         representation: {
           '@id': '?representation',
           image: '?representationUrl',
           label: '?representationRightComment',
-        },
-        legalBody: {
-          '@id': '?legalBody',
-          label: '?legalBodyLabel',
-        },
-        acquisition: {
-          '@id': '?acquisition',
-          label: '?acquisitionLabel',
-        },
-        carriedOut: {
-          '@id': '?carriedOut',
-          label: '?carriedOutLabel',
-          type: '?carriedOutType',
-          url: '?carriedOutUrl',
-        },
-        composed: {
-          '@id': '?collection',
-          '@type': 'http://erlangen-crm.org/current/E78_Collection',
-          label: '?collectionLabel',
-        },
-        material: {
-          '@id': '?material',
-          label: '?materialLabel',
-          prediction: {
-            '@id': '?materialStatement',
-            score: '?predictedMaterialScore',
-            kind: '?predictedMaterialKind',
-            explanation: '?predictedMaterialExplanation',
-            used: '?predictedMaterialUsed',
-          },
-        },
-        technique: {
-          '@id': '?technique',
-          label: '?techniqueLabel',
-          prediction: {
-            '@id': '?techniqueStatement',
-            score: '?predictedTechniqueScore',
-            kind: '?predictedTechniqueKind',
-            explanation: '?predictedTechniqueExplanation',
-            used: '?predictedTechniqueUsed',
-          },
-        },
-        usedType: {
-          '@id': '?usedType',
-        },
-        depiction: {
-          '@id': '?depiction',
-          label: '?depictionLabel',
-          prediction: {
-            '@id': '?depictionStatement',
-            score: '?predictedDepictionScore',
-            kind: '?predictedDepictionKind',
-            explanation: '?predictedDepictionExplanation',
-            used: '?predictedDepictionUsed',
-          },
-        },
-        dimension: {
-          '@id': '?dimension',
-          type: '?dimensionType',
-          value: '?dimensionValue',
-          unit: '?dimensionUnit',
-        },
-        time: {
-          '@id': '?time',
-          label: '?timeLabel',
-          prediction: {
-            '@id': '?productionStatement',
-            score: '?predictedTimeScore',
-            kind: '?predictedTimeKind',
-            explanation: '?predictedTimeExplanation',
-            used: '?predictedTimeUsed',
-          },
-        },
-        century: {
-          '@id': '?century',
-          label: '?centuryLabel',
-        },
-        location: {
-          '@id': '?location',
-          label: '?locationLabel',
-          featureCode: '?locationFeatureCode',
-          latitude: '?locationLat',
-          longitude: '?locationLong',
-          prediction: {
-            '@id': '?locationStatement',
-            score: '?predictedLocationScore',
-            kind: '?predictedLocationKind',
-            explanation: '?predictedLocationExplanation',
-            used: '?predictedLocationUsed',
-          },
-        },
-        type: {
-          '@id': '?digAssignedGroup',
-          label: '?digAssignedGroupLabel',
-        },
-        category: {
-          '@id': '?assigned',
-          label: '?assignedLabel',
         },
       },
     ],
@@ -304,220 +561,6 @@ module.exports = {
       UNION
       {
         ?id rdfs:label ?label .
-      }
-      UNION
-      {
-        ?id owl:sameAs ?sameAs .
-      }
-      UNION
-      {
-        ?id ecrm:P3_has_note ?description .
-      }
-      UNION
-      {
-        ?custody ecrm:P30_transferred_custody_of ?id .
-        ?custody ecrm:P29_custody_received_by ?legalBody .
-        ?legalBody rdfs:label ?legalBodyLabel .
-      }
-      UNION
-      {
-        ?acquisition ecrm:P24_transferred_title_of ?id .
-        ?acquisition ecrm:P23_transferred_title_from ?acquisitionLabel .
-      }
-      UNION
-      {
-        ?collection ecrm:P106_is_composed_of ?id .
-        ?collection rdfs:label ?collectionLabel .
-      }
-      UNION
-      {
-        ?id ecrm:P43_has_dimension ?dimension .
-        ?dimension ecrm:P2_has_type/skos:prefLabel ?dimensionType .
-        ?dimension ecrm:P90_has_value ?dimensionValue .
-        ?dimension ecrm:P91_has_unit ?dimensionUnit .
-      }
-      UNION
-      {
-        ?type_a ecrm:P41_classified ?id .
-        ?type_a silk:L4|silk:L1 ?assigned .
-        ?type_a_group skos:member ?assigned .
-        ?assigned skos:prefLabel ?assignedLabel .
-        FILTER(LANG(?assignedLabel) = "en" || LANG(?assignedLabel) = "")
-      }
-      UNION
-      {
-        ?production ecrm:P108_has_produced ?id .
-        {
-          GRAPH ?g {
-            ?production ecrm:P32_used_general_technique ?technique .
-          }
-          ?technique skos:prefLabel ?techniqueLabel .
-          FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
-        }
-        UNION
-        {
-          SELECT ?production ?techniqueStatement ?technique ?techniqueLabel ?predictedTechniqueScore ?predictedTechniqueKind ?predictedTechniqueUsed ?predictedTechniqueExplanation WHERE {
-            GRAPH <http://data.silknow.org/predictions> {
-              ?techniqueStatement rdf:subject ?production .
-              ?techniqueStatement rdf:predicate ecrm:P32_used_general_technique .
-              ?techniqueStatement rdf:object ?technique .
-              ?techniqueStatement silk:L18 ?predictedTechniqueScore .
-              ?techniqueStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedTechniqueKind .
-              OPTIONAL { ?techniqueStatement prov:wasGeneratedBy/prov:used ?predictedTechniqueUsed . }
-              ?predictedTechniqueKind ecrm:P70_documents ?predictedTechniqueExplanation .
-            }
-            ?technique skos:prefLabel ?techniqueLabel .
-            FILTER(LANG(?techniqueLabel) = "en" || LANG(?techniqueLabel) = "")
-          }
-        }
-        UNION
-        {
-          ?production ecrm:P125_used_object_of_type ?usedType .
-        }
-        UNION
-        {
-          GRAPH ?g {
-            ?production ecrm:P126_employed ?material .
-          }
-          ?material skos:prefLabel ?materialLabel .
-          FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
-        }
-        UNION
-        {
-          SELECT ?production ?materialStatement ?material ?materialLabel ?predictedMaterialScore ?predictedMaterialKind ?predictedMaterialUsed ?predictedMaterialExplanation WHERE {
-            GRAPH <http://data.silknow.org/predictions> {
-              ?materialStatement rdf:subject ?production .
-              ?materialStatement rdf:predicate ecrm:P126_employed .
-              ?materialStatement rdf:object ?material .
-              ?materialStatement silk:L18 ?predictedMaterialScore .
-              ?materialStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedMaterialKind .
-              OPTIONAL { ?materialStatement prov:wasGeneratedBy/prov:used ?predictedMaterialUsed . }
-              ?predictedMaterialKind ecrm:P70_documents ?predictedMaterialExplanation .
-            }
-            ?material skos:prefLabel ?materialLabel .
-            FILTER(LANG(?materialLabel) = "en" || LANG(?materialLabel) = "")
-          }
-        }
-        UNION
-        {
-          GRAPH ?g {
-            { ?production ecrm:P4_has_time-span ?time . }
-            UNION
-            { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?time . }
-          }
-          ?time skos:prefLabel ?timeLabel .
-          FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
-        }
-        UNION
-        {
-          SELECT ?production ?productionStatement ?time ?timeLabel ?predictedTimeScore ?predictedTimeKind ?predictedTimeUsed ?predictedTimeExplanation WHERE {
-            GRAPH <http://data.silknow.org/predictions> {
-              ?productionStatement rdf:subject ?production .
-              ?productionStatement rdf:predicate ecrm:P4_has_time-span .
-              { ?productionStatement rdf:object ?time . }
-              UNION
-              { ?productionStatement rdf:object/ecrm:P86_falls_within ?time . }
-              ?productionStatement silk:L18 ?predictedTimeScore .
-              ?productionStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedTimeKind .
-              OPTIONAL { ?productionStatement prov:wasGeneratedBy/prov:used ?predictedTimeUsed . }
-              ?predictedTimeKind ecrm:P70_documents ?predictedTimeExplanation .
-            }
-            ?time skos:prefLabel ?timeLabel .
-            FILTER(LANG(?timeLabel) = "en" || LANG(?timeLabel) = "")
-          }
-        }
-        UNION
-        {
-          { ?production ecrm:P4_has_time-span ?century . }
-          UNION
-          { ?production ecrm:P4_has_time-span/ecrm:P86_falls_within ?century . }
-          <http://vocab.getty.edu/aat/300404464> skos:member ?century .
-          ?century skos:prefLabel ?centuryLabel .
-          FILTER(LANG(?centuryLabel) = "en" || LANG(?centuryLabel) = "")
-        }
-        UNION
-        {
-          GRAPH ?g {
-            ?production ecrm:P8_took_place_on_or_within ?location .
-          }
-          {
-            ?location ?locationProp ?locationLabel .
-            VALUES ?locationProp { geonames:name rdfs:label }
-            FILTER(LANG(?locationLabel) = "en" || LANG(?locationLabel) = "")
-          }
-          UNION { ?location geo:lat ?locationLat . }
-          UNION { ?location geo:long ?locationLong . }
-          UNION { ?location geonames:parentCountry/geonames:name ?locationCountry . }
-          UNION { ?location geonames:featureCode ?locationFeatureCode . }
-        }
-        UNION
-        {
-          SELECT ?production ?locationStatement ?location ?locationLabel ?locationFeatureCode ?locationLat ?locationLong ?predictedLocationScore ?predictedLocationKind ?predictedLocationUsed ?predictedLocationExplanation WHERE {
-            GRAPH <http://data.silknow.org/predictions> {
-              ?locationStatement rdf:subject ?production .
-              ?locationStatement rdf:predicate ecrm:P8_took_place_on_or_within .
-              ?locationStatement rdf:object ?location .
-              ?locationStatement silk:L18 ?predictedLocationScore .
-              ?locationStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedLocationKind .
-              OPTIONAL { ?locationStatement prov:wasGeneratedBy/prov:used ?predictedLocationUsed . }
-              ?predictedLocationKind ecrm:P70_documents ?predictedLocationExplanation .
-            }
-            {
-              ?location ?locationProp ?locationLabel .
-              VALUES ?locationProp { geonames:name rdfs:label }
-              FILTER(LANG(?locationLabel) = "en" || LANG(?locationLabel) = "")
-            }
-            UNION { ?location geo:lat ?locationLat . }
-            UNION { ?location geo:long ?locationLong . }
-            UNION { ?location geonames:parentCountry/geonames:name ?locationCountry . }
-            UNION { ?location geonames:featureCode ?locationFeatureCode . }
-          }
-        }
-        UNION
-        {
-          ?type_a ecrm:P41_classified ?id .
-          ?type_a silk:L4|silk:L1 ?digTypeAssigned .
-          ?type_a_group skos:member ?digTypeAssigned .
-          ?digAssignedGroup skos:member ?digTypeAssigned .
-          OPTIONAL {
-            ?digAssignedGroup skos:prefLabel ?digAssignedGroupLabel .
-            FILTER(LANG(?digAssignedGroupLabel) = "en" || LANG(?digAssignedGroupLabel) = "")
-          }
-        }
-        UNION
-        {
-          ?production ecrm:P9_consists_of ?activityCarried .
-          ?activityCarried ecrm:P14_carried_out_by ?carriedOut .
-          OPTIONAL { ?activityCarried ecrm:P2_has_type ?carriedOutType . }
-          ?carriedOut ecrm:P1_is_identified_by ?carriedOutLabel .
-          OPTIONAL { ?carriedOut foaf:isPrimaryTopicOf ?carriedOutUrl . }
-        }
-      }
-      UNION
-      {
-        GRAPH ?g {
-          ?id ecrm:P65_shows_visual_item ?depiction .
-        }
-        ?depiction skos:prefLabel ?depictionLabel .
-        FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
-      }
-      UNION
-      {
-        SELECT ?id ?depictionStatement ?depiction ?depictionLabel ?predictedDepictionScore ?predictedDepictionKind ?predictedDepictionUsed ?predictedDepictionExplanation WHERE {
-          GRAPH <http://data.silknow.org/predictions> {
-            ?depictionStatement rdf:subject ?id .
-            ?depictionStatement rdf:predicate ecrm:P65_shows_visual_item .
-            ?depictionStatement rdf:object ?depiction .
-            ?depictionStatement silk:L18 ?predictedDepictionScore .
-            ?depictionStatement prov:wasGeneratedBy/prov:wasAssociatedWith ?predictedDepictionKind .
-            OPTIONAL { ?depictionStatement prov:wasGeneratedBy/prov:used ?predictedDepictionUsed . }
-            ?predictedDepictionKind ecrm:P70_documents ?predictedDepictionExplanation .
-          }
-          OPTIONAL {
-            ?depiction skos:prefLabel ?depictionLabel .
-            FILTER(LANG(?depictionLabel) = "en" || LANG(?depictionLabel) = "")
-          }
-        }
       }
       UNION
       {
