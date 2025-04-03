@@ -2,13 +2,13 @@
 
 ## About
 
-The SILKNOW Exploratory Search Engine is named after Ada Lovelace (1815-1852), the mathematician that anticipated some of the main features of modern computing some 100 years before its advent. In her notes, she wrote that such a computation machine *
-weaves algebraic patterns, just as the Jacquard loom weaves flowers and leaves*.
+The SILKNOW Exploratory Search Engine is named after Ada Lovelace (1815-1852), the mathematician that anticipated some of the main features of modern computing some 100 years before its advent. In her notes, she wrote that such a computation machine _
+weaves algebraic patterns, just as the Jacquard loom weaves flowers and leaves_.
 
 ## Requirements
 
-* [Docker](https://docs.docker.com/engine/)
-* [docker-compose](https://docs.docker.com/compose/)
+- [Docker](https://docs.docker.com/engine/)
+- [docker-compose](https://docs.docker.com/compose/)
 
 ## How to run
 
@@ -24,13 +24,13 @@ cd explorer
 - Start in development mode:
 
 ```bash
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up
 ```
 
 - Start in production mode:
 
 ```bash
-docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up
 ```
 
 ## License
