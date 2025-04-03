@@ -1,13 +1,14 @@
-import 'react-18-image-lightbox/style.css';
+import "yet-another-react-lightbox/styles.css";
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { useMenuState, Menu, MenuItem, MenuButton, MenuButtonArrow } from 'ariakit';
+import { useMenuStore, Menu, MenuItem, MenuButton, MenuButtonArrow } from '@ariakit/react';
 import { saveAs } from 'file-saver';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useState } from 'react';
-import Lightbox from 'react-18-image-lightbox';
+import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { Carousel } from 'react-responsive-carousel';
 import styled from 'styled-components';
 
@@ -230,9 +231,9 @@ function SilknowGalleryDetailsPage({ result, inList, searchData, debugSparqlQuer
   const route = config.routes[query.type];
   const [isLoadingSimilar, setIsLoadingSimilar] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const downloadMenu = useMenuState();
-  const similarityMenu = useMenuState();
-  const virtualLoomMenu = useMenuState();
+  const downloadMenu = useMenuStore();
+  const similarityMenu = useMenuStore();
+  const virtualLoomMenu = useMenuStore();
   const [lightboxIsOpen, setLightboxIsOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(null);
 
@@ -377,20 +378,20 @@ function SilknowGalleryDetailsPage({ result, inList, searchData, debugSparqlQuer
     if (!config.plugins?.virtualLoom?.url) return;
     return Carousel.defaultProps.renderThumbs(children).concat(
       <Element key="virtual-loom">
-        <MenuButton state={virtualLoomMenu}>
+        <MenuButton store={virtualLoomMenu}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/images/virtual-loom-button.png" alt="Virtual Loom" />
         </MenuButton>
         <StyledMenu
-          state={virtualLoomMenu}
+          store={virtualLoomMenu}
           aria-label="Virtual Loom"
           style={{ position: 'absolute', left: 0 }}
         >
-          <MenuItem state={virtualLoomMenu} as={Button} primary onClick={onClickVirtualLoomButton}>
+          <MenuItem store={virtualLoomMenu} as={Button} primary onClick={onClickVirtualLoomButton}>
             {t('common:buttons.virtualLoom.web')}
           </MenuItem>
           <MenuItem
-            state={virtualLoomMenu}
+            store={virtualLoomMenu}
             as={Button}
             primary
             href={generateVirtualLoomURL().replace(/^https?:\/\//, 'vloom://')}
@@ -420,19 +421,22 @@ function SilknowGalleryDetailsPage({ result, inList, searchData, debugSparqlQuer
         <Columns>
           {images.length > 0 && (
             <Primary>
-              {lightboxIsOpen && (
-                <Lightbox
-                  imageTitle={images[lightboxIndex]?.label || pageTitle}
-                  mainSrc={images[lightboxIndex]?.url}
-                  nextSrc={images[(lightboxIndex + 1) % images.length]?.url}
-                  prevSrc={images[(lightboxIndex + images.length - 1) % images.length]?.url}
-                  onCloseRequest={() => setLightboxIsOpen(false)}
-                  onMovePrevRequest={() =>
-                    setLightboxIndex((lightboxIndex + images.length - 1) % images.length)
-                  }
-                  onMoveNextRequest={() => setLightboxIndex((lightboxIndex + 1) % images.length)}
-                />
-              )}
+              <Lightbox
+                index={lightboxIndex}
+                open={lightboxIsOpen}
+                close={() => setLightboxIsOpen(false)}
+                slides={images.map((image) => ({
+                  src: generateMediaUrl(image.url, 1024),
+                  title: image.label,
+                  description: image.description,
+                }))}
+                controller={{
+                  closeOnBackdropClick: true,
+                  closeOnPullDown: true,
+                  closeOnPullUp: true,
+                }}
+                plugins={[Zoom]}
+              />
 
               <MobileContainer>
                 <Title>{pageTitle}</Title>
@@ -543,23 +547,23 @@ function SilknowGalleryDetailsPage({ result, inList, searchData, debugSparqlQuer
               <MetadataList metadata={result} type={query.type} />
             </Element>
             <Element marginBottom={24}>
-              <MenuButton state={downloadMenu} as={Button} primary>
+              <MenuButton store={downloadMenu} as={Button} primary>
                 {t('common:buttons.download')} <MenuButtonArrow />
               </MenuButton>
-              <StyledMenu state={downloadMenu} aria-label={t('common:buttons.download')}>
+              <StyledMenu store={downloadMenu} aria-label={t('common:buttons.download')}>
                 <MenuItem
-                  state={downloadMenu}
+                  store={downloadMenu}
                   as={Button}
                   primary
                   onClick={() => download('vljson')}
                 >
                   {t('common:buttons.virtualLoom.download')}
                 </MenuItem>
-                <MenuItem state={downloadMenu} as={Button} primary onClick={() => download('json')}>
+                <MenuItem store={downloadMenu} as={Button} primary onClick={() => download('json')}>
                   {t('common:buttons.downloadJSON')}
                 </MenuItem>
                 <MenuItem
-                  state={downloadMenu}
+                  store={downloadMenu}
                   as={Button}
                   primary
                   onClick={() => download('image')}
@@ -569,12 +573,12 @@ function SilknowGalleryDetailsPage({ result, inList, searchData, debugSparqlQuer
               </StyledMenu>
             </Element>
             <Element>
-              <MenuButton state={similarityMenu} as={Button} primary loading={isLoadingSimilar}>
+              <MenuButton store={similarityMenu} as={Button} primary loading={isLoadingSimilar}>
                 {t('common:buttons.similar')} <MenuButtonArrow />
               </MenuButton>
-              <StyledMenu state={similarityMenu} aria-label={t('common:buttons.similar')}>
+              <StyledMenu store={similarityMenu} aria-label={t('common:buttons.similar')}>
                 <MenuItem
-                  state={similarityMenu}
+                  store={similarityMenu}
                   as={Button}
                   primary
                   onClick={() => viewSimilar('visual')}
@@ -582,7 +586,7 @@ function SilknowGalleryDetailsPage({ result, inList, searchData, debugSparqlQuer
                   {t('common:similarity.visual')}
                 </MenuItem>
                 <MenuItem
-                  state={similarityMenu}
+                  store={similarityMenu}
                   as={Button}
                   primary
                   onClick={() => viewSimilar('semantic')}
