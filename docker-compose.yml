@@ -26,6 +26,16 @@ services:
   redis:
     container_name: adasilk_redis
     image: redis
+    command:
+      [
+        'redis-server',
+        '--appendonly',
+        'no',
+        '--maxmemory',
+        '4gb',
+        '--maxmemory-policy',
+        'allkeys-lru',
+      ]
 volumes:
   mongo: {}
   images: {}
