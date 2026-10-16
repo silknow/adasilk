@@ -3,7 +3,7 @@ services:
     build:
       dockerfile: ./prod.Dockerfile
     ports:
-      - '4733:3000'
+      - '${ADASILK_BIND_ADDRESS:-0.0.0.0}:4733:3000'
     environment:
       - NODE_ENV=production
     volumes:
