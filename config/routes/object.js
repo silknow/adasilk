@@ -355,11 +355,11 @@ module.exports = {
         }
         UNION
         {
-          SELECT ?id ?representation ?representationRightComment (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
+          SELECT ?id ?representation ?representationRightComment (SAMPLE(?_representationUrlRaw) AS ?representationUrl) WHERE {
             ?id ecrm:P138i_has_representation ?representation .
             OPTIONAL {
-              ?representation schema:contentUrl ?representationUrl .
-              FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))
+              ?representation schema:contentUrl ?_representationUrlRaw .
+              FILTER(STRSTARTS(STR(?_representationUrlRaw), "https://silknow.org/"))
             }
             OPTIONAL {
               ?representationRight a ecrm:E30_Right .
@@ -367,6 +367,7 @@ module.exports = {
               ?representationRight rdfs:comment ?representationRightComment .
             }
           }
+          GROUP BY ?id ?representation ?representationRightComment
         }
         `
       ],
@@ -564,11 +565,11 @@ module.exports = {
       }
       UNION
       {
-        SELECT ?id ?representation ?representationRightComment (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
+        SELECT ?id ?representation ?representationRightComment (SAMPLE(?_representationUrlRaw) AS ?representationUrl) WHERE {
           ?id ecrm:P138i_has_representation ?representation .
           OPTIONAL {
-            ?representation schema:contentUrl ?representationUrl .
-            FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))
+            ?representation schema:contentUrl ?_representationUrlRaw .
+            FILTER(STRSTARTS(STR(?_representationUrlRaw), "https://silknow.org/"))
           }
           OPTIONAL {
             ?representationRight a ecrm:E30_Right .
@@ -576,27 +577,28 @@ module.exports = {
             ?representationRight rdfs:comment ?representationRightComment .
           }
         }
+        GROUP BY ?id ?representation ?representationRightComment
       }
       `,
     ],
     $langTag: 'hide',
   },
   textSearchFunc: (q) => {
+    const words = q.split(/\s+/).filter(Boolean).map((w) => w.toLowerCase());
+    const wordsFor = (lit) => words.map((w) => `${lit} ql:has-word ${JSON.stringify(w)}`).join(' . ');
     const quotedValue = JSON.stringify(q);
-    const bifValue = `${q.replace(/'/g, "\\'")}*`;
-    const quotedBifValue = JSON.stringify(bifValue);
     return [
       `
       {
-        { ?id ?_s1p ?_s1o . ?_s1o bif:contains '${quotedBifValue}' }
+        { ?id ?_s1p ?_s1o . ${wordsFor('?_s1o')} }
         UNION
         { ?id ?_s1p ?_s1o . FILTER(?_s1o = ${quotedValue}) }
         UNION
-        { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o bif:contains '${quotedBifValue}' }
+        { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ${wordsFor('?_s2o')} }
         UNION
         { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . FILTER(?_s2o = ${quotedValue}) }
         UNION
-        { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o ?_s3p ?_s3o . ?_s3o bif:contains '${quotedBifValue}' }
+        { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o ?_s3p ?_s3o . ${wordsFor('?_s3o')} }
         UNION
         { ?_s1o ?_s1p ?id . ?_s1o ?_s2p ?_s2o . ?_s2o ?_s3p ?_s3o . FILTER(?_s3o = ${quotedValue}) }
       }

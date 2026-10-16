@@ -50,6 +50,7 @@ module.exports = {
           SELECT ?item (COUNT(DISTINCT ?production) AS ?count) WHERE {
             ?production ecrm:P126_employed ?item .
           }
+          GROUP BY ?item
         }
 
         OPTIONAL {
@@ -72,6 +73,7 @@ module.exports = {
             SELECT ?item2 (COUNT(DISTINCT ?production2) AS ?count2) WHERE {
               ?production2 ecrm:P126_employed ?item2 .
             }
+            GROUP BY ?item2
           }
 
           OPTIONAL {
@@ -94,6 +96,7 @@ module.exports = {
               SELECT ?item3 (COUNT(DISTINCT ?production3) AS ?count3) WHERE {
                 ?production3 ecrm:P126_employed ?item3 .
               }
+              GROUP BY ?item3
             }
           }
         }
@@ -111,6 +114,16 @@ module.exports = {
   ],
   skosmos: {
     uri: 'http://data.silknow.org/vocabulary/facet/materials'
+  },
+  textSearchFunc: (q) => {
+    const words = q.split(/\s+/).filter(Boolean).map((w) => w.toLowerCase());
+    const wordsFor = (lit) => words.map((w) => `${lit} ql:has-word ${JSON.stringify(w)}`).join(' . ');
+    return [
+      `
+      ?item skos:prefLabel ?_s1lit .
+      ${wordsFor('?_s1lit')}
+      `,
+    ];
   },
   featured: {
     query: ({ language }) => ({
@@ -140,6 +153,7 @@ module.exports = {
           SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
             ?object ecrm:P126_employed ?item .
           }
+          GROUP BY ?item
         }
         UNION
         {
@@ -147,6 +161,7 @@ module.exports = {
             ?item skos:member* ?member .
             ?object ecrm:P126_employed ?member .
           }
+          GROUP BY ?item
         }`
       ],
       $langTag: 'hide',

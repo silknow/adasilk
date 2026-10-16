@@ -49,13 +49,14 @@ module.exports = {
         // Needed because silknow has 2 duplicate images (the source one and the one hosted on silknow.org cloud server)
         // We should only return the silknow.org one
         `OPTIONAL {
-          SELECT ?id ?representation (SAMPLE(?representationUrl) AS ?representationUrl) WHERE {
+          SELECT ?id ?representation (SAMPLE(?_representationUrlRaw) AS ?representationUrl) WHERE {
             ?id ecrm:P138i_has_representation ?representation .
             OPTIONAL {
-              ?representation schema:contentUrl ?representationUrl .
-              FILTER(STRSTARTS(STR(?representationUrl), "https://silknow.org/"))
+              ?representation schema:contentUrl ?_representationUrlRaw .
+              FILTER(STRSTARTS(STR(?_representationUrlRaw), "https://silknow.org/"))
             }
           }
+          GROUP BY ?id ?representation
         }`,
       ],
       $langTag: 'hide',
@@ -89,6 +90,10 @@ module.exports = {
       'skos': 'http://www.w3.org/2004/02/skos/core#',
       'silk': 'http://data.silknow.org/ontology/',
       'prov': 'http://www.w3.org/ns/prov#',
+      'ql': 'http://qlever.cs.uni-freiburg.de/builtin-functions/',
+      'owl': 'http://www.w3.org/2002/07/owl#',
+      'rdf': 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+      'foaf': 'http://xmlns.com/foaf/0.1/',
     }
   },
   routes: {

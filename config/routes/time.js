@@ -24,4 +24,14 @@ module.exports = {
       filter: 'time',
     },
   ],
+  textSearchFunc: (q) => {
+    const words = q.split(/\s+/).filter(Boolean).map((w) => w.toLowerCase());
+    const wordsFor = (lit) => words.map((w) => `${lit} ql:has-word ${JSON.stringify(w)}`).join(' . ');
+    return [
+      `
+      ?item skos:prefLabel ?_s1lit .
+      ${wordsFor('?_s1lit')}
+      `,
+    ];
+  },
 };
