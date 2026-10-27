@@ -1,4 +1,8 @@
 module.exports = {
+  baseWhere: [
+    '?production ecrm:P8_took_place_on_or_within ?id',
+    'BIND(<http://data.silknow.org/vocabulary> AS ?g)',
+  ],
   view: 'list',
   showInNavbar: false,
   backgroundColor: '#16406c',
@@ -6,13 +10,13 @@ module.exports = {
   query: {
     '@graph': [
       {
-        '@id': '?item',
+        '@id': '?id',
         label: '?itemLabel',
       },
     ],
     $where: [
-      '?production ecrm:P8_took_place_on_or_within ?item',
-      '?item geonames:name ?itemLabel',
+      '?production ecrm:P8_took_place_on_or_within ?id',
+      '?id geonames:name ?itemLabel',
     ],
     $langTag: 'hide',
   },
@@ -27,7 +31,7 @@ module.exports = {
     const wordsFor = (lit) => words.map((w) => `${lit} ql:has-word ${JSON.stringify(w)}`).join(' . ');
     return [
       `
-      ?item geonames:name ?_s1lit .
+      ?id geonames:name ?_s1lit .
       ${wordsFor('?_s1lit')}
       `,
     ];

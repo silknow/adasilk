@@ -1,108 +1,38 @@
 module.exports = {
+  baseWhere: [
+    'VALUES ?member { <http://data.silknow.org/vocabulary/209> <http://data.silknow.org/vocabulary/268> } . ?member skos:narrower+ ?id',
+    'BIND(<http://data.silknow.org/vocabulary> AS ?g)',
+  ],
   view: 'vocabulary',
   backgroundColor: '#335a80',
   textColor: '#ffffff',
   query: ({ language }) => ({
     '@graph': [
       {
-        '@id': '?member',
-        label: '?memberLabel',
-        items: {
-          '@id': '?item',
-          label: '?itemLabel',
-          description: '?itemDefinition',
-          count: '?count',
-          items: {
-            '@id': '?item2',
-            label: '?itemLabel2',
-            description: '?itemDefinition2',
-            count: '?count2',
-            items: {
-              '@id': '?item3',
-              label: '?itemLabel3',
-              description: '?itemDefinition3',
-              count: '?count3',
-            },
-          },
-        },
+        '@id': '?id',
+        label: '?itemLabel',
+        description: '?itemDefinition',
+        count: '?count',
       },
     ],
     $where: [
       'VALUES ?member { <http://data.silknow.org/vocabulary/209> <http://data.silknow.org/vocabulary/268> }',
-      '?member skos:prefLabel ?memberLabel',
+      '?member skos:narrower+ ?id',
       `OPTIONAL {
-        ?member skos:narrower ?item .
-        {
-          OPTIONAL {
-            ?item skos:prefLabel ?itemLabel .
-            FILTER(LANG(?itemLabel) = "${language}")
-          }
+        ?id skos:prefLabel ?itemLabel .
+        FILTER(LANG(?itemLabel) = "${language}")
+      }`,
+      `OPTIONAL {
+        ?id skos:definition ?itemDefinition .
+        FILTER(LANG(?itemDefinition) = "${language}")
+      }`,
+      `OPTIONAL {
+        SELECT ?id (COUNT(DISTINCT ?production) AS ?count) WHERE {
+          ?production ecrm:P126_employed ?id .
         }
-        UNION
-        {
-          OPTIONAL {
-            ?item skos:definition ?itemDefinition .
-            FILTER(LANG(?itemDefinition) = "${language}")
-          }
-        }
-        UNION
-        {
-          SELECT ?item (COUNT(DISTINCT ?production) AS ?count) WHERE {
-            ?production ecrm:P126_employed ?item .
-          }
-          GROUP BY ?item
-        }
-
-        OPTIONAL {
-          ?item skos:narrower ?item2 .
-          {
-            OPTIONAL {
-              ?item2 skos:prefLabel ?itemLabel2 .
-              FILTER(LANG(?itemLabel2) = "${language}")
-            }
-          }
-          UNION
-          {
-            OPTIONAL {
-              ?item2 skos:definition ?itemDefinition2 .
-              FILTER(LANG(?itemDefinition2) = "${language}")
-            }
-          }
-          UNION
-          {
-            SELECT ?item2 (COUNT(DISTINCT ?production2) AS ?count2) WHERE {
-              ?production2 ecrm:P126_employed ?item2 .
-            }
-            GROUP BY ?item2
-          }
-
-          OPTIONAL {
-            ?item2 skos:narrower ?item3 .
-            {
-              OPTIONAL {
-                ?item3 skos:prefLabel ?itemLabel3 .
-                FILTER(LANG(?itemLabel3) = "${language}")
-              }
-            }
-            UNION
-            {
-              OPTIONAL {
-                ?item3 skos:definition ?itemDefinition3 .
-                FILTER(LANG(?itemDefinition3) = "${language}")
-              }
-            }
-            UNION
-            {
-              SELECT ?item3 (COUNT(DISTINCT ?production3) AS ?count3) WHERE {
-                ?production3 ecrm:P126_employed ?item3 .
-              }
-              GROUP BY ?item3
-            }
-          }
-        }
+        GROUP BY ?id
       }`,
     ],
-    $filter: [`lang(?memberLabel) = "${language}"`],
     $orderby: ['DESC(?count)'],
     $langTag: 'hide',
   }),
@@ -120,7 +50,7 @@ module.exports = {
     const wordsFor = (lit) => words.map((w) => `${lit} ql:has-word ${JSON.stringify(w)}`).join(' . ');
     return [
       `
-      ?item skos:prefLabel ?_s1lit .
+      ?id skos:prefLabel ?_s1lit .
       ${wordsFor('?_s1lit')}
       `,
     ];
@@ -158,8 +88,8 @@ module.exports = {
         UNION
         {
           SELECT ?item (COUNT(DISTINCT ?object) AS ?count) WHERE {
-            ?item skos:member* ?member .
-            ?object ecrm:P126_employed ?member .
+            ?item skos:member* ?id .
+            ?object ecrm:P126_employed ?id .
           }
           GROUP BY ?item
         }`

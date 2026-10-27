@@ -1,4 +1,8 @@
 module.exports = {
+  baseWhere: [
+    'BIND(<http://data.silknow.org/vocabulary> AS ?g)',
+    '?id a ecrm:E78_Collection',
+  ],
   view: 'list',
   showInNavbar: false,
   backgroundColor: '#16406c',
@@ -6,15 +10,14 @@ module.exports = {
   query: {
     '@graph': [
       {
-        '@id': '?item',
+        '@id': '?id',
         label: '?itemLabel',
       },
     ],
     $where: [
       `
-      ?item a ecrm:E78_Collection .
-      ?item ecrm:P106_is_composed_of ?id .
-      ?item rdfs:label ?itemLabel .
+      ?id a ecrm:E78_Collection .
+      ?id rdfs:label ?itemLabel .
       `
     ],
     $langTag: 'hide',
@@ -30,7 +33,7 @@ module.exports = {
     const wordsFor = (lit) => words.map((w) => `${lit} ql:has-word ${JSON.stringify(w)}`).join(' . ');
     return [
       `
-      ?item rdfs:label ?_s1lit .
+      ?id rdfs:label ?_s1lit .
       ${wordsFor('?_s1lit')}
       `,
     ];
